@@ -1,0 +1,23 @@
+{
+  "name": "gps-vehicle-tracking-system",
+  "version": "1.0.0",
+  "description": "Nikini Automation GPS tracking system",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/icbjayasinghe/GPS-vehicle-tracking-system.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/icbjayasinghe/GPS-vehicle-tracking-system/issues"
+  },
+  "homepage": "https://github.com/icbjayasinghe/GPS-vehicle-tracking-system#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "nodemon": "^1.18.4"
+  }
+}
