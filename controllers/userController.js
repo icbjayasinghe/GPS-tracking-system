@@ -24,7 +24,6 @@ var user = {
     register: function(req, res) {
       var newUser = new User({
         name: req.body.username,
-        email: req.body.email,
         password: req.body.password,
         userType: req.body.userType
       });
