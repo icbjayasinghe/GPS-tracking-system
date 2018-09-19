@@ -7,7 +7,7 @@ var config = require('./config/config');
 const app = express();
 
 //connect to mongoose
-mongoose.connect(config.database,{useNewUrlParser:true, useCreateIndex:true});
+mongoose.connect(config.database,{useNewUrlParser:true});
 var db = mongoose.connection;
 
 app.use(bodyParser.json());
