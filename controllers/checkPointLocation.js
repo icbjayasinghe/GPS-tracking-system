@@ -33,11 +33,21 @@ router.post('/', function(req, res, next) {
 });
 
 /* edit check Points. */
-router.get('/edit', function(req, res, next) {
+router.get('/edit/:id', function(req, res, next) {
+    const locationId = req.params.id
 });
 
 /* delete check Points. */
-router.get('/delete', function(req, res, next) {
+router.get('/delete/:id', function(req, res, next) {
+    const locationId = parseInt(req.params.id);
+    CheckPoint.deleteLocation(locationId, function (err, result) {
+        if(err){
+            res.json({success: false, msg: err});
+        }else {
+            res.json({success: true, msg: "Successfully Deleted The check Point Location!"});
+        }
+    });
+
 });
 
 

@@ -18,3 +18,9 @@ module.exports.addLocation = function(checkPoint, callback){
     CheckPointLocation.create(checkPoint,callback);
 
 };
+
+module.exports.deleteLocation = function(locationId, callback){
+
+    CheckPointLocation.deleteOne({ locationId :  locationId}, callback);
+
+};
