@@ -1,7 +1,7 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-var CheckPoint = require('../models/checkPointLocation');
+const CheckPoint = require('../models/checkPointLocation');
 
 
 
@@ -13,37 +13,41 @@ router.get('/', function(req, res, next) {
 /* add new check Point Locations. */
 router.post('/', function(req, res, next) {
 
-    console.log(req.body.locationId);
-    console.log(req.body.userId);
-    console.log(req.body.locationName);
-    console.log(req.body.latitudes);
-    console.log(req.body.longitudes);
+    const checkPoint = new CheckPoint({
 
-    var checkPoint = new CheckPoint();
-        checkPoint.locationId = req.body.locationId;
-        checkPoint.userId = req.body.userId;
-        checkPoint.locationName = req.body.locationName;
-        checkPoint.latitude = req.body.latitude;
-        checkPoint.longitude = req.body.longitude;
-
-    checkPoint.save(function (err, result) {
-        if(err){
-            res.json({success: false, msg: err});
-        }else {
-            res.json({success: true, msg: "Successfully Added New check Point Location!"});
-        }
-
-        //req.flash('success', 'Successfully Added New check Point Location!');
+    locationId : req.body.locationId,
+    userId : req.body.userId,
+    locationName : req.body.locationName,
+    latitude : req.body.latitude,
+    longitude : req.body.longitude
 
     });
+
+    CheckPoint.addLocation(checkPoint, function (err, result) {
+            if(err){
+                res.json({success: false, msg: err});
+            }else {
+                res.json({success: true, msg: "Successfully Added New check Point Location!"});
+            }
+        });
 });
 
 /* edit check Points. */
-router.get('/edit', function(req, res, next) {
+router.get('/edit/:id', function(req, res, next) {
+    const locationId = req.params.id
 });
 
 /* delete check Points. */
-router.get('/delete', function(req, res, next) {
+router.get('/delete/:id', function(req, res, next) {
+    const locationId = parseInt(req.params.id);
+    CheckPoint.deleteLocation(locationId, function (err, result) {
+        if(err){
+            res.json({success: false, msg: err});
+        }else {
+            res.json({success: true, msg: "Successfully Deleted The check Point Location!"});
+        }
+    });
+
 });
 
 
