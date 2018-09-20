@@ -25,3 +25,7 @@ var Vehicle = module.exports = mongoose.model('Vehicle',vehicleSchema);
 module.exports.addVehicle = function(vehicle,callback){
     Vehicle.create(vehicle,callback);
 }
+//view vehicles
+module.exports.viewVehicles = function(callback, limit){ 
+    Vehicle.find(callback).limit(limit);
+}

@@ -12,6 +12,7 @@ router.get('/api/v1/user/:id', user.getOne);
 
 //vehicle related routes
 router.post('/addVehicle',vehicle.addVehicle);
+router.get('/viewVehicles',vehicle.viewAllVehicles);
 
 
 
