@@ -14,7 +14,20 @@ var vehicle = {
             }
             res.json({success:true,vehicle:vehicleRes});
         })
-
+    },
+    viewAllVehicles: function(req, res){
+        Vehicle.viewVehicles(function(err,vehi){
+            if(err){
+                throw err;
+            }
+            res.json(vehi)
+        });
+        // Vehicle.viewVehicles(err,vehicles){
+        //     if(err){
+        //         throw err;
+        //     }
+        //     res.json(vehicles);
+        // }
     }
 } 
 module.exports = vehicle;
