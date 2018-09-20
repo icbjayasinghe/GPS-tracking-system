@@ -7,7 +7,7 @@ var config = require('./config/config');
 const app = express();
 
 //connect to mongoose
-mongoose.connect(config.database);
+mongoose.connect(config.database, { useNewUrlParser: true });
 var db = mongoose.connection;
 
 app.use(bodyParser.json());
@@ -31,7 +31,7 @@ app.use('/', require('./controllers'));
 const port = 3000;
 
 app.get('/',function(req,res){
-    res.send("Hello!");
+    res.send("Hello world");
 });
 
 app.listen(port, function(){
