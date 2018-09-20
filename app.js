@@ -5,8 +5,6 @@ var mongoose = require('mongoose');
 var config = require('./config/config'); 
 
 const app = express();
-
-//connect to mongoose
 mongoose.connect(config.database,{useNewUrlParser:true});
 var db = mongoose.connection;
 
