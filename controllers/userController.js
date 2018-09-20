@@ -20,7 +20,7 @@ var user = {
         res.json(userRes);
       })
     },
-   
+
     register: function(req, res) {
       var newUser = new User({
         name: req.body.username,
