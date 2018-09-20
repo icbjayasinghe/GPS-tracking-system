@@ -5,8 +5,6 @@ var mongoose = require('mongoose');
 var config = require('./config/config'); 
 
 const app = express();
-
-//connect to mongoose
 mongoose.connect(config.database,{useNewUrlParser:true});
 var db = mongoose.connection;
 
@@ -27,6 +25,7 @@ app.all('/*', function(req, res, next) {
   
  
 app.use('/', require('./controllers'));
+app.use('/CheckPointLocation', require('./controllers/checkPointLocation'));
 
 const port = 3000;
 
