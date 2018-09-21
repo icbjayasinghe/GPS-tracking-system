@@ -28,6 +28,16 @@ var vehicle = {
         //     }
         //     res.json(vehicles);
         // }
+    },
+    updateVehicle: function(req, res){
+        var _id = req.params.id;
+        var vehicle = req.body;
+        Vehicle.updateVehicle(_id, vehicle, {}, function(err, vehicle){
+            if(err){
+                throw err;
+            }
+            res.json(vehicle);
+        })
     }
 } 
 module.exports = vehicle;
