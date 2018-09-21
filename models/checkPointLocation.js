@@ -3,7 +3,6 @@ var Schema = mongoose.Schema;
 
 var schema = new Schema({
 
-    locationId : {type:Number, required: true},
     userId : {type:Number, required: true},
     locationName : {type:String, required: true},
     latitude : {type: Number, required: true},
@@ -21,6 +20,20 @@ module.exports.addLocation = function(checkPoint, callback){
 
 module.exports.deleteLocation = function(locationId, callback){
 
-    CheckPointLocation.deleteOne({ locationId :  locationId}, callback);
+    CheckPointLocation.deleteOne({ _id :  locationId}, callback);
+
+};
+
+
+module.exports.findLocationId = function(locationId, callback){
+
+    CheckPointLocation.find({_id: locationId}).exec(callback);
+
+};
+
+
+module.exports.editLocation = function(locationId, updateDocs, callback){
+
+    CheckPointLocation.findByIdAndUpdate(locationId, updateDocs, { new: true }, callback);
 
 };
