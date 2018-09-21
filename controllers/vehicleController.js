@@ -29,7 +29,7 @@ var vehicle = {
         //     res.json(vehicles);
         // }
     },
-    updateVehicle: function(req, res){
+    vehicleUpdate: function(req, res){
         var _id = req.params.id;
         var vehicle = req.body;
         Vehicle.updateVehicle(_id, vehicle, {}, function(err, vehicle){
@@ -38,6 +38,16 @@ var vehicle = {
             }
             res.json(vehicle);
         })
+    },
+    vehicleDelete: function(req, res){
+        var _id = req.params.id;
+        Vehicle.deleteVehicle(_id,function(err, resVeh){
+            if(err){
+                throw err;
+            }
+            res.json(resVeh);
+        })
     }
+
 } 
 module.exports = vehicle;
