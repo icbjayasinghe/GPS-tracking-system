@@ -24,3 +24,4 @@ module.exports.deleteLocation = function(locationId, callback){
     CheckPointLocation.deleteOne({ locationId :  locationId}, callback);
 
 };
+

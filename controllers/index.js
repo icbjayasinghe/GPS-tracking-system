@@ -17,6 +17,7 @@ router.use('/CheckPointLocation', checkPointLocation);
 //vehicle related routes
 router.post('/addVehicle',vehicle.addVehicle);
 router.get('/viewVehicles',vehicle.viewAllVehicles);
+router.put('/updateVehicle/:id',vehicle.updateVehicle);
 
 
 

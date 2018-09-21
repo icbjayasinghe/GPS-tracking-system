@@ -25,6 +25,7 @@ app.all('/*', function(req, res, next) {
   
  
 app.use('/', require('./controllers'));
+app.use('/CheckPointLocation', require('./controllers/checkPointLocation'));
 
 const port = 3000;
 

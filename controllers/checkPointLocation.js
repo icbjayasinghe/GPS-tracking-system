@@ -5,6 +5,7 @@ const CheckPoint = require('../models/checkPointLocation');
 
 
 
+
 /* view check Points page. */
 router.get('/', function(req, res, next) {
     res.send('Display check Points Location Page');
@@ -47,7 +48,6 @@ router.get('/delete/:id', function(req, res, next) {
             res.json({success: true, msg: "Successfully Deleted The check Point Location!"});
         }
     });
-
 });
 
 
