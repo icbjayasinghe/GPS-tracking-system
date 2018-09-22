@@ -65,3 +65,9 @@ module.exports.getUser = function(_id, callback){
 module.exports.createUser = function(user, callback){
 	user.save(callback);
 }
+
+//find user by name
+module.exports.findUserByName = function(userName, callback){
+    quary = {name:userName}
+    User.find(quary, callback);
+}

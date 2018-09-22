@@ -33,7 +33,17 @@ var user = {
         }
         res.json({success: true,user: userRes});
       })
-    }
+    },
+
+    findByName: function(req, res){
+      var name = req.params.name; 
+      User.findUserByName(name, function(err, userRes){
+        if(err){
+          throw err;
+        }
+        res.json(userRes);
+      })
+    } 
 }
 
 module.exports = user;
