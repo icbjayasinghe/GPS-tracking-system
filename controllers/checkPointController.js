@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const CheckPoint = require('../models/checkPointLocation');
+const CheckPoint = require('../models/checkPoint');
 
 /* view check Points page. */
 router.get('/', function(req, res, next) {
-    res.send('Display check Points Location Page');
+    res.send('Display Check Points Location Page');
 });
 
 /* add new check Point Locations. */
@@ -20,7 +20,7 @@ router.post('/', function(req, res, next) {
             if(err){
                 res.json({success: false, msg: err});
             }else {
-                res.json({success: true, msg: "Successfully Added New check Point Location!"});
+                res.json({success: true, msg: "Successfully Added New Check Point!"});
             }
         });
 });
@@ -28,7 +28,7 @@ router.post('/', function(req, res, next) {
 /* edit check Points. */
 router.get('/edit/:id', function(req, res, next) {
     req.session.locationId = req.params.id;
-    res.redirect('/CheckPointLocation/edit');
+    res.redirect('/CheckPoint/edit');
 });
 
 router.get('/edit', function(req, res, next) {
@@ -36,7 +36,7 @@ router.get('/edit', function(req, res, next) {
         if(err){
             res.json({success: false, msg: err});
         }else {
-            res.json({success: true, msg: "Successfully Display The Edit check Point Location Page!"});
+            res.json({success: true, msg: "Successfully Display The Edit Check Point Page!"});
         }
     });
 });
@@ -65,7 +65,7 @@ router.post('/edit', function(req, res, next) {
 /* delete check Points. */
 router.get('/delete/:id', function(req, res, next) {
     req.session.locationId = req.params.id;
-    res.redirect('/CheckPointLocation/delete')
+    res.redirect('/CheckPoint/delete')
 });
 
 router.get('/delete', function(req, res, next) {

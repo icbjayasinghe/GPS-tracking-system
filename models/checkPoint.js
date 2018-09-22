@@ -17,7 +17,7 @@ var schema = new Schema({
     longitude : {
         type:Number, 
         required: true
-    },
+    }
 });
 
 var CheckPointLocation = module.exports = mongoose.model('CheckPointLocation', schema);
