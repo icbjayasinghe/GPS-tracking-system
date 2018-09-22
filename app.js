@@ -2,13 +2,15 @@ var express = require('express');
 //var path = require('path');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var config = require('./config/config'); 
+var config = require('./config/config');
+var session = require('express-session');
 
 const app = express();
 mongoose.connect(config.database,{useNewUrlParser:true});
 var db = mongoose.connection;
 
 app.use(bodyParser.json());
+app.use(session({secret: 'mysupersecret', resave: false, saveUninitialized: false}));
 
 app.all('/*', function(req, res, next) {
     // CORS headers

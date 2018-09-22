@@ -32,9 +32,13 @@ module.exports.viewVehicles = function(callback, limit){
 //update vehicle
 module.exports.updateVehicle = function(id, vehicle, options, callback){
     var quary = {_id: id};
-    //console.log(vehicle.vehicleDetails);
     var update = {
         vehicleDetails: vehicle.details
     }
     Vehicle.findByIdAndUpdate(quary,update, options, callback);
+}
+//delete vehicle
+module.exports.deleteVehicle = function(id, callback){
+    var quary = {_id: id};
+    Vehicle.findByIdAndDelete(quary, callback);
 }
