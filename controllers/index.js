@@ -12,6 +12,7 @@ router.post('/signup', user.register);
 //find users
 router.get('/api/v1/users', user.getAll);
 router.get('/api/v1/user/:id', user.getOne);
+router.get('/userByName/:name', user.findByName);
 
 //access to the CheckPoint routes
 router.use('/CheckPoint', checkPoint);

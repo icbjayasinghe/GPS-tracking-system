@@ -22,12 +22,6 @@ var vehicle = {
             }
             res.json(vehi)
         });
-        // Vehicle.viewVehicles(err,vehicles){
-        //     if(err){
-        //         throw err;
-        //     }
-        //     res.json(vehicles);
-        // }
     },
     vehicleUpdate: function(req, res){
         var _id = req.params.id;
