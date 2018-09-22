@@ -1,13 +1,15 @@
 var express = require('express');
 var router = express.Router();
-var user  = require('./userController.js');
 var auth = require('./auth.js');
+var user  = require('./userController.js');
 var vehicle = require('./vehicleController.js');
 var checkPointLocation = require('./checkPointLocation');
 
-
+//login & registration
 router.post('/login', auth.login);
 router.post('/signup', user.register);
+
+//find users
 router.get('/api/v1/users', user.getAll);
 router.get('/api/v1/user/:id', user.getOne);
 
