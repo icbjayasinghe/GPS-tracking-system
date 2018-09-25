@@ -100,5 +100,23 @@ module.exports.resetPassword = function(userName,options,callback){
             var update = { password: pw}
             User.findOneAndUpdate(quary, update, options, callback);
         });
-    });
+    });    
+}
+
+//change password
+module.exports.changePassword = function(userName, pass, callback){
+    quary = {name:userName};
+    bcrypt.genSalt(10, function (err, salt) {
+        if (err) {
+            throw err;
+        }
+        bcrypt.hash(pass, salt, function (err, hash) {
+            if (err) {
+                throw err;
+            }
+            pw = hash;
+            var update = { password: pw}
+            User.findOneAndUpdate(quary, update, callback);
+        });
+    }); 
 }
