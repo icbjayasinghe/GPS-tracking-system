@@ -43,7 +43,17 @@ var user = {
         }
         res.json(userRes);
       })
-    } 
+    },
+
+    resetUserPassword: function(req, res){
+      var name = req.params.name;
+      User.resetPassword(name,{}, function(err, userRes){
+        if(err){
+          throw err;
+        }
+        res.json(userRes);
+      })
+    }
 }
 
 module.exports = user;
