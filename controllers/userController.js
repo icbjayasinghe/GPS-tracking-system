@@ -45,6 +45,7 @@ var user = {
         res.json(userRes);
       })
     },
+
     
     deleteFlag: function(req,res){
       var id = req.params.id;
@@ -77,6 +78,6 @@ var user = {
         res.json(userRes);
       })
     }
-}
+  }
 
 module.exports = user;
