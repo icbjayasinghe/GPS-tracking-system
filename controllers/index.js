@@ -13,6 +13,7 @@ router.post('/signup', user.register);
 router.get('/api/v1/users', user.getAll);
 router.get('/api/v1/user/:id', user.getOne);
 router.get('/userByName/:name', user.findByName);
+router.put('/api/v1/user/:id', user.deleteFlag);
 
 //access to the CheckPoint routes
 router.use('/CheckPoint', checkPoint);

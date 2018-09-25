@@ -25,7 +25,8 @@ var user = {
       var newUser = new User({
         name: req.body.username,
         password: req.body.password,
-        userType: req.body.userType
+        userType: req.body.userType,
+        status:"Active"
       });
       User.createUser(newUser, function(err,userRes){
         if (err){
@@ -43,7 +44,19 @@ var user = {
         }
         res.json(userRes);
       })
-    } 
+    },
+    
+    deleteFlag: function(req,res){
+      var id = req.params.id;
+      //var status = req.body;
+      User.deleteUser(id, function(err,userRes){
+        if (err){
+          throw err ;
+        }
+        console.log("User has been deleted");
+        res.json(userRes);
+      })
+    }
 }
 
 module.exports = user;
