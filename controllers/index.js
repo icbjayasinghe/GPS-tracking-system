@@ -13,6 +13,7 @@ router.post('/signup', user.register);
 router.get('/api/v1/users', user.getAll);
 router.get('/api/v1/user/:id', user.getOne);
 router.get('/userByName/:name', user.findByName);
+router.get('/resetPassword/:name', user.resetUserPassword);
 
 //access to the CheckPoint routes
 router.use('/CheckPoint', checkPoint);
@@ -22,5 +23,4 @@ router.post('/addVehicle',vehicle.addVehicle);
 router.get('/viewVehicles',vehicle.viewAllVehicles);
 router.put('/updateVehicle/:id',vehicle.vehicleUpdate);
 router.delete('/deleteVehicle/:id',vehicle.vehicleDelete);
-
 module.exports = router;

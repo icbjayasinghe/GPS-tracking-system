@@ -71,3 +71,10 @@ module.exports.findUserByName = function(userName, callback){
     quary = {name:userName}
     User.find(quary, callback);
 }
+
+//reset password
+module.exports.resetPassword = function(userName,options,callback){
+    quary = {name:userName};
+    var update = { password: userName}
+    User.findOneAndUpdate(quary, update, options, callback);   
+}
