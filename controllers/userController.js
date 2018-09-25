@@ -45,7 +45,6 @@ var user = {
         res.json(userRes);
       })
     },
-
     
     deleteFlag: function(req,res){
       var id = req.params.id;
@@ -55,6 +54,8 @@ var user = {
           throw err ;
         }
         console.log("User has been deleted");
+      })
+    },
 
     resetUserPassword: function(req, res){
       var name = req.params.name;
