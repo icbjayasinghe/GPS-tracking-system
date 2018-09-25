@@ -34,7 +34,6 @@ var auth = {
     validate: function(username, password, cb) {
         User.findOne({name: username}, function(err, user) {
             if (err) throw err;
-         
             if (!user) {
               cb(null, null);
             } 
@@ -52,11 +51,8 @@ var auth = {
             });
     },
     validateUser: function(username) {
-      User.findOne({
-        name: req.body.name
-      }, function(err, user) {
+      User.findOne({name: req.body.name}, function(err, user) {
         if(err) throw err;
-
         if(!user) {
           return null;
         }

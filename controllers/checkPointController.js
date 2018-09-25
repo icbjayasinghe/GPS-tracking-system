@@ -11,10 +11,10 @@ router.get('/', function(req, res, next) {
 /* add new check Point Locations. */
 router.post('/', function(req, res, next) {
     const checkPoint = new CheckPoint({
-    userId : req.body.userId,
-    locationName : req.body.locationName,
-    latitude : req.body.latitude,
-    longitude : req.body.longitude
+        userId : req.body.userId,
+        locationName : req.body.locationName,
+        latitude : req.body.latitude,
+        longitude : req.body.longitude
     });
     CheckPoint.addLocation(checkPoint, function (err, result) {
             if(err){

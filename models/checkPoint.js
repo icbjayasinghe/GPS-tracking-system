@@ -3,8 +3,8 @@ var Schema = mongoose.Schema;
 
 var schema = new Schema({
     userId : {
-        type:Number, 
-        required: true
+        type: mongoose.Schema.Types.ObjectId,
+        ref : 'User'
     },
     locationName : {
         type:String, 
