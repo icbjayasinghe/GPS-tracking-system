@@ -53,6 +53,17 @@ var user = {
         }
         res.json(userRes);
       })
+    },
+
+    changeUserPassword: function(req, res){
+      var name = req.params.name;
+      var pass = req.body.password;
+      User.changePassword(name, pass, function(err, userRes){
+        if(err){
+          throw err;
+        }
+        res.json(userRes);
+      })
     }
 }
 
