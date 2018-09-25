@@ -48,7 +48,7 @@ var auth = {
                 }
               });
             }
-            });
+        });
     },
     validateUser: function(username) {
       User.findOne({name: req.body.name}, function(err, user) {

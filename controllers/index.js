@@ -13,8 +13,10 @@ router.post('/signup', user.register);
 router.get('/api/v1/users', user.getAll);
 router.get('/api/v1/user/:id', user.getOne);
 router.get('/userByName/:name', user.findByName);
+router.put('/api/v1/user/:id', user.deleteFlag);
 router.get('/resetPassword/:name', user.resetUserPassword);
 router.post('/changePasword/:name', user.changeUserPassword);
+
 
 //access to the CheckPoint routes
 router.use('/CheckPoint', checkPoint);

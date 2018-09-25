@@ -15,7 +15,11 @@ var UserSchema = mongoose.Schema({
 	userType:{
 		type: String,
 		required: true
-	}
+    },
+    status:{
+		type: String,
+		value: "Active"
+    }
 });
 
 UserSchema.pre('save', function (next) {
@@ -69,7 +73,16 @@ module.exports.createUser = function(user, callback){
 //find user by name
 module.exports.findUserByName = function(userName, callback){
     quary = {name:userName}
-    User.find(quary, callback);
+    User.find(quary, callback); 
+}
+
+//delete user by flag
+module.exports.deleteUser = function(id,options, callback){
+    quary = {_id:id}
+    var update = {
+        status:"Deleted"
+    }
+    User.findByIdAndUpdate(quary,update, options, callback);
 }
 
 //reset password
