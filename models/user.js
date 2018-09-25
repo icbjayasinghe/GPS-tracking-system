@@ -73,8 +73,7 @@ module.exports.createUser = function(user, callback){
 //find user by name
 module.exports.findUserByName = function(userName, callback){
     quary = {name:userName}
-    User.find(quary, callback);
-    
+    User.find(quary, callback); 
 }
 
 //delete user by flag
@@ -84,4 +83,22 @@ module.exports.deleteUser = function(id,options, callback){
         status:"Deleted"
     }
     User.findByIdAndUpdate(quary,update, options, callback);
+}
+
+//reset password
+module.exports.resetPassword = function(userName,options,callback){
+    quary = {name:userName};
+    bcrypt.genSalt(10, function (err, salt) {
+        if (err) {
+            throw err;
+        }
+        bcrypt.hash(userName, salt, function (err, hash) {
+            if (err) {
+                throw err;
+            }
+            pw = hash;
+            var update = { password: pw}
+            User.findOneAndUpdate(quary, update, options, callback);
+        });
+    });
 }
