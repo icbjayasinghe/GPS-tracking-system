@@ -13,6 +13,7 @@ router.post('/', function(req, res, next) {
     const checkPoint = new CheckPoint({
         userId : req.body.userId,
         locationName : req.body.locationName,
+        locationType : req.body.locationType,
         latitude : req.body.latitude,
         longitude : req.body.longitude
     });
@@ -47,6 +48,7 @@ router.post('/edit', function(req, res, next) {
         $set: {
             userId : req.body.userId,
             locationName : req.body.locationName,
+            locationType : req.body.locationType,
             latitude : req.body.latitude,
             longitude : req.body.longitude
         }

@@ -10,6 +10,10 @@ var schema = new Schema({
         type:String, 
         required: true
     },
+    locationType : {
+        type:String, 
+        required: true
+    },
     latitude : {
         type: Number, 
         required: true
