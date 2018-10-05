@@ -12,6 +12,10 @@ var schema = new Schema({
 
 var CheckPointLocation = module.exports = mongoose.model('CheckPointLocation', schema);
 
+module.exports.getAllCheckPoints = function(callback){
+    CheckPointLocation.find().exec(callback);
+};
+
 module.exports.addLocation = function(checkPoint, callback){
 
     CheckPointLocation.create(checkPoint,callback);
