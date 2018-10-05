@@ -28,7 +28,6 @@ var CheckPointLocation = module.exports = mongoose.model('CheckPointLocation', s
 
 module.exports.getAllCheckPoints = function(callback){
     CheckPointLocation.find().exec(callback);
-    CheckPointLocation.deleteOne({ _id :  locationId}, callback);
 };
 
 module.exports.addLocation = function(checkPoint, callback){
