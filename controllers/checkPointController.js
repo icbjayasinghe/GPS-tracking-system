@@ -7,9 +7,9 @@ const CheckPoint = require('../models/checkPoint');
 router.get('/', function(req, res, next) {
     CheckPoint.getAllCheckPoints(function (err, docs) {
         if(err){
-            res.json({success: false, msg: err});
+            throw err;
         }else {
-            res.json({success: true, msg: docs});
+            res.json(docs);
         }
     });
 });
