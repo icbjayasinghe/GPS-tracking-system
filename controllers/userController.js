@@ -5,7 +5,7 @@ var user = {
     getAll: function(req, res) {
       User.getUsers(function(err,userRes){
         if (err){
-          throw err ;
+          res.json({success: false, msg: err});
         }
         res.json(userRes);
       })
@@ -15,7 +15,7 @@ var user = {
       var id = req.params.id;
       User.getUser(id, function(err,userRes){
         if (err){
-          throw err ;
+          res.json({success: false, msg: err});
         }
         res.json(userRes);
       })
@@ -23,14 +23,14 @@ var user = {
 
     register: function(req, res) {
       var newUser = new User({
-        name: req.body.username,
+        name: req.body.name,
         password: req.body.password,
         userType: req.body.userType,
-        status:"Active"
+        status: req.body.status
       });
       User.createUser(newUser, function(err,userRes){
         if (err){
-          throw err ;
+          res.json({success: false, msg: err});
         }
         res.json({success: true,user: userRes});
       })
@@ -40,7 +40,7 @@ var user = {
       var name = req.params.name; 
       User.findUserByName(name, function(err, userRes){
         if(err){
-          throw err;
+          res.json({success: false, msg: err});
         }
         res.json(userRes);
       })
@@ -52,7 +52,7 @@ var user = {
       //var status = req.body;
       User.deleteUser(id, function(err,userRes){
         if (err){
-          throw err ;
+          res.json({success: false, msg: err});
         }
         console.log("User has been deleted");
       })
@@ -62,7 +62,7 @@ var user = {
       var name = req.params.name;
       User.resetPassword(name,{}, function(err, userRes){
         if(err){
-          throw err;
+          res.json({success: false, msg: err});
         }
         res.json(userRes);
       })
@@ -73,7 +73,7 @@ var user = {
       var pass = req.body.password;
       User.changePassword(name, pass, function(err, userRes){
         if(err){
-          throw err;
+          res.json({success: false, msg: err});
         }
         res.json(userRes);
       })

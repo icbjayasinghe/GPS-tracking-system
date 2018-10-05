@@ -10,7 +10,7 @@ var vehicle = {
         });
         Vehicle.addVehicle(newVehicle,function(err,vehicleRes){
             if(err){
-                throw err;
+                res.json({success: false, msg: err});
             }
             res.json({success:true,vehicle:vehicleRes});
         })
@@ -18,7 +18,7 @@ var vehicle = {
     viewAllVehicles: function(req, res){
         Vehicle.viewVehicles(function(err,vehi){
             if(err){
-                throw err;
+                res.json({success: false, msg: err});
             }
             res.json(vehi)
         });
@@ -28,7 +28,7 @@ var vehicle = {
         var vehicle = req.body;
         Vehicle.updateVehicle(_id, vehicle, {}, function(err, vehicle){
             if(err){
-                throw err;
+                res.json({success: false, msg: err});
             }
             res.json(vehicle);
         })
@@ -37,7 +37,7 @@ var vehicle = {
         var _id = req.params.id;
         Vehicle.deleteVehicle(_id,function(err, resVeh){
             if(err){
-                throw err;
+                res.json({success: false, msg: err});
             }
             res.json(resVeh);
         })
