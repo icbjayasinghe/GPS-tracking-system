@@ -32,31 +32,27 @@ var auth = {
     },
    
     validate: function(username, password, cb) {
-        User.findOne({
-            name: username
-          }, function(err, user) {
+        User.findOne({name: username}, function(err, user) {
             if (err) throw err;
-         
             if (!user) {
               cb(null, null);
-            } else {
+            } 
+            else {
               // check if password matches
               user.comparePassword(password, function (err, isMatch) {
                 if (isMatch && !err) {
                   cb(user, genToken(user.name));
-                } else {
+                } 
+                else {
                   cb(user, null);
                 }
               });
             }
-            });
+        });
     },
     validateUser: function(username) {
-      User.findOne({
-        name: req.body.name
-      }, function(err, user) {
+      User.findOne({name: req.body.name}, function(err, user) {
         if(err) throw err;
-
         if(!user) {
           return null;
         }

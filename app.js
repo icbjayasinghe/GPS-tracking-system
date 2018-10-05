@@ -1,5 +1,4 @@
 var express = require('express');
-//var path = require('path');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var config = require('./config/config');
@@ -23,10 +22,9 @@ app.all('/*', function(req, res, next) {
     } else {
       next();
     }
-  });
+});
   
- 
-app.use('/', require('./controllers'));
+ app.use('/', require('./controllers'));
 
 const port = 3000;
 

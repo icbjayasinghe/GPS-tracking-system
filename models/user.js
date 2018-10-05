@@ -15,7 +15,11 @@ var UserSchema = mongoose.Schema({
 	userType:{
 		type: String,
 		required: true
-	}
+    },
+    status:{
+		type: String,
+		value: "Active"
+    }
 });
 
 UserSchema.pre('save', function (next) {
@@ -64,4 +68,55 @@ module.exports.getUser = function(_id, callback){
 //Add User
 module.exports.createUser = function(user, callback){
 	user.save(callback);
+}
+
+//find user by name
+module.exports.findUserByName = function(userName, callback){
+    quary = {name:userName}
+    User.find(quary, callback); 
+}
+
+//delete user by flag
+module.exports.deleteUser = function(id,options, callback){
+    quary = {_id:id}
+    var update = {
+        status:"Deleted"
+    }
+    User.findByIdAndUpdate(quary,update, options, callback);
+}
+
+//reset password
+module.exports.resetPassword = function(userName,options,callback){
+    quary = {name:userName};
+    bcrypt.genSalt(10, function (err, salt) {
+        if (err) {
+            throw err;
+        }
+        bcrypt.hash(userName, salt, function (err, hash) {
+            if (err) {
+                throw err;
+            }
+            pw = hash;
+            var update = { password: pw}
+            User.findOneAndUpdate(quary, update, options, callback);
+        });
+    });    
+}
+
+//change password
+module.exports.changePassword = function(userName, pass, callback){
+    quary = {name:userName};
+    bcrypt.genSalt(10, function (err, salt) {
+        if (err) {
+            throw err;
+        }
+        bcrypt.hash(pass, salt, function (err, hash) {
+            if (err) {
+                throw err;
+            }
+            pw = hash;
+            var update = { password: pw}
+            User.findOneAndUpdate(quary, update, callback);
+        });
+    }); 
 }
