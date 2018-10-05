@@ -5,7 +5,13 @@ const CheckPoint = require('../models/checkPoint');
 
 /* view check Points page. */
 router.get('/', function(req, res, next) {
-    res.send('Display Check Points Location Page');
+    CheckPoint.getAllCheckPoints(function (err, docs) {
+        if(err){
+            res.json({success: false, msg: err});
+        }else {
+            res.json({success: true, msg: docs});
+        }
+    });
 });
 
 /* add new check Point Locations. */
