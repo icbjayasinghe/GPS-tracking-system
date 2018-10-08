@@ -13,7 +13,7 @@ router.post('/signup', user.register);
 router.get('/users', user.getAll);
 router.get('/user/:id', user.getOne);
 router.get('/userByName/:name', user.findByName);
-router.put('/user/:id', user.deleteFlag);
+router.put('/userDelete/:id', user.deleteFlag);
 router.get('/resetPassword/:name', user.resetUserPassword);
 router.post('/changePasword/:name', user.changeUserPassword);
 
