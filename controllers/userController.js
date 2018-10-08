@@ -45,16 +45,14 @@ var user = {
         res.json(userRes);
       })
     },
-
     
     deleteFlag: function(req,res){
       var id = req.params.id;
       //var status = req.body;
-      User.deleteUser(id, function(err,userRes){
+      User.deleteUser(id, function(err){
         if (err){
           res.json({success: false, msg: err});
         }
-        console.log("User has been deleted");
       })
     },
 

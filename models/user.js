@@ -18,7 +18,7 @@ var UserSchema = mongoose.Schema({
     },
     status:{
 		type: String,
-		value: "Active"
+		require: true
     }
 });
 
@@ -77,7 +77,7 @@ module.exports.findUserByName = function(userName, callback){
 }
 
 //delete user by flag
-module.exports.deleteUser = function(id,options, callback){
+module.exports.deleteUser = function(id, options, callback){
     quary = {_id:id}
     var update = {
         status:"Deleted"
