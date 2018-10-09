@@ -59,7 +59,7 @@ const SUCCESS_RESPONCE = {
         };
     }
 };
-  
+
 export {
     ERROR_RESPONCE,
     SUCCESS_RESPONCE
