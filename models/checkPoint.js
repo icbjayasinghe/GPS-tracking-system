@@ -35,9 +35,9 @@ module.exports.addLocation = function(checkPoint, callback){
 };
 
 module.exports.deleteLocation = function(locationId, callback){
-    CheckPointLocation.deleteOne({ _id :  locationId}, callback);
+    var quary = { _id : locationId};
+    CheckPointLocation.findByIdAndDelete(quary ,callback);
 };
-
 
 module.exports.findLocationId = function(locationId, callback){
     CheckPointLocation.find({_id: locationId}).exec(callback);
