@@ -48,7 +48,6 @@ router.get('/edit', function(req, res, next) {
     });
 });
 
-
 router.post('/edit', function(req, res, next) {
     req.session.updateDocs = {
         $set: {
@@ -69,6 +68,17 @@ router.post('/edit', function(req, res, next) {
     });
 });
 
+router.delete('/:id', function(req, res, next) {
+    console.log(id);
+    req.session.locationId = req.params.id;
+    CheckPoint.deleteLocation(req.session.locationId, function (err, result) {
+        if(err){
+            res.json({success: false, msg: err});
+        }else {
+            res.json({success: true, msg: "Successfully Deleted The check Point Location!"});
+        }
+    });
+});
 
 /* delete check Points. */
 router.get('/delete/:id', function(req, res, next) {
