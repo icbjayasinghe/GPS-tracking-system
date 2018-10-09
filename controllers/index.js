@@ -7,22 +7,22 @@ var checkPoint = require('./checkPointController');
 
 //login & registration
 router.post('/login', auth.login);
-router.post('/signup', user.register);
 
 //find users
-router.get('/users', user.getAll);
+router.post('/user', user.register);
+router.get('/user', user.getAll);
 router.get('/user/:id', user.getOne);
-router.get('/userByName/:name', user.findByName);
-router.put('/userDelete/:id', user.deleteFlag);
-router.get('/resetPassword/:name', user.resetUserPassword);
-router.post('/changePasword/:name', user.changeUserPassword);
+router.get('/user/:name', user.findByName);
+router.put('/user/deleteUser/:id', user.deleteFlag);
+router.put('/user/resetPassword/:name', user.resetUserPassword);
+router.put('/user/changePasword/:name', user.changeUserPassword);
 
 //access to the CheckPoint routes
-router.use('/CheckPoint', checkPoint);
+router.use('/checkpoint', checkPoint);
 
 //vehicle related routes
-router.post('/addVehicle',vehicle.addVehicle);
-router.get('/viewVehicles',vehicle.viewAllVehicles);
-router.put('/updateVehicle/:id',vehicle.vehicleUpdate);
-router.delete('/deleteVehicle/:id',vehicle.vehicleDelete);
+router.post('/vehicle',vehicle.addVehicle);
+router.get('/vehicle',vehicle.viewAllVehicles);
+router.put('/vehicle/:id',vehicle.vehicleUpdate);
+router.delete('/vehicle/:id',vehicle.vehicleDelete);
 module.exports = router;
