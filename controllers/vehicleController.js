@@ -39,7 +39,7 @@ var vehicle = {
             if(err){
                 res.json({success: false, msg: err});
             }
-            res.json(resVeh);
+            res.json({success: true, msg: resVeh});
         })
     }
 
