@@ -26,11 +26,11 @@ var vehicle = {
     vehicleUpdate: function(req, res){
         var _id = req.params.id;
         var vehicle = req.body;
-        Vehicle.updateVehicle(_id, vehicle, {}, function(err, vehicle){
+        Vehicle.updateVehicle(_id, vehicle, {}, function(err, vehicleRes){
             if(err){
                 res.json({success: false, msg: err});
             }
-            res.json(vehicle);
+            res.json({success: true, msg: vehicleRes});
         })
     },
     vehicleDelete: function(req, res){
