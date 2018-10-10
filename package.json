@@ -20,6 +20,7 @@
     "bcryptjs": "^2.4.3",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
+    "hex-to-dec": "^1.0.1",
     "jwt-simple": "^0.5.1",
     "mongoose": "^5.2.15",
     "nodemon": "^1.18.4"
