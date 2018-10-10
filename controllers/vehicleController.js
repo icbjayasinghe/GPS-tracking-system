@@ -42,6 +42,5 @@ var vehicle = {
             res.json({success: true, msg: resVeh});
         })
     }
-
 } 
 module.exports = vehicle;

@@ -25,7 +25,7 @@ app.all('/*', function(req, res, next) {
     }
 });
   
- app.use('/', require('./controllers'));
+app.use('/', require('./controllers'));
 
 const port = 3000;
 

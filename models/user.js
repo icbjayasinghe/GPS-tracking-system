@@ -22,6 +22,8 @@ var UserSchema = mongoose.Schema({
     }
 });
 
+var User = module.exports = mongoose.model('User',UserSchema);
+
 UserSchema.pre('save', function (next) {
     var user = this;
     if (this.isModified('password') || this.isNew) {
@@ -38,7 +40,8 @@ UserSchema.pre('save', function (next) {
                 next();
             });
         });
-    } else {
+    } 
+    else {
         return next();
     }
 });
@@ -52,8 +55,6 @@ UserSchema.methods.comparePassword = function (passw, cb) {
         cb(null, isMatch);
     });
 };
-
-var User = module.exports = mongoose.model('User',UserSchema);
 
 //Get User
 module.exports.getUsers = function(callback, limit){
@@ -79,9 +80,7 @@ module.exports.findUserByName = function(userName, callback){
 //delete user by flag
 module.exports.deleteUser = function(id, options, callback){
     quary = {_id:id}
-    var update = {
-        status:"Deleted"
-    }
+    var update = { status:"Deleted" }
     User.findByIdAndUpdate(quary,update, options, callback);
 }
 
@@ -105,7 +104,7 @@ module.exports.resetPassword = function(userName,options,callback){
 
 //change password
 module.exports.changePassword = function(userName, pass, callback){
-    quary = {name:userName};
+    quary = { name:userName };
     bcrypt.genSalt(10, function (err, salt) {
         if (err) {
             throw err;
