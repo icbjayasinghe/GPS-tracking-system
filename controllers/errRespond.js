@@ -21,7 +21,7 @@ const ERROR_RESPONCE = {
             message: constant.RESPONCE.DbContentNotFound,
             success: false,
             data: e
-      };
+        };
     },
     serverError: e => {
         return {
@@ -59,7 +59,7 @@ const SUCCESS_RESPONCE = {
         };
     }
 };
-  
+
 export {
     ERROR_RESPONCE,
     SUCCESS_RESPONCE

@@ -43,7 +43,6 @@ module.exports.findLocationId = function(locationId, callback){
     CheckPointLocation.find({_id: locationId}).exec(callback);
 };
 
-
 module.exports.editLocation = function(locationId, updateDocs, callback){
     CheckPointLocation.findByIdAndUpdate(locationId, updateDocs, { new: true }, callback);
 };

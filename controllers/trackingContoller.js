@@ -17,4 +17,4 @@ var fullDataSplit = {
 
 }
 module.exports = fullDataSplit;
-    
+

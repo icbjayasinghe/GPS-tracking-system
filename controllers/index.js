@@ -9,7 +9,7 @@ var checkPoint = require('./checkPointController');
 router.post('/login', auth.login);
 
 //find users
-router.post('/user', user.register);
+router.post('/user', user.addUser);
 router.get('/user', user.getAll);
 router.get('/user/:id', user.getOne);
 router.get('/user/:name', user.findByName);
