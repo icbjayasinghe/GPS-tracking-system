@@ -19,7 +19,6 @@ var fullDataSplit = {
     //     longiValue=longi/10000000;
     //     return longiValue;
     // }
-
 }
 module.exports = fullDataSplit;
     
