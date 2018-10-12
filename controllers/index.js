@@ -3,26 +3,27 @@ var router = express.Router();
 var auth = require('./auth.js');
 var user  = require('./userController.js');
 var vehicle = require('./vehicleController.js');
-var checkPoint = require('./checkPointController');
+
+//find users
+router.post('/api/user', user.addUser);
+router.get('/api/user', user.getAll);
+router.get('/api/user/:id', user.getOne);
+router.get('/api/userByName/:userName', user.findByName);
+router.put('/api/user/resetPassword/:userName', user.resetUserPassword);
+router.put('/api/user/deleteUser/:id', user.deleteFlag);
+router.put('/api/user/changePasword/:userName', user.changeUserPassword);
+router.put('/api/user/addNewLocation/:userName', user.addLocation);
 
 //login & registration
 router.post('/login', auth.login);
-
-//find users
-router.post('/user', user.addUser);
-router.get('/user', user.getAll);
-router.get('/user/:id', user.getOne);
-router.get('/user/:name', user.findByName);
-router.put('/user/deleteUser/:id', user.deleteFlag);
-router.put('/user/resetPassword/:name', user.resetUserPassword);
-router.put('/user/changePasword/:name', user.changeUserPassword);
-
-//access to the CheckPoint routes
-router.use('/checkpoint', checkPoint);
-
+ 
 //vehicle related routes
-router.post('/vehicle',vehicle.addVehicle);
-router.get('/vehicle',vehicle.viewAllVehicles);
-router.put('/vehicle/:id',vehicle.vehicleUpdate);
-router.delete('/vehicle/:id',vehicle.vehicleDelete);
+router.post('/api/vehicle',vehicle.addVehicle);
+router.get('/api/vehicle',vehicle.viewAllVehicles);
+router.put('/api/vehicle/:id',vehicle.vehicleUpdate);
+router.delete('/api/vehicle/:id',vehicle.vehicleDelete);
+router.put('/api/vehicle/:imeiNumber',vehicle.addTrackingData);
+
+//does not work
+
 module.exports = router;

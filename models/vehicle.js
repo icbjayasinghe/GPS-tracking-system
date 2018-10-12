@@ -1,20 +1,29 @@
 var mongoose = require('mongoose');
 // vehicle schema
 var vehicleSchema = mongoose.Schema({
-    vehicleNo:{
+    vehicleNumber:{
         type:String,
         required:true
     },
-    imeiNo:{
+    imeiNumber:{
         type:String,
         required:true
     },
-    userName:{
-        type:String,
-        required:true
+    userId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref : 'User'
     },
     vehicleDetails:{
         type:String
+    },
+    trckingData:{
+        date : String,
+        longitude: String,
+        latitude: String,
+        altitude: String,
+        angle: String,
+        sattelites: String,
+        speed: String
     }
 });
 
@@ -38,4 +47,9 @@ module.exports.updateVehicle = function(id, vehicle, options, callback){
 module.exports.deleteVehicle = function(id, callback){
     var quary = {_id: id};
     Vehicle.findByIdAndDelete(quary, callback);
+}
+
+module.exports.addNewTrackingData = function(imeiNumber, callback){
+    quary = {imeiNumber:imeiNumber};
+    User.findOneAndUpdate(quary, update, options, callback);
 }

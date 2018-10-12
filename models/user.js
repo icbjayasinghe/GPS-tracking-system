@@ -3,7 +3,23 @@ var bcrypt = require('bcryptjs');
 
 //User Schema
 var UserSchema = mongoose.Schema({
-	name:{
+    fullName:{
+        type: String,
+        required: true
+    },
+    address:{
+        type: String,
+        required: true
+    },
+    contactNumber:{
+        type: String,
+        required: true
+    },
+    emailAddress:{
+        type: String,
+        required: true
+    },
+	userName:{
         type: String,
         unique: true,
 		required: true
@@ -12,17 +28,83 @@ var UserSchema = mongoose.Schema({
 		type: String,
 		required: true
 	},
-	userType:{
-		type: String,
-		required: true
+	roles: {
+        type: [{
+            type: String,
+            enum: ['user', 'admin']
+        }],
+        default: ['user']
     },
+    location:[{
+        name: String,
+        type: String,
+        latitude: String,
+        longitude: String
+    }],
     status:{
-		type: String,
+        type: String,
 		require: true
     }
 });
 
 var User = module.exports = mongoose.model('User',UserSchema);
+
+//Add User
+module.exports.createUser = function(user, callback){
+	user.save(callback);
+}
+//Get User
+module.exports.getUsers = function(callback, limit){
+	User.find(callback).limit(limit);
+}
+//Get User 
+module.exports.getUser = function(_id, callback){
+	User.findById(_id, callback);
+}
+//find user by name
+module.exports.findUserByName = function(userName, callback){
+    User.find({userName:userName}, callback); 
+}
+//delete user by flag
+module.exports.resetStatus = function(id,options,callback){
+    quary = {_id:id};
+    var update = { status: 'Deleted'}
+    User.findOneAndUpdate(quary, update, options, callback);  
+}
+//reset password
+module.exports.resetPassword = function(userName,options,callback){
+    quary = {userName:userName};
+    bcrypt.genSalt(10, function (err, salt) {
+        if (err) {
+            throw err;
+        }
+        bcrypt.hash(userName, salt, function (err, hash) {
+            if (err) {
+                throw err;
+            }
+            pw = hash;
+            var update = { password: pw}
+            User.findOneAndUpdate(quary, update, options, callback);
+        });
+    });    
+}
+//change password
+module.exports.changePassword = function(userName, pw, callback){
+    quary = { userName:userName };
+    bcrypt.genSalt(10, function (err, salt) {
+        if (err) {
+            throw err;
+        }
+        bcrypt.hash(pw, salt, function (err, hash) {
+            if (err) {
+                throw err;
+            }
+            hpw = hash;
+            var update = { password: hpw}
+            User.findOneAndUpdate(quary, update, callback);
+        });
+    }); 
+}
 
 UserSchema.pre('save', function (next) {
     var user = this;
@@ -45,7 +127,6 @@ UserSchema.pre('save', function (next) {
         return next();
     }
 });
- 
 UserSchema.methods.comparePassword = function (passw, cb) {
     bcrypt.compare(passw, this.password, function (err, isMatch) {
         if (err) {
@@ -56,66 +137,6 @@ UserSchema.methods.comparePassword = function (passw, cb) {
     });
 };
 
-//Get User
-module.exports.getUsers = function(callback, limit){
-	User.find(callback).limit(limit);
-}
 
-//Get User 
-module.exports.getUser = function(_id, callback){
-	User.findById(_id, callback);
-}
 
-//Add User
-module.exports.createUser = function(user, callback){
-	user.save(callback);
-}
 
-//find user by name
-module.exports.findUserByName = function(userName, callback){
-    quary = {name:userName}
-    User.find(quary, callback); 
-}
-
-//delete user by flag
-module.exports.deleteUser = function(id, options, callback){
-    quary = {_id:id}
-    var update = { status:"Deleted" }
-    User.findByIdAndUpdate(quary,update, options, callback);
-}
-
-//reset password
-module.exports.resetPassword = function(userName,options,callback){
-    quary = {name:userName};
-    bcrypt.genSalt(10, function (err, salt) {
-        if (err) {
-            throw err;
-        }
-        bcrypt.hash(userName, salt, function (err, hash) {
-            if (err) {
-                throw err;
-            }
-            pw = hash;
-            var update = { password: pw}
-            User.findOneAndUpdate(quary, update, options, callback);
-        });
-    });    
-}
-
-//change password
-module.exports.changePassword = function(userName, pass, callback){
-    quary = { name:userName };
-    bcrypt.genSalt(10, function (err, salt) {
-        if (err) {
-            throw err;
-        }
-        bcrypt.hash(pass, salt, function (err, hash) {
-            if (err) {
-                throw err;
-            }
-            pw = hash;
-            var update = { password: pw}
-            User.findOneAndUpdate(quary, update, callback);
-        });
-    }); 
-}
