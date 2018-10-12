@@ -1,4 +1,5 @@
 var Vehicle = require('../models/vehicle');
+var TrackingData = require('./trackingContoller');
 
 var vehicle = {
     addVehicle: function(req, res){
@@ -40,6 +41,16 @@ var vehicle = {
                 res.json({success: false, msg: err});
             }
             res.json({success: true, msg: resVeh});
+        })
+    },
+    addTrackingData: function(imeiNumber, rawData, res){
+        newTrackingData = TrackingData.splitData(rawData);
+        Vehicle.addNewTrackingData({ imeiNumber: imeiNumber }, { $push: { trackingData: newTrackingData } }, function (err) {
+            if (err) {
+                res.json({ success: false, message: "error" });
+            } else {
+                res.json({ success: true, message: "successfully added new tracking data" });
+            }
         })
     }
 } 
