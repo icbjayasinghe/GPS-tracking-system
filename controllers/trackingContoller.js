@@ -53,6 +53,11 @@ var TrackingData = {
             }
         });  
         return newTackingData;
+    },
+
+    getNoOfData:function(d){
+        data = hexToDec(d.substring(19,20));
+        return data;
     }
 }
 
