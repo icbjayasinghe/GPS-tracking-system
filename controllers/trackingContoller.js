@@ -41,7 +41,7 @@ var TrackingData = {
                 return cb(null, sattelites);
             },
             function speed(cb) {
-                var speed = hexToDec(testData.substring(64,78));
+                var speed = hexToDec(testData.substring(64,68));
                 newTackingData.speed=speed;
                 return cb(null, speed);
             } 
