@@ -21,12 +21,10 @@ router.post('/login', auth.login);
 //vehicle related routes done
 router.post('/api/vehicle',vehicle.addVehicle);
 router.get('/api/vehicle',vehicle.viewAllVehicles);
-router.get('/api/vehicle/:userName',vehicle.viewUserVehicles);
 router.get('/api/vehicle/:vehicleNumber',vehicle.searchVehicle);
-router.put('/api/vehicle/:vehicleNumber',vehicle.vehicleUpdate);
 router.delete('/api/vehicle/:vehicleNumber',vehicle.vehicleDelete);
-
-//does not work
 router.put('/api/vehicle/addTrackingData/:imeiNumber',vehicle.addTrackingData);
+router.get('/api/vehicle/:userId',vehicle.viewUserVehicles);
+router.get('/api/vehicle/checkImei/:imeiNumber',vehicle.checkImeiNumber);
 
 module.exports = router;
