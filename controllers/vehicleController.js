@@ -18,21 +18,21 @@ var vehicle = {
             res.json({success:true,vehicle:vehicleRes});
         })
     },
+    viewUserVehicles: function(req, res){
+        var userId = req.params.userId;
+        Vehicle.userVehicles(userId,function(err, vehicleRes){
+            if (err){
+                res.json({success: false, msg: err});
+            }
+            res.json(vehicleRes)
+        });
+    },
     viewAllVehicles: function(req, res){
         Vehicle.viewVehicles(function(err,vehi){
             if(err){
                 res.json({success: false, msg: err});
             }
             res.json(vehi)
-        });
-    },
-    viewUserVehicles: function(req, res){
-        var userName = req.params.userName;
-        Vehicle.userVehicles(userName,function(err, vehicleRes){
-            if (err){
-                res.json({success: false, msg: err});
-            }
-            res.json(vehicleRes)
         });
     },
     searchVehicle: function(req, res){
@@ -73,6 +73,17 @@ var vehicle = {
                 res.json({ success: false, message: "error" });
             } else {
                 res.json({ success: true, message: "successfully added new tracking data" });
+            }
+        })
+    },    
+    checkImeiNumber : function(req, res){
+        var imeiNumber = req.params.imeiNumber;
+        //console.log(imeiNumber);
+        Vehicle.checkImei(imeiNumber, function (err){
+            if (err) {
+                res.json(false);
+            } else {
+                res.json(true);
             }
         })
     }

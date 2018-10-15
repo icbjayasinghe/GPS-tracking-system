@@ -37,23 +37,25 @@ module.exports.addVehicle = function(vehicle,callback){
 module.exports.viewVehicles = function(callback, limit){ 
     Vehicle.find(callback).limit(limit);
 }
-//userVehicles
-module.exports.userVehicles = function(userName,callback,limit){
-    var quary = {userName: userName};
-    Vehicle.find(quary,callback).limit(limit);
-}
 module.exports.findVehicle =function(vehicleNumber, callback){
     var vehicleNumber = vehicleNumber;
     Vehicle.find({'vehicleNumber' : new RegExp(vehicleNumber, 'i')},callback);
 }
 //update vehicle
 module.exports.updateVehicle = function(vehicleNumber, vehicle, options, callback){
-    var quary = {vehicleNumber: vehicleNumber};
-    var update = {vehicleDetails: vehicle}
-    Vehicle.findOneAndUpdate(quary,update, options, callback);
+    Vehicle.findOneAndUpdate({vehicleNumber: vehicleNumber},{vehicleDetails: vehicle}, options, callback);
+}
+//vehicles by user
+module.exports.userVehicles = function(userId, callback){
+    Vehicle.find({userId:userId},callback);
 }
 //delete vehicle
 module.exports.deleteVehicle = function(vehicleNumber, callback){
-    var quary = {vehicleNumber: vehicleNumber};
-    Vehicle.findOneAndDelete(quary, callback);
+    Vehicle.findOneAndDelete({vehicleNumber: vehicleNumber}, callback);
+}
+//check imei
+module.exports.checkImei = function(imeiNumber,callback){
+    console.log('hi '+imeiNumber);
+
+    Vehicle.find({imeiNumber:imeiNumber},callback);
 }
