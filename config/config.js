@@ -1,4 +1,4 @@
 module.exports = {
     'secret': 'devdacticIsAwesome',
-    'database': 'mongodb://localhost/GPStracking'
+    'database': 'mongodb://localhost/gps_tracking_system_db'
   };

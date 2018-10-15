@@ -1,25 +1,59 @@
+var async = require('async');
 var hexToDec = require('hex-to-dec');
-var rawData = "080400000113fc208dff000f14f650209cca80006f00d6040004000403010115031603000 1460000015d0000000113fc17610b000f14ffe0209cc580006e00c0050001000403010115 0316010001460000015e0000000113fc284945000f150f00209cd20000950108040000000 4030101150016030001460000015d0000000113fc267c5b000f150a50209cccc000930068 0400000004030101150016030001460000015b0004";    
-var fullDataSplit = {
-    timeStamp: function(){
-        dateData =rawData.substring(9,20);
-        dateDec = hexToDec(data);
-        var date = new Date(dateDec);
-        return date;
-    },
-    longitude: function(){
-        longitudeData = rawData.substring(22,30);
-        longi = hexToDec(longitudeData);
-        longiValue=longi/10000000;
-        return longiValue;
-    },
-    // latitude: function(){
-    //     longitudeData = rawData.substring(22,30);
-    //     longi = hexToDec(latitudeData);
-    //     longiValue=longi/10000000;
-    //     return longiValue;
-    // }
 
+var TrackingData = {   
+    splitData : function (req, res, next) {
+        var testData = req;
+        let newTackingData = {};
+        //console.log("test:  " + testData);
+        const tasks = [
+            function time(cb) {
+                dateDec = hexToDec(testData.substring(25,36));
+                var date = new Date(dateDec);
+                newTackingData.date = date;
+                return cb(null, date);
+            },
+            function longitude(cb) {
+                longi = hexToDec(testData.substring(38,46));
+                var longitude = longi/10000000;
+                newTackingData.longitude=longitude;
+                return cb(null, longitude);
+            },
+            function latitude(cb) {
+                lati = hexToDec(testData.substring(46,54));
+                var latitude = lati/10000000;
+                newTackingData.latitude = latitude;
+                return cb(null, latitude);
+            },
+            function altitude(cb) {
+                var altitude = hexToDec(testData.substring(54,58));
+                newTackingData.altitude = altitude;
+                return cb(null, altitude);
+            },
+            function angle(cb) {
+                var angle = hexToDec(testData.substring(58,62));
+                newTackingData.angle = angle;
+                return cb(null, angle);
+            },
+            function sattelites(cb) {
+                var sattelites = hexToDec(testData.substring(62,64));
+                newTackingData.sattelites=sattelites;
+                return cb(null, sattelites);
+            },
+            function speed(cb) {
+                var speed = hexToDec(testData.substring(64,78));
+                newTackingData.speed=speed;
+                return cb(null, speed);
+            } 
+        ];
+
+        async.series(tasks, (err, results) => {
+            if (err) {
+                console.log(err);
+            }
+        });  
+        return newTackingData;
+    }
 }
-module.exports = fullDataSplit;
-    
+
+module.exports = TrackingData;
