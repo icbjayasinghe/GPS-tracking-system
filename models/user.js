@@ -36,10 +36,22 @@ var UserSchema = mongoose.Schema({
         default: ['user']
     },
     location:[{
-        name: String,
-        type: String,
-        latitude: String,
-        longitude: String
+        name: {
+            type: String,
+            required: true
+        },
+        type: {
+            type: String,
+            required: true
+        },
+        latitude: {
+            type: String,
+            required: true
+        },
+        longitude: {
+            type: String,
+            required: true
+        }
     }],
     status:{
         type: String,
@@ -66,8 +78,8 @@ module.exports.findUserByName = function(userName, callback){
     User.find({userName:userName}, callback); 
 }
 //delete user by flag
-module.exports.resetStatus = function(id,options,callback){
-    quary = {_id:id};
+module.exports.resetStatus = function(userName,options,callback){
+    quary = {userName:userName};
     var update = { status: 'Deleted'}
     User.findOneAndUpdate(quary, update, options, callback);  
 }
@@ -104,6 +116,11 @@ module.exports.changePassword = function(userName, pw, callback){
             User.findOneAndUpdate(quary, update, callback);
         });
     }); 
+}
+//view location
+module.exports.viewAllLocation = function(userName, callback){
+    quary = { userName:userName};
+    User.findOne(quary,{ location: 1 }, callback);
 }
 
 UserSchema.pre('save', function (next) {
