@@ -59,6 +59,38 @@ var UserSchema = mongoose.Schema({
     }
 });
 
+UserSchema.pre('save', function (next) {
+    var user = this;
+    if (this.isModified('password') || this.isNew) {
+        bcrypt.genSalt(10, function (err, salt) {
+            if (err) {
+                return next(err);
+            }
+            bcrypt.hash(user.password, salt, function (err, hash) {
+                if (err) {
+                    return next(err);
+                }
+                user.password = hash;
+                console.log('all hash done');
+                next();
+            });
+        });
+    } 
+    else {
+        return next();
+    }
+});
+
+UserSchema.methods.comparePassword = function (passw, cb) {
+    bcrypt.compare(passw, this.password, function (err, isMatch) {
+        if (err) {
+            return cb(err);
+        }
+        //give it to callback function of cb(in server.js)
+        cb(null, isMatch);
+    });
+};
+
 var User = module.exports = mongoose.model('User',UserSchema);
 
 //Add User
@@ -123,36 +155,8 @@ module.exports.viewAllLocation = function(userName, callback){
     User.findOne(quary,{ location: 1 }, callback);
 }
 
-UserSchema.pre('save', function (next) {
-    var user = this;
-    if (this.isModified('password') || this.isNew) {
-        bcrypt.genSalt(10, function (err, salt) {
-            if (err) {
-                return next(err);
-            }
-            bcrypt.hash(user.password, salt, function (err, hash) {
-                if (err) {
-                    return next(err);
-                }
-                user.password = hash;
-                console.log('all hash done');
-                next();
-            });
-        });
-    } 
-    else {
-        return next();
-    }
-});
-UserSchema.methods.comparePassword = function (passw, cb) {
-    bcrypt.compare(passw, this.password, function (err, isMatch) {
-        if (err) {
-            return cb(err);
-        }
-        //give it to callback function of cb(in server.js)
-        cb(null, isMatch);
-    });
-};
+
+
 
 
 

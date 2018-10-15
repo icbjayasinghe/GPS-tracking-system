@@ -4,9 +4,9 @@ var config = require('../config/config');
 
 var auth = {
   login: function(req, res) {   
-    var username = req.body.username || '';
+    var userName = req.body.userName || '';
     var password = req.body.password || '';
-    if (username == '' || password == '') {
+    if (userName == '' || password == '') {
       res.status(401);
       res.json({
         "status": 401,
@@ -15,7 +15,7 @@ var auth = {
     return;
   }
   // Fire a query to your DB and check if the credentials are valid
-  var dbUserObj = auth.validate(username, password, function(user, tokenDetail){
+  var dbUserObj = auth.validate(userName, password, function(user, tokenDetail){
     if(!user) {
       res.send({success: false, msg: 'Authentication failed. user is not found.'});
     }
@@ -28,28 +28,28 @@ var auth = {
   });
 },
    
-validate: function(username, password, cb) {
-  User.findOne({name: username}, function(err, user) {
+validate: function(userName, password, cb) {
+  User.findOne({userName: userName}, {userName:1, password:1, status:1, role:1}, function(err, user) {
     if (err) throw err;
-      if (!user) {
-        cb(null, null);
-      } 
-      else {
-        // check if password matches
-        user.comparePassword(password, function (err, isMatch) {
-            if (isMatch && !err) {
-              cb(user, genToken(user.name));
-            } 
-            else {
-              cb(user, null);
-            }
-        });
-      }
+    if (!user) {
+      cb(null, null);
+    }
+    else {
+      // check if password matches
+      user.comparePassword(password, function (err, isMatch) {  
+        if (isMatch && !err) {
+          cb(user, genToken(user.userName));
+        } 
+        else {
+          cb(user, null);
+        }
+      });
+    }
   });
 },
 
-validateUser: function(username) {
-  User.findOne({name: req.body.name}, function(err, user) {
+validateUser: function(userName) {
+  User.findOne({userName: req.body.name}, function(err, user) {
     if(err) throw err;
       if(!user) {
         return null;
@@ -60,11 +60,11 @@ validateUser: function(username) {
 }
    
 // private method
-function genToken(username) {
+function genToken(userName) {
   var expires = expiresIn(7); // 7 days
   var token = jwt.encode({
     exp: expires,
-    username: username
+    userName: userName
   }, config.secret);
   return {
     token: token,
