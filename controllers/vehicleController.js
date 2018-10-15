@@ -7,7 +7,7 @@ var vehicle = {
             vehicleNumber: req.body.vehicleNumber,
             imeiNumber: req.body.imeiNumber,
             userId: req.body.userId,
-            userName: userName,
+            userName: req.body.userName,
             vehicleDetails: req.body.details,
             trackingData: [],
         });
