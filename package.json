@@ -23,6 +23,8 @@
     "hex-to-dec": "^1.0.1",
     "jwt-simple": "^0.5.1",
     "mongoose": "^5.2.15",
-    "nodemon": "^1.18.4"
+    "nodemon": "^1.18.4",
+    "socket.io": "^2.1.1",
+    "websocket": "^1.0.28"
   }
 }
