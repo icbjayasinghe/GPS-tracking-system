@@ -35,10 +35,10 @@ var TrackingData = {
                 newTackingData.angle = angle;
                 return cb(null, angle);
             },
-            function sattelites(cb) {
-                var sattelites = hexToDec(testData.substring(62,64));
-                newTackingData.sattelites=sattelites;
-                return cb(null, sattelites);
+            function satelites(cb) {
+                var satelites = hexToDec(testData.substring(62,64));
+                newTackingData.satelites=satelites;
+                return cb(null, satelites);
             },
             function speed(cb) {
                 var speed = hexToDec(testData.substring(64,68));

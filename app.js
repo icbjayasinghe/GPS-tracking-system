@@ -6,6 +6,7 @@ var session = require('express-session');
 var fullDataSplit = require('./controllers/trackingContoller');
 const net = require('net');
 var http = require('http');
+var tracking = require('./controllers/vehicleController')
 
 
 const app = express();
@@ -55,9 +56,7 @@ server.on("connection", function(socket){
         }
         else {
             //console.log(d.length);
-            //console.log(d.toString("hex"));
-           
-            
+            //console.log(d.toString("hex"));            
             console.log(fullDataSplit.splitData(d.toString("hex")));
             console.log(fullDataSplit.getNoOfData(d.toString("hex")));
             var noOfData =fullDataSplit.getNoOfData(d.toString("hex"));
@@ -65,10 +64,7 @@ server.on("connection", function(socket){
             buf.writeInt32BE(noOfData);
             socket.write(buf);
             //console.log("${noOfData}");
-
         }
-      
-      
     });
   
     socket.once("close", function(){
