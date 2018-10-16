@@ -5,7 +5,6 @@ var TrackingData = {
     splitData : function (req, res, next) {
         var testData = req;
         let newTackingData = {};
-        //console.log("test:  " + testData);
         const tasks = [
             function time(cb) {
                 dateDec = hexToDec(testData.substring(25,36));

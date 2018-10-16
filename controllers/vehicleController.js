@@ -64,13 +64,10 @@ var vehicle = {
         })
     },
     addTrackingData: function(req){
-        //console.log(req.imeiNumber);
         var imeiNumber = String(req.imeiNumber);
         var rawData = req.data;
         var newTrackingData = TrackingData.splitData(rawData);
-        console.log(newTrackingData);
         Vehicle.checkImei(imeiNumber,function(err, vehicleRes){
-            console.log(vehicleRes);
             if(err){
                 res.json({success: false, msg: err});
             }
@@ -90,14 +87,11 @@ var vehicle = {
     },    
     checkImeiNumber : function(req, res){
         var imeiNumber = req.params.imeiNumber;
-        //console.log(imeiNumber);
         Vehicle.checkImei(imeiNumber,function(err, vehicleRes){
-            console.log(vehicleRes);
             if(err){
                 res.json({success: false, msg: err});
             }
             if (!vehicleRes){
-                //console.log(vehicleRes.vehicleNumber);
                 res.json(false);
             }
             else{
