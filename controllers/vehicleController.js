@@ -80,22 +80,22 @@ var vehicle = {
             }
         })
     },    
-    checkImeiNumber : function(req, res){
-        var imeiNumber = req.params.imeiNumber;
+    checkImeiNumber : function(imei,res){
+        var imeiNumber =imei;
+        //var ret;
         //console.log(imeiNumber);
-        Vehicle.checkImei(imeiNumber,function(err, vehicleRes){
-            console.log(vehicleRes);
-            if(err){
-                res.json({success: false, msg: err});
-            }
-            if (!vehicleRes){
-                //console.log(vehicleRes.vehicleNumber);
-                res.json(false);
+        Vehicle.checkImei(imeiNumber,function(err,data){
+            if(!err){
+                //console.log(res);
+                //callback(null, res);
+                //return ({success: true, msg: data});
+                //var myFalse = new Boolean(true);
+                return (0<1);
             }
             else{
-                res.json(true);
+                return ({success: false, msg: err});
             }
-        })
+        });
     }
 }
 module.exports = vehicle;
