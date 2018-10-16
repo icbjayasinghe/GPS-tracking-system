@@ -79,10 +79,16 @@ var vehicle = {
     checkImeiNumber : function(req, res){
         var imeiNumber = req.params.imeiNumber;
         //console.log(imeiNumber);
-        Vehicle.checkImei(imeiNumber, function (err){
-            if (err) {
+        Vehicle.checkImei(imeiNumber,function(err, vehicleRes){
+            console.log(vehicleRes);
+            if(err){
+                res.json({success: false, msg: err});
+            }
+            if (!vehicleRes){
+                //console.log(vehicleRes.vehicleNumber);
                 res.json(false);
-            } else {
+            }
+            else{
                 res.json(true);
             }
         })
