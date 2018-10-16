@@ -40,6 +40,7 @@ app.get('/',function(req,res){
 
 //socket setup
 var server = net.createServer();
+var IMIE;
 server.on("connection", function(socket){
     var remoteAddress = socket.remoteAddress +":"+ socket.remotePort;
     console.log("New client connection made %s ", remoteAddress);
@@ -49,12 +50,20 @@ server.on("connection", function(socket){
         //console.log(size)
         if(size==17){
             console.log("IMIE : %s  ",d );
+            IMIE = d.toString();
+            //console.log(IMIE);
             socket.write("");
         }
-        else{
+        else {
             //console.log(d.length);
-            //console.log(d.toString("hex"));
+            //console.log(d.toString("hex"));            
             console.log(fullDataSplit.splitData(d.toString("hex")));
+            console.log(fullDataSplit.getNoOfData(d.toString("hex")));
+            var noOfData =fullDataSplit.getNoOfData(d.toString("hex"));
+            var buf = new Buffer(4);
+            buf.writeInt32BE(noOfData);
+            socket.write(buf);
+            //console.log("${noOfData}");
         }
     });
   
