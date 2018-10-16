@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var config = require('./config/config');
 var session = require('express-session');
 var fullDataSplit = require('./controllers/trackingContoller');
+var addTracking = require('./controllers/vehicleController');
 const net = require('net');
 var http = require('http');
 var tracking = require('./controllers/vehicleController')
@@ -63,6 +64,19 @@ server.on("connection", function(socket){
             var buf = new Buffer(4);
             buf.writeInt32BE(noOfData);
             socket.write(buf);
+            console.log(IMIE);
+            
+
+            //data obj
+            var dataObj = { 
+                imeiNumber:IMIE,
+                data:d.toString("hex")
+            } 
+
+            //data to database
+            
+            //addTracking.addTrackingData(dataObj);
+
             //console.log("${noOfData}");
         }
     });
