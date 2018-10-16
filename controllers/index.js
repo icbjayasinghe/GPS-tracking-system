@@ -23,7 +23,7 @@ router.post('/api/vehicle',vehicle.addVehicle);
 router.get('/api/vehicle',vehicle.viewAllVehicles);
 router.get('/api/vehicle/:vehicleNumber',vehicle.searchVehicle);
 router.delete('/api/vehicle/:vehicleNumber',vehicle.vehicleDelete);
-router.put('/api/vehicle/addTrackingData/:imeiNumber',vehicle.addTrackingData);
+router.put('/api/vehicle/addTrackingData/',vehicle.addTrackingData);
 router.get('/api/vehicle/:userId',vehicle.viewUserVehicles);
 router.get('/api/vehicle/checkImei/:imeiNumber',vehicle.checkImeiNumber);
 
