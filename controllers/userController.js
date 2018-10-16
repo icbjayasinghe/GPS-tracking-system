@@ -2,7 +2,6 @@ var User  = require('../models/user.js');
 
 var user = {
   addUser: function(req, res) {
-    console.log('hi');
     var newUser = new User({
       fullName: req.body.fullName,
       address: req.body.address,
@@ -14,7 +13,6 @@ var user = {
       location: [],
       status:"Active"
     });
-    console.log(newUser);
     User.createUser(newUser, function(err,userRes){
       if (err){
         res.json({success: false, msg: err});
@@ -84,7 +82,6 @@ var user = {
       latitude:req.body.latitude,
       longitude:req.body.longitude
     };
-    console.log(location);
     User.updateMany({'userName': userName}, {'$push': { location : location }}, function (err) {
       if (err) {
           throw err;
