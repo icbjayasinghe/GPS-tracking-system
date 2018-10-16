@@ -6,6 +6,7 @@ var session = require('express-session');
 var fullDataSplit = require('./controllers/trackingContoller');
 const net = require('net');
 var http = require('http');
+var tracking = require('./controllers/vehicleController')
 
 
 const app = express();
@@ -54,10 +55,7 @@ server.on("connection", function(socket){
             //console.log(d.length);
             //console.log(d.toString("hex"));
             console.log(fullDataSplit.splitData(d.toString("hex")));
-
         }
-      
-      
     });
   
     socket.once("close", function(){
