@@ -68,13 +68,25 @@ var vehicle = {
         var rawData = req.body.data;
         var newTrackingData = TrackingData.splitData(rawData);
         console.log(newTrackingData);
-        Vehicle.updateMany({'imeiNumber': imeiNumber}, {'$push': { trackingData : newTrackingData}}, function (err){
-            if (err) {
-                res.json({ success: false, message: "error" });
-            } else {
-                res.json({ success: true, message: "successfully added new tracking data" });
+        Vehicle.checkImei(imeiNumber,function(err, vehicleRes){
+            console.log(vehicleRes);
+            if(err){
+                res.json({success: false, msg: err});
+            }
+            if (!vehicleRes){
+                res.json({success: false, msg: "wrong imei"});
+            }
+            else{
+                Vehicle.updateMany({'imeiNumber': imeiNumber}, {'$push': { trackingData : newTrackingData}}, function (err){
+                    if (err) {
+                        res.json({ success: false, message: "error" });
+                    } else {
+                        res.json({ success: true, message: "successfully added new tracking data" });
+                    }
+                });
             }
         })
+        
     },    
     checkImeiNumber : function(req, res){
         var imeiNumber = req.params.imeiNumber;

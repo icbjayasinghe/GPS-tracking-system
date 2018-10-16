@@ -26,5 +26,6 @@ router.delete('/api/vehicle/:vehicleNumber',vehicle.vehicleDelete);
 router.put('/api/vehicle/addTrackingData/:imeiNumber',vehicle.addTrackingData);
 router.get('/api/vehicle/:userId',vehicle.viewUserVehicles);
 router.get('/api/vehicle/checkImei/:imeiNumber',vehicle.checkImeiNumber);
+router.get('/api/user/trackingData/:userName', user.viewLocation);
 
 module.exports = router;
