@@ -22,11 +22,14 @@ router.post('/login', auth.login);
 router.post('/api/vehicle',vehicle.addVehicle);
 router.get('/api/vehicle',vehicle.viewAllVehicles);
 router.get('/api/vehicle/:vehicleNumber',vehicle.searchVehicle);
-router.delete('/api/vehicle/:vehicleNumber',vehicle.vehicleDelete);
-router.put('/api/vehicle/addTrackingData/',vehicle.addTrackingData);
 router.get('/api/vehicle/:userId',vehicle.viewUserVehicles);
+router.put('/api/vehicle/:vehicleNumber',vehicle.vehicleUpdate);
+router.delete('/api/vehicle/:vehicleNumber',vehicle.vehicleDelete);
+
+//Tracking data
 router.get('/api/vehicle/checkImei/:imeiNumber',vehicle.checkImeiNumber);
-router.get('/api/user/trackingData/:userName', user.viewLocation);
 router.get('/sort/:imeiNumber',vehicle.sortByDate);
+router.put('/api/vehicle/trackingData/',vehicle.addTrackingData);
+router.get('/api/vehicle/trackingData/:imeiNumber', vehicle.viewPath);
 
 module.exports = router;
