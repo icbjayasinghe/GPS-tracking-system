@@ -67,3 +67,7 @@ module.exports.checkImei = function(imeiNumber,callback){
         }
     });
 }
+//view tracking data of a vehicle
+module.exports.checkPath = function(imeiNumber,callback){
+    Vehicle.findOne({imeiNumber:imeiNumber},{trackingData:1},callback);
+}

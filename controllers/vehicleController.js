@@ -18,15 +18,6 @@ var vehicle = {
             res.json({success:true,vehicle:vehicleRes});
         })
     },
-    viewUserVehicles: function(req, res){
-        var userId = req.params.userId;
-        Vehicle.userVehicles(userId,function(err, vehicleRes){
-            if (err){
-                res.json({success: false, msg: err});
-            }
-            res.json(vehicleRes)
-        });
-    },
     viewAllVehicles: function(req, res){
         Vehicle.viewVehicles(function(err,vehi){
             if(err){
@@ -44,6 +35,15 @@ var vehicle = {
             res.json(vehicleRes);
         })
     },
+    viewUserVehicles: function(req, res){
+        var userId = req.params.userId;
+        Vehicle.userVehicles(userId,function(err, vehicleRes){
+            if (err){
+                res.json({success: false, msg: err});
+            }
+            res.json(vehicleRes)
+        });
+    },  
     vehicleUpdate: function(req, res){
         var vehicleNumber = req.params.vehicleNumber;
         var vehicle = req.body.vehicleDetails;
@@ -97,7 +97,19 @@ var vehicle = {
             else{
                 return ({success: false, msg: err});
             }
-        });
+        })
+    },
+    viewPath : function(req,res){
+        var imeiNumber = req.params.imeiNumber;
+        Vehicle.checkPath(imeiNumber,function(err,trackingRes){
+            if (err){
+                res.json({success: false, msg: err});
+            }
+            else{
+                res.json({success: true, msg: trackingRes});
+
+            }
+        })
     }
 }
 module.exports = vehicle;
