@@ -110,8 +110,6 @@ var vehicle = {
                 res.json(vehicleRes);
             }
         });
-
-        })
     },
     viewPath : function(req,res){
         var imeiNumber = req.params.imeiNumber;
@@ -123,8 +121,7 @@ var vehicle = {
                 res.json({success: true, msg: trackingRes});
 
             }
-        })
-
+        });
     }
 }
 module.exports = vehicle;
