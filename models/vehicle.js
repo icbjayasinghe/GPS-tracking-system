@@ -55,7 +55,17 @@ module.exports.deleteVehicle = function(vehicleNumber, callback){
 }
 //check imei
 module.exports.checkImei = function(imeiNumber,callback){
-    Vehicle.findOne({imeiNumber:imeiNumber},{vehicleNumber:1},callback);
+    Vehicle.findOne({imeiNumber:imeiNumber},{vehicleNumber:1},function(err,vehicleRes){
+        if(err){
+            return callback(err,false);
+        }
+        if (!vehicleRes){
+            return callback(null,false);
+        }
+        else{
+            return callback(null,true);
+        }
+    });
 }
 //view tracking data of a vehicle
 module.exports.checkPath = function(imeiNumber,callback){

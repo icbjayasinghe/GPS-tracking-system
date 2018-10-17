@@ -69,17 +69,17 @@ var vehicle = {
         var newTrackingData = TrackingData.splitData(rawData);
         Vehicle.checkImei(imeiNumber,function(err, vehicleRes){
             if(err){
-                res.json({success: false, msg: err});
+                console.log({success: false, msg: err});
             }
             if (!vehicleRes){
-                res.json({success: false, msg: "wrong imei"});
+                console.log({success: false, msg: "wrong imei"});
             }
             else{
                 Vehicle.updateMany({'imeiNumber': imeiNumber}, {'$push': { trackingData : newTrackingData}}, function (err){
                     if (err) {
-                        res.json({ success: false, message: "error" });
+                        console.log({ success: false, message: "error" });
                     } else {
-                        res.json({ success: true, message: "successfully added new tracking data" });
+                        console.log({ success: true, message: "successfully added new tracking data" });
                     }
                 });
             }
@@ -95,7 +95,7 @@ var vehicle = {
                 res.json(false);
             }
             else{
-                res.json(true);
+                return ({success: false, msg: err});
             }
         })
     },
@@ -110,7 +110,6 @@ var vehicle = {
 
             }
         })
-
     }
 }
 module.exports = vehicle;
