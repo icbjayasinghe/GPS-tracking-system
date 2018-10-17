@@ -8,12 +8,8 @@ var addTracking = require('./controllers/vehicleController');
 const net = require('net');
 var http = require('http');
 var Vehicle = require('./models/vehicle');
-//var tracking = require('./controllers/vehicleController');
-//var hexToDec = require('hex-to-dec');
-//var TrackingData = require('./trackingContoller');
-
-
 const app = express();
+
 mongoose.connect(config.database,{useNewUrlParser:true});
 var db = mongoose.connection;
 
@@ -51,31 +47,25 @@ server.on("connection", function(socket){
   
     socket.on("data", function(d){
         var size= d.length.valueOf();
-        //console.log(size)
         if(size==17){
             console.log("IMIE : %s  ",d );
             IMIE = d.toString().substring(2,17);
             Vehicle.checkImei(IMIE,function(err,data){
                 if(!err){
                     socket.write("");
-                    console.log("works");
                 }
                 else{
-                    return ({success: false, msg: err});
+                    console.log({success: false, msg: err});
                 }
             });
         }
-        else {
-            //console.log(d.length);
-            //console.log(d.toString("hex"));            
+        else {          
             console.log(fullDataSplit.splitData(d.toString("hex")));
             console.log(fullDataSplit.getNoOfData(d.toString("hex")));
             var noOfData =fullDataSplit.getNoOfData(d.toString("hex"));
             var buf = new Buffer(4);
             buf.writeInt32BE(noOfData);
             socket.write(buf);
-            //console.log(IMIE);
-            
 
             //data obj
             var dataObj = { 
@@ -84,10 +74,7 @@ server.on("connection", function(socket){
             } 
 
             //data to database
-            
             addTracking.addTrackingData(dataObj);
-
-            //console.log("${noOfData}");
         }
     });
   
