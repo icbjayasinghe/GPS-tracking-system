@@ -55,10 +55,8 @@ module.exports.deleteVehicle = function(vehicleNumber, callback){
 }
 //check imei
 module.exports.checkImei = function(imeiNumber,callback){
-    //console.log('hi '+imeiNumber);
     Vehicle.findOne({imeiNumber:imeiNumber},{vehicleNumber:1},function(err,vehicleRes){
         if(err){
-            //console.log({success: false, msg: err});
             return callback(err,false);
         }
         if (!vehicleRes){
