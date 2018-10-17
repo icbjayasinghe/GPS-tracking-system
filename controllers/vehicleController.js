@@ -85,19 +85,6 @@ var vehicle = {
             }
         })
     },    
-<<<<<<< HEAD
-    checkImeiNumber : function(imei,res){
-        var imeiNumber =imei;
-        //var ret;
-        //console.log(imeiNumber);
-        Vehicle.checkImei(imeiNumber,function(err,data){
-            if(!err){
-                //console.log(res);
-                //callback(null, res);
-                //return ({success: true, msg: data});
-                //var myFalse = new Boolean(true);
-                return (0<1);
-=======
     checkImeiNumber : function(req, res){
         var imeiNumber = req.params.imeiNumber;
         Vehicle.checkImei(imeiNumber,function(err, vehicleRes){
@@ -106,7 +93,6 @@ var vehicle = {
             }
             if (!vehicleRes){
                 res.json(false);
->>>>>>> 109076e33579a39764aec0ce71f6a4000eb50eed
             }
             else{
                 return ({success: false, msg: err});
