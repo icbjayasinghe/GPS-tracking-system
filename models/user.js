@@ -36,16 +36,64 @@ var UserSchema = mongoose.Schema({
         default: ['user']
     },
     location:[{
-        name: String,
-        type: String,
-        latitude: String,
-        longitude: String
+        name: {
+            type: String,
+            required: true
+        },
+        type: {
+            type: String,
+            required: true
+        },
+        latitude: {
+            type: String,
+            required: true
+        },
+        longitude: {
+            type: String,
+            required: true
+        },
+        range:{
+            type: String,
+            require: true
+        }
     }],
     status:{
         type: String,
 		require: true
     }
 });
+
+UserSchema.pre('save', function (next) {
+    var user = this;
+    if (this.isModified('password') || this.isNew) {
+        bcrypt.genSalt(10, function (err, salt) {
+            if (err) {
+                return next(err);
+            }
+            bcrypt.hash(user.password, salt, function (err, hash) {
+                if (err) {
+                    return next(err);
+                }
+                user.password = hash;
+                console.log('all hash done');
+                next();
+            });
+        });
+    } 
+    else {
+        return next();
+    }
+});
+
+UserSchema.methods.comparePassword = function (passw, cb) {
+    bcrypt.compare(passw, this.password, function (err, isMatch) {
+        if (err) {
+            return cb(err);
+        }
+        //give it to callback function of cb(in server.js)
+        cb(null, isMatch);
+    });
+};
 
 var User = module.exports = mongoose.model('User',UserSchema);
 
@@ -66,8 +114,8 @@ module.exports.findUserByName = function(userName, callback){
     User.find({userName:userName}, callback); 
 }
 //delete user by flag
-module.exports.resetStatus = function(id,options,callback){
-    quary = {_id:id};
+module.exports.resetStatus = function(userName,options,callback){
+    quary = {userName:userName};
     var update = { status: 'Deleted'}
     User.findOneAndUpdate(quary, update, options, callback);  
 }
@@ -105,37 +153,14 @@ module.exports.changePassword = function(userName, pw, callback){
         });
     }); 
 }
+//view location
+module.exports.viewAllLocation = function(userName, callback){
+    quary = { userName:userName};
+    User.findOne(quary,{ location: 1 }, callback);
+}
 
-UserSchema.pre('save', function (next) {
-    var user = this;
-    if (this.isModified('password') || this.isNew) {
-        bcrypt.genSalt(10, function (err, salt) {
-            if (err) {
-                return next(err);
-            }
-            bcrypt.hash(user.password, salt, function (err, hash) {
-                if (err) {
-                    return next(err);
-                }
-                user.password = hash;
-                console.log('all hash done');
-                next();
-            });
-        });
-    } 
-    else {
-        return next();
-    }
-});
-UserSchema.methods.comparePassword = function (passw, cb) {
-    bcrypt.compare(passw, this.password, function (err, isMatch) {
-        if (err) {
-            return cb(err);
-        }
-        //give it to callback function of cb(in server.js)
-        cb(null, isMatch);
-    });
-};
+
+
 
 
 
