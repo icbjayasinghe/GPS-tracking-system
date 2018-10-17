@@ -7,7 +7,10 @@ var fullDataSplit = require('./controllers/trackingContoller');
 var addTracking = require('./controllers/vehicleController');
 const net = require('net');
 var http = require('http');
-var tracking = require('./controllers/vehicleController')
+var Vehicle = require('./models/vehicle');
+//var tracking = require('./controllers/vehicleController');
+//var hexToDec = require('hex-to-dec');
+//var TrackingData = require('./trackingContoller');
 
 
 const app = express();
@@ -51,9 +54,24 @@ server.on("connection", function(socket){
         //console.log(size)
         if(size==17){
             console.log("IMIE : %s  ",d );
-            IMIE = d.toString();
+            IMIE = d.toString().substring(2,17);
+            //Im = hexToDec(IMIE);
+            // console.log(addTracking.checkImeiNumber(IMIE));
+            // if(addTracking.checkImeiNumber(IMIE)){
+               
+            // };
+
+            Vehicle.checkImei(IMIE,function(err,data){
+                if(!err){
+                    socket.write("");
+                    console.log("works");
+                }
+                else{
+                    return ({success: false, msg: err});
+                }
+            });
             //console.log(IMIE);
-            socket.write("");
+            
         }
         else {
             //console.log(d.length);
@@ -64,7 +82,7 @@ server.on("connection", function(socket){
             var buf = new Buffer(4);
             buf.writeInt32BE(noOfData);
             socket.write(buf);
-            console.log(IMIE);
+            //console.log(IMIE);
             
 
             //data obj
