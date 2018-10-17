@@ -28,6 +28,7 @@ router.delete('/api/vehicle/:vehicleNumber',vehicle.vehicleDelete);
 
 //Tracking data
 router.get('/api/vehicle/checkImei/:imeiNumber',vehicle.checkImeiNumber);
+router.get('/sort/:imeiNumber',vehicle.sortByDate);
 router.put('/api/vehicle/trackingData/',vehicle.addTrackingData);
 router.get('/api/vehicle/trackingData/:imeiNumber', vehicle.viewPath);
 
