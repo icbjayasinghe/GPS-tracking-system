@@ -55,12 +55,6 @@ server.on("connection", function(socket){
         if(size==17){
             console.log("IMIE : %s  ",d );
             IMIE = d.toString().substring(2,17);
-            //Im = hexToDec(IMIE);
-            // console.log(addTracking.checkImeiNumber(IMIE));
-            // if(addTracking.checkImeiNumber(IMIE)){
-               
-            // };
-
             Vehicle.checkImei(IMIE,function(err,data){
                 if(!err){
                     socket.write("");
@@ -70,8 +64,6 @@ server.on("connection", function(socket){
                     return ({success: false, msg: err});
                 }
             });
-            //console.log(IMIE);
-            
         }
         else {
             //console.log(d.length);
@@ -93,7 +85,7 @@ server.on("connection", function(socket){
 
             //data to database
             
-            //addTracking.addTrackingData(dataObj);
+            addTracking.addTrackingData(dataObj);
 
             //console.log("${noOfData}");
         }
