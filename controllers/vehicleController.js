@@ -64,22 +64,28 @@ var vehicle = {
         })
     },
     addTrackingData: function(req){
-        //console.log(req.imeiNumber);
         var imeiNumber = String(req.imeiNumber);
         var rawData = req.data;
         var newTrackingData = TrackingData.splitData(rawData);
-        
-        Vehicle.updateMany({'imeiNumber': imeiNumber}, {'$push': { trackingData : newTrackingData}}, function (err){
-            console.log(newTrackingData);
-            console.log(imeiNumber)
-            if (err) {
-                console.log({ success: false, message: "error" });
-            } else {
-                
-                console.log({ success: true, message: "successfully added new tracking data" });
+        Vehicle.checkImei(imeiNumber,function(err, vehicleRes){
+            if(err){
+                res.json({success: false, msg: err});
+            }
+            if (!vehicleRes){
+                res.json({success: false, msg: "wrong imei"});
+            }
+            else{
+                Vehicle.updateMany({'imeiNumber': imeiNumber}, {'$push': { trackingData : newTrackingData}}, function (err){
+                    if (err) {
+                        res.json({ success: false, message: "error" });
+                    } else {
+                        res.json({ success: true, message: "successfully added new tracking data" });
+                    }
+                });
             }
         })
     },    
+<<<<<<< HEAD
     checkImeiNumber : function(imei,res){
         var imeiNumber =imei;
         //var ret;
@@ -91,6 +97,16 @@ var vehicle = {
                 //return ({success: true, msg: data});
                 //var myFalse = new Boolean(true);
                 return (0<1);
+=======
+    checkImeiNumber : function(req, res){
+        var imeiNumber = req.params.imeiNumber;
+        Vehicle.checkImei(imeiNumber,function(err, vehicleRes){
+            if(err){
+                res.json({success: false, msg: err});
+            }
+            if (!vehicleRes){
+                res.json(false);
+>>>>>>> 109076e33579a39764aec0ce71f6a4000eb50eed
             }
             else{
                 return ({success: false, msg: err});
