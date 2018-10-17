@@ -98,6 +98,17 @@ var vehicle = {
                 return ({success: false, msg: err});
             }
         });
+    },
+    sortByDate: function(req,res){
+        var imeiNumber = req.params.imeiNumber;
+        Vehicle.sortTrackingData(imeiNumber,function(err, vehicleRes){
+            if (err){
+                throw err;
+            }
+            else{
+                res.json(vehicleRes);
+            }
+        });
     }
 }
 module.exports = vehicle;

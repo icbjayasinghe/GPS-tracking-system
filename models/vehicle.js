@@ -67,3 +67,12 @@ module.exports.checkImei = function(imeiNumber,callback){
         }
     });
 }
+//sort tracking data by date
+module.exports.sortTrackingData = function(imeiNumber, callback){
+    console.log(imeiNumber);
+
+    //Vehicle.findOne({imeiNumber:imeiNumber}).sort({"trackingData.date": -1}).limit(1)
+    //Vehicle.findOne({imeiNumber:imeiNumber,trackingData:{"date": "Wed Oct 17 2018 08:57:53 GMT+0530 (Sri Lanka Standard Time)"}},callback);
+    //find().sort( { "item.category": 1, "item.type": 1 } )
+    Vehicle.find({'imeiNumber':imeiNumber}).sort({'trackingData.date': 1}).limit(1);
+}

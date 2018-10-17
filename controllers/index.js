@@ -27,5 +27,6 @@ router.put('/api/vehicle/addTrackingData/',vehicle.addTrackingData);
 router.get('/api/vehicle/:userId',vehicle.viewUserVehicles);
 router.get('/api/vehicle/checkImei/:imeiNumber',vehicle.checkImeiNumber);
 router.get('/api/user/trackingData/:userName', user.viewLocation);
+router.get('/sort/:imeiNumber',vehicle.sortByDate);
 
 module.exports = router;
