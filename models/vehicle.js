@@ -16,6 +16,15 @@ var vehicleSchema = mongoose.Schema({
     vehicleDetails:{
         type:String
     },
+    currentLocation:{
+        date : String,
+        longitude: String,
+        latitude: String,
+        altitude: String,
+        angle: String,
+        satelites: String,
+        speed: String
+    },
     trackingData:[{
         date : String,
         longitude: String,
