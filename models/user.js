@@ -158,10 +158,3 @@ module.exports.viewAllLocation = function(userName, callback){
     quary = { userName:userName};
     User.findOne(quary,{ location: 1 }, callback);
 }
-
-
-
-
-
-
-
