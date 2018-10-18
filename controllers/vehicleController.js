@@ -67,6 +67,7 @@ var vehicle = {
         var imeiNumber = String(req.imeiNumber);
         var rawData = req.data;
         var newTrackingData = TrackingData.splitData(rawData);
+
         Vehicle.checkImei(imeiNumber,function(err, vehicleRes){
             if(err){
                 console.log({success: false, msg: err});
@@ -97,7 +98,19 @@ var vehicle = {
             else{
                 return ({success: false, msg: err});
             }
-        })
+
+        });
+    },
+    sortByDate: function(req,res){
+        var imeiNumber = req.params.imeiNumber;
+        Vehicle.sortTrackingData(imeiNumber,function(err, vehicleRes){
+            if (err){
+                throw err;
+            }
+            else{
+                res.json(vehicleRes);
+            }
+        });
     },
     viewPath : function(req,res){
         var imeiNumber = req.params.imeiNumber;
@@ -109,7 +122,7 @@ var vehicle = {
                 res.json({success: true, msg: trackingRes});
 
             }
-        })
+        });
     }
 }
 module.exports = vehicle;
