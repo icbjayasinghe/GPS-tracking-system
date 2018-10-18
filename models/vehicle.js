@@ -27,8 +27,8 @@ var vehicleSchema = mongoose.Schema({
     },
     trackingData:[{
         date : String,
-        longitude: String,
-        latitude: String,
+        longitude: Number,
+        latitude: Number,
         altitude: String,
         angle: String,
         satelites: String,
@@ -76,7 +76,6 @@ module.exports.checkImei = function(imeiNumber,callback){
         }
     });
 }
-
 //sort tracking data by date
 module.exports.sortTrackingData = function(imeiNumber, callback){
     console.log(imeiNumber);
@@ -86,7 +85,6 @@ module.exports.sortTrackingData = function(imeiNumber, callback){
     //find().sort( { "item.category": 1, "item.type": 1 } )
     Vehicle.find({'imeiNumber':imeiNumber}).sort({'trackingData.date': 1}).limit(1);
 }
-
 //view tracking data of a vehicle
 module.exports.checkPath = function(imeiNumber,callback){
     Vehicle.findOne({imeiNumber:imeiNumber},{trackingData:1},callback);
