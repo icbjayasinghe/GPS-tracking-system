@@ -123,6 +123,14 @@ var vehicle = {
 
             }
         });
+    },
+    allCurrentLocations: function(req, res){
+        Vehicle.viewAllCurrentLocations(function(err,vehi){
+            if(err){
+                res.json({success: false, msg: err});
+            }
+            res.json(vehi)
+        });
     }
 }
 module.exports = vehicle;

@@ -90,3 +90,7 @@ module.exports.sortTrackingData = function(imeiNumber, callback){
 module.exports.checkPath = function(imeiNumber,callback){
     Vehicle.findOne({imeiNumber:imeiNumber},{trackingData:1},callback);
 }
+//view current locations of vehicles 
+module.exports.viewAllCurrentLocations = function(callback){ 
+    Vehicle.find({},{imeiNumber:1,currentLocation:1,_id:0},callback);
+}
