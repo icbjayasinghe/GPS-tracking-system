@@ -18,8 +18,8 @@ var vehicleSchema = mongoose.Schema({
     },
     currentLocation:{
         date : String,
-        longitude: String,
-        latitude: String,
+        longitude: Number,
+        latitude: Number,
         altitude: String,
         angle: String,
         satelites: String,
@@ -79,6 +79,7 @@ module.exports.checkImei = function(imeiNumber,callback){
 //sort tracking data by date
 module.exports.sortTrackingData = function(imeiNumber, callback){
     console.log(imeiNumber);
+    //Vehicle.find().sort({datefield: -1}, function(err, cursor){...});
 
     //Vehicle.findOne({imeiNumber:imeiNumber}).sort({"trackingData.date": -1}).limit(1)
     //Vehicle.findOne({imeiNumber:imeiNumber,trackingData:{"date": "Wed Oct 17 2018 08:57:53 GMT+0530 (Sri Lanka Standard Time)"}},callback);
@@ -88,4 +89,13 @@ module.exports.sortTrackingData = function(imeiNumber, callback){
 //view tracking data of a vehicle
 module.exports.checkPath = function(imeiNumber,callback){
     Vehicle.findOne({imeiNumber:imeiNumber},{trackingData:1},callback);
+}
+//view current locations of vehicles 
+module.exports.viewAllCurrentLocations = function(callback){ 
+    Vehicle.find({},{imeiNumber:1,currentLocation:1,_id:0},callback);
+}
+//delete tracking data
+module.exports.removeAllTrackingData = function(vehicleId, callback){
+    Vehicle.update( {_id: vehicleId }, { $set: {trackingData:[]}} , callback );
+
 }

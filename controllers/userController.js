@@ -92,14 +92,25 @@ var user = {
   },
   viewLocation: function(req, res){
     var userName = req.params.userName;
-    var location=[];
     User.viewAllLocation(userName, function(err,locationRes){
       if (err){
         throw err;
       } else {
         res.json(locationRes);
       }
-    })
+    });
+  },
+  removeLocation: function(req,res){
+    var userId = req.params.userId;
+    var locationId = req.body.locationId;
+    User.deleteLocation(userId,locationId,function(err,locationRes){
+      if (err){
+        res.json({success:false, message:err});
+        //throw err ; 
+      }else{
+        res.json({success:true, message:"location deleted"});
+      }
+    });
   }
 }
 
