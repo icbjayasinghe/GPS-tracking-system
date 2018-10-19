@@ -94,3 +94,8 @@ module.exports.checkPath = function(imeiNumber,callback){
 module.exports.viewAllCurrentLocations = function(callback){ 
     Vehicle.find({},{imeiNumber:1,currentLocation:1,_id:0},callback);
 }
+//delete tracking data
+module.exports.removeAllTrackingData = function(vehicleId, callback){
+    Vehicle.update( {_id: vehicleId }, { $set: {trackingData:[]}} , callback );
+
+}

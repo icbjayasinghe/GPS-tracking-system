@@ -131,6 +131,16 @@ var vehicle = {
             }
             res.json(vehi)
         });
+    },
+    removeTrackingData: function(req, res){
+        var vehicleId = req.params.vehicleId;
+        Vehicle.removeAllTrackingData(vehicleId,function(err,trackingRes){
+            if (err){
+                res.json({success: false, msg: err});
+            }else{
+                res.json({success: true, msg: "tracking data deleted"});
+            }
+        })
     }
 }
 module.exports = vehicle;
