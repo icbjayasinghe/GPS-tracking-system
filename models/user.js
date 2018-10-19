@@ -158,3 +158,7 @@ module.exports.viewAllLocation = function(userName, callback){
     quary = { userName:userName};
     User.findOne(quary,{ location: 1 }, callback);
 }
+//delete location
+module.exports.deleteLocation = function(userId, locationId,callback){
+    User.update( {_id: userId }, { $pull: {location : {_id: locationId }} }, callback );
+}

@@ -12,8 +12,11 @@ router.get('/api/userByName/:userName', user.findByName);
 router.put('/api/user/resetPassword/:userName', user.resetUserPassword);
 router.put('/api/user/deleteUser/:userName', user.deleteFlag);
 router.put('/api/user/changePasword/:userName', user.changeUserPassword);
+
+//locations(branch) routes
 router.put('/api/user/location/:userName', user.addLocation);
 router.get('/api/user/location/:userName', user.viewLocation);
+router.put('/api/user/removeLocation/:userId',user.removeLocation);
 
 //login & registration
 router.post('/login', auth.login);
@@ -30,6 +33,8 @@ router.delete('/api/vehicle/:vehicleNumber',vehicle.vehicleDelete);
 router.get('/api/vehicle/checkImei/:imeiNumber',vehicle.checkImeiNumber);
 router.get('/sort/:imeiNumber',vehicle.sortByDate);
 router.put('/api/vehicle/trackingData/',vehicle.addTrackingData);
+router.put('/api/vehicle/removeTrackingData/:vehicleId',vehicle.removeTrackingData);
+
 
 //get current locations of vehicles
 router.get('/api/vehicle/trackingData/currentLocation',vehicle.allCurrentLocations);
