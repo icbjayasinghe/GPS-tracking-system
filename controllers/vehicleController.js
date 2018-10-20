@@ -64,7 +64,7 @@ var vehicle = {
         })
     },
     addTrackingData: function(req){
-        var imeiNumber = String(req.imeiNumber);
+        var imeiNumber = req.imeiNumber;
         var rawData = req.data;
         var newTrackingData = TrackingData.splitData(rawData);
 

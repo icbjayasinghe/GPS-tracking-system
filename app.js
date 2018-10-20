@@ -40,19 +40,26 @@ app.get('/',function(req,res){
 
 //socket setup
 var server = net.createServer();
-var IMIE;
+var subArr= [];//contain with remortPort and IMEI number
+var mainArr= [];// constain with subArrs.
 server.on("connection", function(socket){
     var remoteAddress = socket.remoteAddress +":"+ socket.remotePort;
     console.log("New client connection made %s ", remoteAddress);
-  
     socket.on("data", function(d){
+        //var IMIE;
+        for(i=0;i<mainArr.length;i++){
+            console.log(mainArr[i][0]);
+        }
         var size= d.length.valueOf();
         if(size==17){
             console.log("IMIE : %s  ",d );
-            IMIE = d.toString().substring(2,17);
+            var IMIE = d.toString().substring(2,17);
             Vehicle.checkImei(IMIE,function(err,data){
                 if(!err){
                     socket.write("");
+                    subArr[0]=socket.remotePort;
+                    subArr[1]=IMIE;
+                    mainArr[mainArr.length]=subArr;
                 }
                 else{
                     console.log({success: false, msg: err});
@@ -66,19 +73,35 @@ server.on("connection", function(socket){
             var buf = new Buffer(4);
             buf.writeInt32BE(noOfData);
             socket.write(buf);
+            var dataObj;
+            remPort = socket.remotePort;
+            for(i=0;i<mainArr.length;i++){
+                if(mainArr[i][0]==remPort){
+                    console.log(mainArr[i][1])
+                    dataObj = { 
 
+                        imeiNumber:mainArr[i][1],
+                        data:d.toString("hex")
+                    }
+                    //data to database
+                    addTracking.addTrackingData(dataObj);
+                    return;
+                }
+            }
             //data obj
-            var dataObj = { 
-                imeiNumber:IMIE,
-                data:d.toString("hex")
-            } 
-
-            //data to database
-            addTracking.addTrackingData(dataObj);
+            
+            
         }
     });
   
     socket.once("close", function(){
+        for(i=0;i<mainArr.length;i++){
+            if(mainArr[i][0]==remPort){
+                //console.log(mainArr[i][1])
+                mainArr.splice(i, 1);
+                return;
+            }
+        }
       console.log("Connection from %s deleted ", remoteAddress)
     });
   
