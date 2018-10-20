@@ -3,10 +3,12 @@ var mongoose = require('mongoose');
 var vehicleSchema = mongoose.Schema({
     vehicleNumber:{
         type:String,
+        unique: true,        
         required:true
     },
     imeiNumber:{
         type:String,
+        unique: true,        
         required:true
     },
     userId:{
@@ -80,7 +82,6 @@ module.exports.checkImei = function(imeiNumber,callback){
 module.exports.sortTrackingData = function(imeiNumber, callback){
     console.log(imeiNumber);
     //Vehicle.find().sort({datefield: -1}, function(err, cursor){...});
-
     //Vehicle.findOne({imeiNumber:imeiNumber}).sort({"trackingData.date": -1}).limit(1)
     //Vehicle.findOne({imeiNumber:imeiNumber,trackingData:{"date": "Wed Oct 17 2018 08:57:53 GMT+0530 (Sri Lanka Standard Time)"}},callback);
     //find().sort( { "item.category": 1, "item.type": 1 } )
@@ -97,5 +98,4 @@ module.exports.viewAllCurrentLocations = function(callback){
 //delete tracking data
 module.exports.removeAllTrackingData = function(vehicleId, callback){
     Vehicle.update( {_id: vehicleId }, { $set: {trackingData:[]}} , callback );
-
 }
