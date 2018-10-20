@@ -90,8 +90,6 @@ var vehicle = {
         var imeiNumber = req.params.imeiNumber;
         var rawData = req.body.data;
         var newTrackingData = TrackingData.splitData(rawData);
-        console.log(imeiNumber);
-
         Vehicle.checkImei(imeiNumber,function(err, vehicleRes){
             if(err){
                 res.json({success: false, msg: err});
