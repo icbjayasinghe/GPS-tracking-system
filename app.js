@@ -57,9 +57,18 @@ server.on("connection", function(socket){
             Vehicle.checkImei(IMIE,function(err,data){
                 if(!err){
                     socket.write("");
-                    subArr[0]=socket.remotePort;
-                    subArr[1]=IMIE;
-                    mainArr[mainArr.length]=subArr;
+                    var state= false;
+                    for(i=0;i<mainArr.length;i++){
+                        if(mainArr[i][0]==socket.remotePort){
+                            state = true;
+                            return;
+                        }
+                    }
+                    if(state==false){
+                        subArr[0]=socket.remotePort;
+                        subArr[1]=IMIE;
+                        mainArr[mainArr.length]=subArr;
+                    }
                 }
                 else{
                     console.log({success: false, msg: err});
@@ -70,12 +79,10 @@ server.on("connection", function(socket){
             console.log(fullDataSplit.splitData(d.toString("hex")));
             console.log(fullDataSplit.getNoOfData(d.toString("hex")));
             var noOfData =fullDataSplit.getNoOfData(d.toString("hex"));
-            var buf = new Buffer(4);
-            buf.writeInt32BE(noOfData);
-            socket.write(buf);
+            
             var dataObj;
-            remPort = socket.remotePort;
             for(i=0;i<mainArr.length;i++){
+                remPort = socket.remotePort;
                 if(mainArr[i][0]==remPort){
                     console.log(mainArr[i][1])
                     dataObj = { 
@@ -85,9 +92,24 @@ server.on("connection", function(socket){
                     }
                     //data to database
                     addTracking.addTrackingData(dataObj);
+                    mainArr.splice(i, 1);
                     return;
                 }
+                else{
+                    console.log("aul , "+socket.remotePort);
+                }
             }
+            var buf = new Buffer(4);
+            buf.writeInt32BE(noOfData);
+            socket.write(buf);
+
+            // for(i=0;i<mainArr.length;i++){
+            //     if(mainArr[i][0]==remPort){
+            //         //console.log(mainArr[i][1])
+            //         mainArr.splice(i, 1);
+            //         return;
+            //     }
+            // }
             //data obj
             
             
@@ -95,13 +117,7 @@ server.on("connection", function(socket){
     });
   
     socket.once("close", function(){
-        for(i=0;i<mainArr.length;i++){
-            if(mainArr[i][0]==remPort){
-                //console.log(mainArr[i][1])
-                mainArr.splice(i, 1);
-                return;
-            }
-        }
+        
       console.log("Connection from %s deleted ", remoteAddress)
     });
   
