@@ -78,9 +78,9 @@ var vehicle = {
             else{
                 Vehicle.updateMany({'imeiNumber': imeiNumber},{'$push': { trackingData:{ '$each':[newTrackingData], '$sort':{date:-1}}}}, function (err){
                     if (err) {
-                        res.json({ success: false, message: "error" });
+                        console.log({ success: false, message: "error" });
                     } else {
-                        res.json({ success: true, message: "successfully added new tracking data" });
+                        console.log({ success: true, message: "successfully added new tracking data" });
                     }
                 });
             }
