@@ -76,11 +76,11 @@ var vehicle = {
                 console.log({success: false, msg: "wrong imei"});
             }
             else{
-                Vehicle.updateMany({'imeiNumber': imeiNumber}, {'$push': { trackingData : newTrackingData}}, function (err){
+                Vehicle.updateMany({'imeiNumber': imeiNumber},{'$push': { trackingData:{ '$each':[newTrackingData], '$sort':{date:-1}}}}, function (err){
                     if (err) {
-                        console.log({ success: false, message: "error" });
+                        res.json({ success: false, message: "error" });
                     } else {
-                        console.log({ success: true, message: "successfully added new tracking data" });
+                        res.json({ success: true, message: "successfully added new tracking data" });
                     }
                 });
             }
