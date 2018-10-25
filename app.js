@@ -93,15 +93,17 @@ server.on("connection", function(socket){
                     //data to database
                     addTracking.addTrackingData(dataObj);
                     mainArr.splice(i, 1);
-                    return;
+                    //return;
+                    console.log("buf eka langa " +socket.remotePort);
+                    var buf = new Buffer(4);
+                    buf.writeInt32BE(noOfData);
+                    socket.write(buf);
                 }
                 else{
                     console.log("aul , "+socket.remotePort);
                 }
             }
-            var buf = new Buffer(4);
-            buf.writeInt32BE(noOfData);
-            socket.write(buf);
+            
 
             // for(i=0;i<mainArr.length;i++){
             //     if(mainArr[i][0]==remPort){
