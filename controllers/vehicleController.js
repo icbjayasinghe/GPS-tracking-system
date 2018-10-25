@@ -98,7 +98,7 @@ var vehicle = {
                 res.json({success: false, msg: "wrong imei"});
             }
             else{
-                Vehicle.updateMany({'imeiNumber': imeiNumber}, {'$push': { trackingData : newTrackingData}}, function (err){
+                Vehicle.updateMany({'imeiNumber': imeiNumber},{'$push': { trackingData:{ '$each':[newTrackingData], '$sort':{date:-1}}}}, function (err){
                     if (err) {
                         res.json({ success: false, message: "error" });
                     } else {
@@ -119,18 +119,6 @@ var vehicle = {
             }
             else{
                 return ({success: false, msg: err});
-            }
-
-        });
-    },
-    sortByDate: function(req,res){
-        var imeiNumber = req.params.imeiNumber;
-        Vehicle.sortTrackingData(imeiNumber,function(err, vehicleRes){
-            if (err){
-                throw err;
-            }
-            else{
-                res.json(vehicleRes);
             }
         });
     },
