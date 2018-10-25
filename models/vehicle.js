@@ -18,15 +18,6 @@ var vehicleSchema = mongoose.Schema({
     vehicleDetails:{
         type:String
     },
-    currentLocation:{
-        date : Date,
-        longitude: Number,
-        latitude: Number,
-        altitude: String,
-        angle: String,
-        satelites: String,
-        speed: String
-    },
     trackingData:[{
         date : Date,
         longitude: Number,
@@ -83,8 +74,8 @@ module.exports.checkPath = function(imeiNumber,callback){
     Vehicle.findOne({imeiNumber:imeiNumber},{trackingData:1},callback);
 }
 //view current locations of vehicles 
-module.exports.viewAllCurrentLocations = function(callback){ 
-    Vehicle.find({},{imeiNumber:1,currentLocation:1,_id:0},callback);
+module.exports.viewAllLatesttLocations = function(callback){ 
+    Vehicle.find({},{imeiNumber:1,trackingData:1,_id:0},callback);
 }
 //delete tracking data
 module.exports.removeAllTrackingData = function(vehicleId, callback){
