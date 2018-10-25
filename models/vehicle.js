@@ -19,7 +19,7 @@ var vehicleSchema = mongoose.Schema({
         type:String
     },
     currentLocation:{
-        date : String,
+        date : Date,
         longitude: Number,
         latitude: Number,
         altitude: String,
@@ -28,7 +28,7 @@ var vehicleSchema = mongoose.Schema({
         speed: String
     },
     trackingData:[{
-        date : String,
+        date : Date,
         longitude: Number,
         latitude: Number,
         altitude: String,
@@ -77,15 +77,6 @@ module.exports.checkImei = function(imeiNumber,callback){
             return callback(null,true);
         }
     });
-}
-//sort tracking data by date
-module.exports.sortTrackingData = function(imeiNumber, callback){
-    console.log(imeiNumber);
-    //Vehicle.find().sort({datefield: -1}, function(err, cursor){...});
-    //Vehicle.findOne({imeiNumber:imeiNumber}).sort({"trackingData.date": -1}).limit(1)
-    //Vehicle.findOne({imeiNumber:imeiNumber,trackingData:{"date": "Wed Oct 17 2018 08:57:53 GMT+0530 (Sri Lanka Standard Time)"}},callback);
-    //find().sort( { "item.category": 1, "item.type": 1 } )
-    Vehicle.find({'imeiNumber':imeiNumber}).sort({'trackingData.date': 1}).limit(1);
 }
 //view tracking data of a vehicle
 module.exports.checkPath = function(imeiNumber,callback){
