@@ -134,8 +134,8 @@ var vehicle = {
             }
         });
     },
-    allCurrentLocations: function(req, res){
-        Vehicle.viewAllCurrentLocations(function(err,vehi){
+    allLatestLocations: function(req, res){
+        Vehicle.viewAllLatesttLocations(function(err,vehi){
             if(err){
                 res.json({success: false, msg: err});
             }
