@@ -22,10 +22,10 @@ var vehicleSchema = mongoose.Schema({
         date : Date,
         longitude: Number,
         latitude: Number,
-        altitude: String,
-        angle: String,
-        satelites: String,
-        speed: String
+        altitude: Number,
+        angle: Number,
+        satelites: Number,
+        speed: Number
     }]
 });
 
