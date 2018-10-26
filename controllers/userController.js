@@ -30,7 +30,7 @@ var user = {
   },
   getOne: function(req, res) {
     var id = req.params.id;
-    User.getUser(id, function(err,userRes){
+    User.getUserDetails(id, function(err,userRes){
       if (err){
         res.json({success: false, msg: err});
       }
