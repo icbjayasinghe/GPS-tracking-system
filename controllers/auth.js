@@ -20,7 +20,17 @@ var auth = {
       res.send({success: false, msg: 'Authentication failed. user is not found.'});
     }
     else if(tokenDetail) {
-      res.json({success: true, token: 'JWT ' + tokenDetail.token, expires:tokenDetail.expires});
+      res.json({
+        success: true, 
+        token: 'JWT ' + tokenDetail.token, 
+        expires:tokenDetail.expires, 
+        userName:user.userName,
+        fullName:user.fullName,
+        address:user.address,
+        contactNumber:user.contactNumber,
+        emailAddress:user.emailAddress,
+        status:user.status
+      });
     }
     else {
       res.send({success: false, msg: 'Authentication failed. Wrong password.'});
@@ -29,7 +39,7 @@ var auth = {
 },
    
 validate: function(userName, password, cb) {
-  User.findOne({userName: userName}, {userName:1, password:1, status:1, role:1}, function(err, user) {
+  User.findOne({userName: userName},function(err, user) {
     if (err) throw err;
     if (!user) {
       cb(null, null);
