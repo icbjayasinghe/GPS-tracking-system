@@ -1,5 +1,6 @@
 var User = require('../models/user');
-var jwt = require('jwt-simple');
+var config = require('../config/config');
+var jwt = require('jsonwebtoken');
 var config = require('../config/config');
 
 var auth = {
@@ -22,8 +23,7 @@ var auth = {
     else if(tokenDetail) {
       res.json({
         success: true, 
-        token: 'JWT ' + tokenDetail.token, 
-        expires:tokenDetail.expires, 
+        token: 'JWT ' + tokenDetail.token,
         userName:user.userName,
         fullName:user.fullName,
         address:user.address,
@@ -48,7 +48,7 @@ validate: function(userName, password, cb) {
       // check if password matches
       user.comparePassword(password, function (err, isMatch) {  
         if (isMatch && !err) {
-          cb(user, genToken(user.userName));
+          cb(user, genToken(user));
         } 
         else {
           cb(user, null);
@@ -70,21 +70,12 @@ validateUser: function(userName) {
 }
    
 // private method
-function genToken(userName) {
-  var expires = expiresIn(7); // 7 days
-  var token = jwt.encode({
-    exp: expires,
-    userName: userName
-  }, config.secret);
+function genToken(user) {
+  const token = jwt.sign(user.toJSON(),config.secret,{expiresIn: 3600});
+
   return {
-    token: token,
-    expires: expires
+    token: token
   };
-}
-   
-function expiresIn(numDays) {
-  var dateObj = new Date();
-  return dateObj.setDate(dateObj.getDate() + numDays);
 }
    
 module.exports = auth;

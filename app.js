@@ -8,6 +8,7 @@ var addTracking = require('./controllers/vehicleController');
 const net = require('net');
 var http = require('http');
 var Vehicle = require('./models/vehicle');
+var passport = require('passport');
 const app = express();
 
 mongoose.connect(config.database,{useNewUrlParser:true});
@@ -15,6 +16,9 @@ var db = mongoose.connection;
 
 app.use(bodyParser.json());
 app.use(session({secret: 'mysupersecret', resave: false, saveUninitialized: false}));
+app.use(passport.initialize());
+app.use(passport.session());
+require('./config/passport')(passport);
 
 app.all('/*', function(req, res, next) {
     // CORS headers
