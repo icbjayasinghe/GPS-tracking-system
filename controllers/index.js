@@ -3,7 +3,14 @@ var router = express.Router();
 var auth = require('./auth.js');
 var user  = require('./userController.js');
 var vehicle = require('./vehicleController.js');
+const passport = require('passport');
 
+
+/*router.use('/', passport.authenticate('jwt', { session: false }),
+    function(req, res, next) {
+        next();
+    }
+);*/
 //find users done
 router.post('/api/user', user.addUser);
 router.get('/api/user', user.getAll);
@@ -18,8 +25,6 @@ router.put('/api/user/location/:userName', user.addLocation);
 router.get('/api/user/location/:userName', user.viewLocation);
 router.put('/api/user/removeLocation/:userId',user.removeLocation);
 
-//login & registration
-router.post('/login', auth.login);
 
 //vehicle related routes done
 router.post('/api/vehicle',vehicle.addVehicle);
@@ -37,5 +42,9 @@ router.put('/api/vehicle/removeTrackingData/:vehicleId',vehicle.removeTrackingDa
 
 //filter tracking data by vehicle
 router.get('/api/vehicle/trackingData/:imeiNumber', vehicle.viewPath);
+
+//login & registration
+router.post('/login', auth.login);
+
 
 module.exports = router;
