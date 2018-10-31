@@ -1,6 +1,10 @@
 var User = require('../models/user');
-var jwt = require('jwt-simple');
 var config = require('../config/config');
+<<<<<<< HEAD
+var jwt = require('jsonwebtoken');
+var config = require('../config/config');
+=======
+>>>>>>> f9e393666adacb400e872e97c8f1e7701d513526
 
 var auth = {
   login: function(req, res) {   
@@ -22,8 +26,12 @@ var auth = {
     else if(tokenDetail) {
       res.json({
         success: true, 
+<<<<<<< HEAD
+        token: 'JWT ' + tokenDetail.token,
+=======
         token: 'JWT ' + tokenDetail.token, 
         expires:tokenDetail.expires, 
+>>>>>>> f9e393666adacb400e872e97c8f1e7701d513526
         userName:user.userName,
         fullName:user.fullName,
         address:user.address,
@@ -48,7 +56,11 @@ validate: function(userName, password, cb) {
       // check if password matches
       user.comparePassword(password, function (err, isMatch) {  
         if (isMatch && !err) {
+<<<<<<< HEAD
+          cb(user, genToken(user));
+=======
           cb(user, genToken(user.userName));
+>>>>>>> f9e393666adacb400e872e97c8f1e7701d513526
         } 
         else {
           cb(user, null);
@@ -70,6 +82,15 @@ validateUser: function(userName) {
 }
    
 // private method
+<<<<<<< HEAD
+function genToken(user) {
+  const token = jwt.sign(user.toJSON(),config.secret,{expiresIn: 3600});
+
+  return {
+    token: token
+  };
+}
+=======
 function genToken(userName) {
   var expires = expiresIn(7); // 7 days
   var token = jwt.encode({
@@ -86,5 +107,6 @@ function expiresIn(numDays) {
   var dateObj = new Date();
   return dateObj.setDate(dateObj.getDate() + numDays);
 }
+>>>>>>> f9e393666adacb400e872e97c8f1e7701d513526
    
 module.exports = auth;

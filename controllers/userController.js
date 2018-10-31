@@ -1,39 +1,117 @@
 var User  = require('../models/user.js');
 
 var user = {
- 
-    getAll: function(req, res) {
-      User.getUsers(function(err,userRes){
-        if (err){
-          throw err ;
-        }
-        res.json(userRes);
-      })
-    },
-   
-    getOne: function(req, res) {
-      var id = req.params.id;
-      User.getUser(id, function(err,userRes){
-        if (err){
-          throw err ;
-        }
-        res.json(userRes);
-      })
-    },
-
-    register: function(req, res) {
-      var newUser = new User({
-        name: req.body.username,
-        password: req.body.password,
-        userType: req.body.userType
-      });
-      User.createUser(newUser, function(err,userRes){
-        if (err){
-          throw err ;
-        }
-        res.json({success: true,user: userRes});
-      })
-    }
+  addUser: function(req, res) {
+    var newUser = new User({
+      fullName: req.body.fullName,
+      address: req.body.address,
+      contactNumber: req.body.contactNumber,
+      emailAddress: req.body.emailAddress,
+      userName: req.body.userName,
+      password: req.body.userName,
+      role: req.body.role,
+      location: [],
+      status:"Active"
+    });
+    User.createUser(newUser, function(err,userRes){
+      if (err){
+        res.json({success: false, msg: err});
+      }
+      res.json({success: true,user: userRes});
+    })
+  },
+  getAll: function(req, res) {
+    User.getUsers(function(err,userRes){
+      if (err){
+        res.json({success: false, msg: err});
+      }
+      res.json(userRes);
+    })
+  },
+  getOne: function(req, res) {
+    var id = req.params.id;
+    User.getUserDetails(id, function(err,userRes){
+      if (err){
+        res.json({success: false, msg: err});
+      }
+      res.json(userRes);
+    })
+  },
+  findByName: function(req, res){
+    var userName = req.params.userName; 
+    User.findUserByName(userName, function(err, userRes){
+      if(err){
+        res.json({success: false, msg: err});
+      }
+      res.json(userRes);
+    })
+  },
+  resetUserPassword: function(req, res){
+    var userName = req.params.userName;
+    User.resetPassword(userName,{}, function(err, userRes){
+      if(err){
+        res.json({success: false, msg: err});
+      }
+      res.json(userRes);
+    })
+  },
+  deleteFlag: function(req, res){
+    var userName = req.params.userName;
+    User.resetStatus(userName,{}, function(err, userRes){
+      if(err){
+        res.json({success: false, msg: err});
+      }
+      res.json(userRes);
+    })
+  },
+  changeUserPassword: function(req, res){
+    var userName = req.params.userName;
+    var pw = req.body.password;
+    User.changePassword(userName, pw, function(err, userRes){
+      if(err){
+        res.json({success: false, msg: err});
+      }
+      res.json(userRes);
+    })
+  },
+  addLocation: function(req,res){
+    var userName = req.params.userName;
+    let location = {
+      name:req.body.name,
+      type:req.body.type,
+      latitude:req.body.latitude,
+      longitude:req.body.longitude
+    };
+    User.updateMany({'userName': userName}, {'$push': { location : location }}, function (err) {
+      if (err) {
+          throw err;
+      } else {
+          res.json({ success: true, message: "successfully added location" });
+      }
+    });
+  },
+  viewLocation: function(req, res){
+    var userName = req.params.userName;
+    User.viewAllLocation(userName, function(err,locationRes){
+      if (err){
+        throw err;
+      } else {
+        res.json(locationRes);
+      }
+    });
+  },
+  removeLocation: function(req,res){
+    var userId = req.params.userId;
+    var locationId = req.body.locationId;
+    User.deleteLocation(userId,locationId,function(err,locationRes){
+      if (err){
+        res.json({success:false, message:err});
+        //throw err ; 
+      }else{
+        res.json({success:true, message:"location deleted"});
+      }
+    });
+  }
 }
 
 module.exports = user;
