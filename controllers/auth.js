@@ -2,7 +2,6 @@ var User = require('../models/user');
 var config = require('../config/config');
 var jwt = require('jsonwebtoken');
 var config = require('../config/config');
-
 var auth = {
   login: function(req, res) {   
     var userName = req.body.userName || '';
