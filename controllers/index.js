@@ -4,7 +4,12 @@ var auth = require('./auth.js');
 var user  = require('./userController.js');
 var vehicle = require('./vehicleController.js');
 const passport = require('passport');
+const jwt      = require('jsonwebtoken');
 
+
+
+//login & registration
+router.post('/login', auth.login);
 
 /*router.use('/', passport.authenticate('jwt', { session: false }),
     function(req, res, next) {
@@ -13,7 +18,7 @@ const passport = require('passport');
 );*/
 //find users done
 router.post('/api/user', user.addUser);
-router.get('/api/user', user.getAll);
+router.get('/api/user', passport.authenticate('jwt', {session:false}), user.getAll);
 router.get('/api/user/:id', user.getOne);
 router.get('/api/userByName/:userName', user.findByName);
 router.put('/api/user/resetPassword/:userName', user.resetUserPassword);
@@ -43,8 +48,7 @@ router.put('/api/vehicle/removeTrackingData/:vehicleId',vehicle.removeTrackingDa
 //filter tracking data by vehicle
 router.get('/api/vehicle/trackingData/:imeiNumber', vehicle.viewPath);
 
-//login & registration
-router.post('/login', auth.login);
+
 
 
 module.exports = router;

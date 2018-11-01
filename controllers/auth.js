@@ -1,12 +1,11 @@
 var User = require('../models/user');
-var config = require('../config/config');
 var jwt = require('jsonwebtoken');
 var config = require('../config/config');
 var auth = {
   login: function(req, res) {   
     var userName = req.body.userName || '';
     var password = req.body.password || '';
-    if (userName == '' || password == '') {
+    if (userName === '' || password === '') {
       res.status(401);
       res.json({
         "status": 401,
@@ -70,6 +69,7 @@ validateUser: function(userName) {
    
 // private method
 function genToken(user) {
+  console.log(user);
   const token = jwt.sign(user.toJSON(),config.secret,{expiresIn: 3600});
 
   return {
