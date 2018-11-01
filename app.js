@@ -10,9 +10,12 @@ var http = require('http');
 var Vehicle = require('./models/vehicle');
 var passport = require('passport');
 const app = express();
-
+const cors = require('cors');
+app.use(cors());
 mongoose.connect(config.database,{useNewUrlParser:true});
 var db = mongoose.connection;
+
+
 
 app.use(bodyParser.json());
 app.use(session({secret: config.secret, resave: false, saveUninitialized: false}));

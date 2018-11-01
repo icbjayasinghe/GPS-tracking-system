@@ -69,7 +69,6 @@ validateUser: function(userName) {
    
 // private method
 function genToken(user) {
-  console.log(user);
   const token = jwt.sign(user.toJSON(),config.secret,{expiresIn: 3600});
 
   return {

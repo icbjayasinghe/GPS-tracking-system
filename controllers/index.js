@@ -4,21 +4,21 @@ var auth = require('./auth.js');
 var user  = require('./userController.js');
 var vehicle = require('./vehicleController.js');
 const passport = require('passport');
-const jwt      = require('jsonwebtoken');
+
 
 
 
 //login & registration
 router.post('/login', auth.login);
 
-/*router.use('/', passport.authenticate('jwt', { session: false }),
+router.use('/', passport.authenticate('jwt', { session: false }),
     function(req, res, next) {
         next();
     }
-);*/
+);
 //find users done
 router.post('/api/user', user.addUser);
-router.get('/api/user', passport.authenticate('jwt', {session:false}), user.getAll);
+router.get('/api/user',  user.getAll);
 router.get('/api/user/:id', user.getOne);
 router.get('/api/userByName/:userName', user.findByName);
 router.put('/api/user/resetPassword/:userName', user.resetUserPassword);
@@ -33,7 +33,7 @@ router.put('/api/user/removeLocation/:userId',user.removeLocation);
 
 //vehicle related routes done
 router.post('/api/vehicle',vehicle.addVehicle);
-router.get('/api/vehicle',vehicle.viewAllVehicles);
+router.get('/api/vehicle', vehicle.viewAllVehicles);
 router.get('/api/vehicle/search/:vehicleNumber',vehicle.searchVehicle);
 router.get('/api/vehicle/:userId',vehicle.viewUserVehicles);
 router.put('/api/vehicle/:vehicleNumber',vehicle.vehicleUpdate);
