@@ -3,8 +3,10 @@ var History = require('../models/history');
 var Vehicle = require('../models/vehicle');
 
 module.exports = {
-    addToHistory : function(req, res, next){
+    addTrackingDataToHistory : function(req, res, next){
         id = req.body.vehicleId;
+
+
         let rsp = {};
         const tasks = [
             function getDate(cb){
@@ -49,6 +51,7 @@ module.exports = {
                     if (err) {
                         return cb(err);
                     }
+                    rsp.historyRes = null;
                     return cb(null);
                 })
             }
