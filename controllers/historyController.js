@@ -14,6 +14,26 @@ var history = {
             }
             res.json(history);
         });
+    },
+
+    getHistoryByUser: function(req,res){
+        var userId = req.params.userId; 
+        History.searchHistoryByUser(userId, function(err, historyRes){
+            if (err){
+                res.json({success:false, msg:err});
+            }
+            res.json(historyRes);
+        });
+    },
+
+    getHistoryByVehicle : function(req, res){
+        var vehicleNumber = req.params.vehicleNumber;
+        History.findVehicle(vehicleNumber, function(err, historyRes){
+            if (err){
+                res.json({success:false, msg:err});
+            }
+            res.json(historyRes);
+        });
     }
 }
 

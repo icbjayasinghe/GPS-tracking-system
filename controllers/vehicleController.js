@@ -151,6 +151,18 @@ var vehicle = {
                 res.json({success: true, msg: "tracking data deleted"});
             }
         })
+    },
+    viewTrackingDataByUser: function(req,res){
+        var userId = req.params.userId;
+        Vehicle.checkTrackingDataByUser(userId,function(err,trackingRes){
+            if (err){
+                res.json({success: false, msg: err});
+            }
+            else{
+                res.json({success: true, msg: trackingRes});
+
+            }
+        });
     }
 }
 module.exports = vehicle;
