@@ -42,6 +42,7 @@ var TrackingData = {
             function speed(cb) {
                 var speed = hexToDec(testData.substring(64,68));
                 newTackingData.speed=speed;
+                newTackingData.routeVisibility = 0.0;
                 return cb(null, speed);
             } 
         ];
