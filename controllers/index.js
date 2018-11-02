@@ -3,6 +3,7 @@ var router = express.Router();
 var auth = require('./auth.js');
 var user  = require('./userController.js');
 var vehicle = require('./vehicleController.js');
+var history = require('./historyController.js');
 const passport = require('passport');
 
 
@@ -10,6 +11,7 @@ const passport = require('passport');
 
 //login & registration
 router.post('/login', auth.login);
+router.post('/test', history.create);
 
 router.use('/', passport.authenticate('jwt', { session: false }),
     function(req, res, next) {
