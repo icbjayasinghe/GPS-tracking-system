@@ -6,18 +6,17 @@ var vehicle = require('./vehicleController.js');
 var history = require('./historyController.js');
 const passport = require('passport');
 
-
-
-
 //login & registration
 router.post('/login', auth.login);
-router.post('/test', history.create);
+router.post('/api/history', history.create);
+router.get('/api/history',history.getHistory);
 
 router.use('/', passport.authenticate('jwt', { session: false }),
     function(req, res, next) {
         next();
     }
 );
+
 //find users done
 router.post('/api/user', user.addUser);
 router.get('/api/user',  user.getAll);
@@ -31,7 +30,6 @@ router.put('/api/user/changePasword/:userName', user.changeUserPassword);
 router.put('/api/user/location/:userName', user.addLocation);
 router.get('/api/user/location/:userName', user.viewLocation);
 router.put('/api/user/removeLocation/:userId',user.removeLocation);
-
 
 //vehicle related routes done
 router.post('/api/vehicle',vehicle.addVehicle);
@@ -49,8 +47,5 @@ router.put('/api/vehicle/removeTrackingData/:vehicleId',vehicle.removeTrackingDa
 
 //filter tracking data by vehicle
 router.get('/api/vehicle/trackingData/:imeiNumber', vehicle.viewPath);
-
-
-
 
 module.exports = router;

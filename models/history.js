@@ -22,6 +22,7 @@ var historySchema = mongoose.Schema({
 
 var History = module.exports = mongoose.model('History',historySchema);
 
-module.exports.addToHistory = function(rsp,callback){
-	history.save(callback);
+//view all history
+module.exports.getAll = function(callback, limit){ 
+    History.find(callback).limit(limit);
 }
