@@ -51,6 +51,10 @@ module.exports.updateVehicle = function(vehicleNumber, vehicle, options, callbac
 module.exports.userVehicles = function(userId, callback){
     Vehicle.find({userId:userId},callback);
 }
+//tracking data by name
+module.exports.checkTrackingDataByUser = function(userId, callback){
+    Vehicle.find({userId:userId},{trackingData:1},callback);
+}
 //delete vehicle
 module.exports.deleteVehicle = function(vehicleNumber, callback){
     Vehicle.findOneAndDelete({vehicleNumber: vehicleNumber}, callback);

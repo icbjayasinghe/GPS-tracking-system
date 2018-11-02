@@ -8,10 +8,6 @@ const passport = require('passport');
 
 //login & registration
 router.post('/login', auth.login);
-router.post('/api/history', history.create);
-router.get('/api/history',history.getHistory);
-router.get('/api/history/:userId',history.getHistoryByUser);
-router.get('/api/historyByVehicle/:vehicleNumber',history.getHistoryByVehicle);
 
 router.use('/', passport.authenticate('jwt', { session: false }),
     function(req, res, next) {
@@ -40,14 +36,19 @@ router.get('/api/vehicle/search/:vehicleNumber',vehicle.searchVehicle);
 router.get('/api/vehicle/:userId',vehicle.viewUserVehicles);
 router.put('/api/vehicle/:vehicleNumber',vehicle.vehicleUpdate);
 router.delete('/api/vehicle/:vehicleNumber',vehicle.vehicleDelete);
+router.get('/api/vehicle/checkImei/:imeiNumber',vehicle.checkImeiNumber);
 
 //Tracking data
-router.get('/api/vehicle/checkImei/:imeiNumber',vehicle.checkImeiNumber);
 router.put('/api/vehicle/trackingData/:imeiNumber',vehicle.addTrackingData2);
-router.put('/api/vehicle/trackingData/',vehicle.addTrackingData);
 router.put('/api/vehicle/removeTrackingData/:vehicleId',vehicle.removeTrackingData);
-
-//filter tracking data by vehicle
 router.get('/api/vehicle/trackingData/:imeiNumber', vehicle.viewPath);
+router.get('/api/vehicle/trackingDataByUser/:userId', vehicle.viewTrackingDataByUser);
+
+//history related routes
+router.post('/api/history', history.create);
+router.get('/api/history',history.getHistory);
+router.get('/api/history/:userId',history.getHistoryByUser);
+router.get('/api/historyByVehicle/:vehicleNumber',history.getHistoryByVehicle);
+
 
 module.exports = router;
