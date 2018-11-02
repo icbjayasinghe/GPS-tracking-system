@@ -10,6 +10,8 @@ const passport = require('passport');
 router.post('/login', auth.login);
 router.post('/api/history', history.create);
 router.get('/api/history',history.getHistory);
+router.get('/api/history/:userId',history.getHistoryByUser);
+router.get('/api/historyByVehicle/:vehicleNumber',history.getHistoryByVehicle);
 
 router.use('/', passport.authenticate('jwt', { session: false }),
     function(req, res, next) {
