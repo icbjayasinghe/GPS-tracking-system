@@ -6,7 +6,6 @@ module.exports = {
     addTrackingDataToHistory : function(req, res, next){
         id = req.body.vehicleId;
 
-
         let rsp = {};
         const tasks = [
             function getDate(cb){
@@ -19,6 +18,7 @@ module.exports = {
                     if (err) {
                         return cb(err);
                     }
+                    rsp.userId = vehicle.userId;
                     rsp.vehicleNumber = vehicle.vehicleNumber;
                     return cb(null, vehicle.vehicleNumber)
                 })
@@ -35,6 +35,7 @@ module.exports = {
             function createBill(cb) {
                 const history = new History({
                     date : rsp.date,
+                    userId :rsp.userId,
                     vehicleNumber : rsp.vehicleNumber,
                     trackingData : rsp.trackingData
                 });
