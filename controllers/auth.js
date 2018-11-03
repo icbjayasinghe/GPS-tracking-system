@@ -22,12 +22,14 @@ var auth = {
       res.json({
         success: true, 
         token: 'JWT ' + tokenDetail.token,
+          _id: user._id,
         userName:user.userName,
         fullName:user.fullName,
         address:user.address,
         contactNumber:user.contactNumber,
         emailAddress:user.emailAddress,
-        status:user.status
+        status:user.status,
+          role: user.roles
       });
     }
     else {
