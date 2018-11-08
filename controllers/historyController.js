@@ -1,11 +1,24 @@
 var History  = require('../models/history');
 var CommonFacade = require('./commonFacade');
+var Vehicle = require('../models/vehicle');
 
 var history = {
 
     create : function(req,res, next) {
-        CommonFacade.addTrackingDataToHistory(req, res, next);
+        Vehicle.find().then((vehicles) => {
+            var resu;
+            vehicles.forEach((vehicle) => {
+                var vId = vehicle._id;
+                console.log(vId);
+                resu = CommonFacade.addTrackingDataToHistory(vId, next);
+            });
+            res.json(resu);
+        })
     },
+
+    // create : function(req,res, next) {
+    //     CommonFacade.addTrackingDataToHistory(req, res, next);
+    // },
 
     getHistory: function(req,res){
         History.getAll(function(err, history){

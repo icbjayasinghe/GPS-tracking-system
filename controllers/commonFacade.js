@@ -3,9 +3,10 @@ var History = require('../models/history');
 var Vehicle = require('../models/vehicle');
 
 module.exports = {
-    addTrackingDataToHistory : function(req, res, next){
-        id = req.body.vehicleId;
-
+    addTrackingDataToHistory : function(req, next){
+        
+        id = req;
+        //id = req.body.vehicleId;
         let rsp = {};
         const tasks = [
             function getDate(cb){
@@ -20,19 +21,11 @@ module.exports = {
                     }
                     rsp.userId = vehicle.userId;
                     rsp.vehicleNumber = vehicle.vehicleNumber;
-                    return cb(null, vehicle.vehicleNumber)
-                })
-            },
-            function getTrackingData(cb){
-                Vehicle.findOne({ _id: id }, function (err, vehicle) {
-                    if (err) {
-                        return cb(err);
-                    }
                     rsp.trackingData = vehicle.trackingData;
-                    return cb(null, vehicle.trackingData)
+                    return cb(null, vehicle)
                 })
             },
-            function createBill(cb) {
+            function createHistory(cb) {
                 const history = new History({
                     date : rsp.date,
                     userId :rsp.userId,
@@ -63,7 +56,7 @@ module.exports = {
                 return next(err);
             }
             console.log('result : '+results);
-            return res.json(results);
+            return results;
         })
     }
 }
