@@ -8,7 +8,7 @@ var TrackingData = {
         const tasks = [
             function time(cb) {
                 dateDec = hexToDec(testData.substring(25,36));
-                var date = new Date(dateDec);
+                var date = new Date(dateDec).setHours(05,30,00,00);
                 newTackingData.date = date;
                 return cb(null, date);
             },
