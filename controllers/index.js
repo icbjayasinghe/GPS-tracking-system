@@ -22,7 +22,7 @@ router.get('/api/user/:id', user.getOne);
 router.get('/api/userByName/:userName', user.findByName);
 router.put('/api/user/resetPassword/:userName', user.resetUserPassword);
 router.put('/api/user/deleteUser/:userName', user.deleteFlag);
-router.put('/api/user/changePasword/:userName', user.changeUserPassword);
+router.post('/api/user/changePassword', user.changeUserPassword);
 
 //locations(branch) routes
 router.put('/api/user/location/:userName', user.addLocation);

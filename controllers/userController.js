@@ -65,14 +65,23 @@ var user = {
     })
   },
   changeUserPassword: function(req, res){
-    var userName = req.params.userName;
-    var pw = req.body.password;
-    User.changePassword(userName, pw, function(err, userRes){
-      if(err){
-        res.json({success: false, msg: err});
-      }
-      res.json(userRes);
-    })
+      const userPasswordDetails = {
+          userId: req.body.userId,
+          currentPassword: req.body.currentPassword,
+          newPassword: req.body.newPassword,
+          confirmPassword: req.body.confirmPassword
+      };
+
+      User.getUser(userPasswordDetails.userId,function(err, user) {
+          if (err) throw err;
+              // check if password matches
+                      User.changePassword(userPasswordDetails, user,function(err, userRes){
+                          if(err){
+                              res.json({success: false, msg: err});
+                          }
+                          res.json({success: true, msg: 'Password Changed Successfully..!!!'});
+                      });
+      });
   },
   addLocation: function(req,res){
     var userName = req.params.userName;

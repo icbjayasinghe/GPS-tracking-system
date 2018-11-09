@@ -134,22 +134,32 @@ module.exports.resetPassword = function(userName,options,callback){
     });    
 }
 //change password
-module.exports.changePassword = function(userName, pw, callback){
-    quary = { userName:userName };
-    bcrypt.genSalt(10, function (err, salt) {
+module.exports.changePassword = function(userPasswordDetails,user, callback) {
+
+    bcrypt.compare(userPasswordDetails.currentPassword, user.password, function (err, isMatch) {
         if (err) {
-            throw err;
+            return callback(err);
         }
-        bcrypt.hash(pw, salt, function (err, hash) {
-            if (err) {
-                throw err;
-            }
-            hpw = hash;
-            var update = { password: hpw}
-            User.findOneAndUpdate(quary, update, callback);
-        });
-    }); 
-}
+        if (!isMatch) {
+            return callback(null, isMatch);
+        } else {
+            quary = {_id: userPasswordDetails.userId};
+            bcrypt.genSalt(10, function (err, salt) {
+                if (err) {
+                    throw err;
+                }
+                bcrypt.hash(userPasswordDetails.newPassword, salt, function (err, hash) {
+                    if (err) {
+                        throw err;
+                    }
+                    var newPassword = hash;
+                    var update = {password: newPassword};
+                    User.findOneAndUpdate(quary, update, callback);
+                });
+            });
+        }
+    });
+};
 //view location
 module.exports.viewAllLocation = function(userName, callback){
     quary = { userName:userName};
