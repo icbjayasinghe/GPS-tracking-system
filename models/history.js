@@ -26,18 +26,23 @@ var historySchema = mongoose.Schema({
 
 var History = module.exports = mongoose.model('History',historySchema);
 
+//add tracking data to history
 module.exports.newHistory = function(history, callback){
     history.save(callback);
 }
-
 //view all history
 module.exports.getAll = function(callback, limit){ 
     History.find(callback).limit(limit);
 }
 //search history by user
-module.exports.searchHistoryByUser = function(userId, callback){
+module.exports.historyByUser = function(userId, callback){
     History.find({userId:userId},callback);
 }
-module.exports.findVehicle = function(vehicleNumber, callback){
+//history bby vehicle
+module.exports.historyByVehicle = function(vehicleNumber, callback){
     History.find({vehicleNumber:vehicleNumber},callback);
+}
+//history search
+module.exports.searchHistory = function(userId,vehicleNumber,date,callback){
+    History.find({userId:userId,vehicleNumber:vehicleNumber,date:date},callback);
 }

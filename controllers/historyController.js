@@ -1,6 +1,7 @@
 var History  = require('../models/history');
 var CommonFacade = require('./commonFacade');
 
+
 var history = {
     
     create : function(req,res) {
@@ -18,7 +19,7 @@ var history = {
 
     getHistoryByUser: function(req,res){
         var userId = req.params.userId; 
-        History.searchHistoryByUser(userId, function(err, historyRes){
+        History.historyByUser(userId, function(err, historyRes){
             if (err){
                 res.json({success:false, msg:err});
             }
@@ -28,7 +29,21 @@ var history = {
 
     getHistoryByVehicle : function(req, res){
         var vehicleNumber = req.params.vehicleNumber;
-        History.findVehicle(vehicleNumber, function(err, historyRes){
+        History.historyByVehicle(vehicleNumber, function(err, historyRes){
+            if (err){
+                res.json({success:false, msg:err});
+            }
+            res.json(historyRes);
+        });
+    },
+
+    searchHistory: function(req, res){
+        var userId =  req.body.userId;
+        var vehicleNumber = req. body.vehicleNumber;
+        var date = req.body.date;
+        // date.setHours(date.getHours() + 5);
+        // date.setMinutes(date.getMinutes() + 30);
+        History.searchHistory(userId,vehicleNumber,date, function(err, historyRes){
             if (err){
                 res.json({success:false, msg:err});
             }

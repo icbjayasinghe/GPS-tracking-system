@@ -7,6 +7,8 @@ module.exports = {
         Vehicle.viewVehicles(function(err,res){
             res.forEach(element => {
                 var date = new Date();
+                // date.setHours(date.getHours() + 5);
+                // date.setMinutes(date.getMinutes() + 30);
                 var history = new History({
                     date : date,
                     userId : element.userId,
@@ -26,8 +28,6 @@ module.exports = {
                     console.log({success:true,history:historyRes});
                 })
                 console.log(element._id);
-
-                //CommonFacade.addTrackingDataToHistory(element._id);
             });
         })
         res.json({success:true});
