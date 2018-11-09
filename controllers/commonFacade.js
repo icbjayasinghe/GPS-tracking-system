@@ -6,11 +6,11 @@ module.exports = {
     create : function(req,res) {
         Vehicle.viewVehicles(function(err,res){
             res.forEach(element => {
-                var date = new Date();
-                // date.setHours(date.getHours() + 5);
-                // date.setMinutes(date.getMinutes() + 30);
+                var date = new Date().toISOString();
+                console.log('hi');
+                var d = date.substring(0,10);
                 var history = new History({
-                    date : date,
+                    date : d,
                     userId : element.userId,
                     vehicleNumber : element.vehicleNumber,
                     trackingData : element.trackingData
