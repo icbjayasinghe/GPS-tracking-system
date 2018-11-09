@@ -8,6 +8,7 @@ const passport = require('passport');
 
 //login & registration
 router.post('/login', auth.login);
+router.post('/api/history', history.create);
 
 router.use('/', passport.authenticate('jwt', { session: false }),
     function(req, res, next) {
@@ -45,7 +46,6 @@ router.get('/api/vehicle/trackingData/:imeiNumber', vehicle.viewPath);
 router.get('/api/vehicle/trackingDataByUser/:userId', vehicle.viewTrackingDataByUser);
 
 //history related routes
-router.post('/api/history', history.create);
 router.get('/api/history',history.getHistory);
 router.get('/api/history/:userId',history.getHistoryByUser);
 router.get('/api/historyByVehicle/:vehicleNumber',history.getHistoryByVehicle);
