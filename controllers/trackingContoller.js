@@ -9,8 +9,8 @@ var TrackingData = {
             function time(cb) {
                 dateDec = hexToDec(testData.substring(25,36));
                 var date = new Date(dateDec);
-                date.setHours(d.getHours() + 5);
-                date.setMinutes(d.getMinutes() + 30);
+                date.setHours(date.getHours() + 5);
+                date.setMinutes(date.getMinutes() + 30);
                 newTackingData.date = date;
                 return cb(null, date);
             },
