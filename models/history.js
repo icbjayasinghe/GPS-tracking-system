@@ -43,6 +43,6 @@ module.exports.historyByVehicle = function(vehicleNumber, callback){
     History.find({vehicleNumber:vehicleNumber},callback);
 }
 //history search
-module.exports.searchHistory = function(userId,vehicleNumber,date,callback){
-    History.find({userId:userId,vehicleNumber:vehicleNumber,date:date},callback);
+module.exports.searchHistory = function(searchDetails,callback){    
+    History.find({vehicleNumber:searchDetails.vehicleNumber,date:searchDetails.date},callback);
 }

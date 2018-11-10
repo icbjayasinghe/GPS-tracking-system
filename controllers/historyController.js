@@ -38,22 +38,24 @@ var history = {
     },
 
     searchHistory: function(req, res){
-        var date = (req.body.dateFrom).substring(0,10)
+        var d = new Date(); // Today!
+        d.setDate(d.getDate() + 1); 
+        var date = new Date().toISOString();
+
+        var day =date.substring(0,10)
         const searchDetails = {
             vehicleNumber: req.body.vehicleNumber,
-            dateFrom: date
+            date: day
         };
         console.log(searchDetails);
-        /*var userId =  req.body.userId;
-        var vehicleNumber = req. body.vehicleNumber;
-        var date = req.body.date;
-        
-        History.searchHistory(userId,vehicleNumber,date, function(err, historyRes){
+
+        History.searchHistory(searchDetails, function(err, historyRes){
             if (err){
                 res.json({success:false, msg:err});
             }
+            console.log(historyRes);
             res.json(historyRes);
-        });*/
+        });
     }
 }
 
