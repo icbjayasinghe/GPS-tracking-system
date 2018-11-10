@@ -9,17 +9,18 @@ const passport = require('passport');
 //login & registration
 router.post('/login', auth.login);
 
-// router.use('/', passport.authenticate('jwt', { session: false }),
-//     function(req, res, next) {
-//         next();
-//     }
-// );
+router.use('/', passport.authenticate('jwt', { session: false }),
+    function(req, res, next) {
+        next();
+    }
+);
 
 //find users done
 router.post('/api/user', user.addUser);
 router.get('/api/user',  user.getAll);
 router.get('/api/user/:id', user.getOne);
 router.get('/api/userByName/:userName', user.findByName);
+router.post('/api/user/resetPassword', user.resetPassword);
 router.put('/api/user/resetPassword/:userName', user.resetUserPassword);
 router.put('/api/user/deleteUser/:userName', user.deleteFlag);
 router.post('/api/user/changePassword', user.changeUserPassword);

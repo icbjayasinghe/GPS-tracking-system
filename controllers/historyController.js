@@ -53,7 +53,7 @@ var history = {
             if (err){
                 res.json({success:false, msg:err});
             }
-            console.log(historyRes);
+            console.log(historyRes[0]);
             res.json(historyRes);
         });
     }

@@ -64,6 +64,13 @@ var user = {
       res.json(userRes);
     })
   },
+    resetPassword: function(req, res){
+        const userRestPasswordDetails = {
+            userId: req.body.userId,
+            userName: req.body.userName
+        };
+        console.log(userRestPasswordDetails);
+    },
   changeUserPassword: function(req, res){
       const userPasswordDetails = {
           userId: req.body.userId,
