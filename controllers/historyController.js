@@ -38,16 +38,16 @@ var history = {
     },
 
     searchHistory: function(req, res){
-        const userPasswordDetails = {
+        var date = (req.body.dateFrom).substring(0,10)
+        const searchDetails = {
             vehicleNumber: req.body.vehicleNumber,
-            dateFrom: req.body.dateFrom
+            dateFrom: date
         };
-        console.log(userPasswordDetails);
+        console.log(searchDetails);
         /*var userId =  req.body.userId;
         var vehicleNumber = req. body.vehicleNumber;
         var date = req.body.date;
-        // date.setHours(date.getHours() + 5);
-        // date.setMinutes(date.getMinutes() + 30);
+        
         History.searchHistory(userId,vehicleNumber,date, function(err, historyRes){
             if (err){
                 res.json({success:false, msg:err});
