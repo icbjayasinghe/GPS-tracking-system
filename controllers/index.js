@@ -47,7 +47,7 @@ router.get('/api/vehicle/trackingDataByUser/:userId', vehicle.viewTrackingDataBy
 //history related routes
 router.post('/api/history', history.create);
 router.get('/api/history',history.getHistory);
-router.post('/api/searchHistory',history.searchHistory)
+router.post('/api/searchHistory',history.searchHistory);
 router.get('/api/historyByUserId/:userId',history.getHistoryByUser);
 router.get('/api/historyByVehicle/:vehicleNumber',history.getHistoryByVehicle);
 

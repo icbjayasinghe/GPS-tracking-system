@@ -38,7 +38,12 @@ var history = {
     },
 
     searchHistory: function(req, res){
-        var userId =  req.body.userId;
+        const userPasswordDetails = {
+            vehicleNumber: req.body.vehicleNumber,
+            dateFrom: req.body.dateFrom
+        };
+        console.log(userPasswordDetails);
+        /*var userId =  req.body.userId;
         var vehicleNumber = req. body.vehicleNumber;
         var date = req.body.date;
         // date.setHours(date.getHours() + 5);
@@ -48,7 +53,7 @@ var history = {
                 res.json({success:false, msg:err});
             }
             res.json(historyRes);
-        });
+        });*/
     }
 }
 
