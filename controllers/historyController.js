@@ -46,8 +46,7 @@ var history = {
         /*var userId =  req.body.userId;
         var vehicleNumber = req. body.vehicleNumber;
         var date = req.body.date;
-        // date.setHours(date.getHours() + 5);
-        // date.setMinutes(date.getMinutes() + 30);
+        
         History.searchHistory(userId,vehicleNumber,date, function(err, historyRes){
             if (err){
                 res.json({success:false, msg:err});
