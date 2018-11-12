@@ -48,14 +48,32 @@ var TrackingData = {
             },
             function noOFIo(cb){
                 var noOFIoElements = hexToDec(testData.substring(70,72));
-                elementCount=0;
+                var noOfOneBytes = hexToDec(testData.substring(72,74));
+                // console.log("1byte "+noOfOneBytes);
+                if(noOfOneBytes!=0){
+                    for(i=0;i<noOfOneBytes;i++){
+                        var idEndPoint=74+2*i;
+                        var valueEndPoint=idEndPoint+2;
+                        console.log("point id"+idEndPoint+" : "+testData.substring(74,idEndPoint));
+                        console.log("value " +testData.substring(74,valueEndPoint));   
+                    }
+                    var secondEndPoint = 74+(4*noOfOneBytes);
+                    var noOfTwoBytes = hexToDec(testData.substring(secondEndPoint,secondEndPoint+2));
+                    console.log("second "+noOfTwoBytes);
+                }
+                
+
+                // elementCount=0;
                 // var oneByteState = false;
                 // var twoByteState = false;
                 // var fourByteState = false;
                 // var eightByteState = false;
                 // for(i=0;i<noOFIoElements;i++){
                 //     if(oneByteState==false){
-                //         var noOfOneByte =  hexToDec(testData.substring(72,));
+                //         oneByteState==true;
+                //         var noOfOneByte =  hexToDec(testData.substring(72,74));
+                //         //for(j)
+                //         console.log("No of 1byte "+noOfOneByte);
                 //     }
                     
                 // }
@@ -75,7 +93,8 @@ var TrackingData = {
         data = hexToDec(d.substring(19,20));
         //console.log(this.splitData(d.substring(105,184)));
         //var len = (d.length-30)/86;
-        // console.log(d);
+        console.log("numb "+data);
+        console.log(d)
         // console.log("Len : "+d.length)
         return data;
     }
