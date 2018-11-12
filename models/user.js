@@ -117,22 +117,22 @@ module.exports.resetStatus = function(userName,options,callback){
     User.findOneAndUpdate(quary, update, options, callback);  
 }
 //reset password
-module.exports.resetPassword = function(userName,options,callback){
-    quary = {userName:userName};
+module.exports.restPassword = function(userRestPasswordDetails,callback){
     bcrypt.genSalt(10, function (err, salt) {
         if (err) {
             throw err;
         }
-        bcrypt.hash(userName, salt, function (err, hash) {
+        bcrypt.hash(userRestPasswordDetails.userName, salt, function (err, hash) {
             if (err) {
                 throw err;
             }
-            pw = hash;
-            var update = { password: pw}
-            User.findOneAndUpdate(quary, update, options, callback);
+            var quary = {_id: userRestPasswordDetails.userId};
+            var newPassword = hash;
+            var update = {password: newPassword};
+            User.findOneAndUpdate(quary, update, callback);
         });
-    });    
-}
+    });
+};
 //change password
 module.exports.changePassword = function(userPasswordDetails,user, callback) {
 

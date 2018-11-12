@@ -20,8 +20,7 @@ router.post('/api/user', user.addUser);
 router.get('/api/user',  user.getAll);
 router.get('/api/user/:id', user.getOne);
 router.get('/api/userByName/:userName', user.findByName);
-router.post('/api/user/resetPassword', user.resetPassword);
-router.put('/api/user/resetPassword/:userName', user.resetUserPassword);
+router.post('/api/user/restPassword', user.restPassword);
 router.put('/api/user/deleteUser/:userName', user.deleteFlag);
 router.post('/api/user/changePassword', user.changeUserPassword);
 

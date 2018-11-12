@@ -46,15 +46,6 @@ var user = {
       res.json(userRes);
     })
   },
-  resetUserPassword: function(req, res){
-    var userName = req.params.userName;
-    User.resetPassword(userName,{}, function(err, userRes){
-      if(err){
-        res.json({success: false, msg: err});
-      }
-      res.json(userRes);
-    })
-  },
   deleteFlag: function(req, res){
     var userName = req.params.userName;
     User.resetStatus(userName,{}, function(err, userRes){
@@ -64,12 +55,18 @@ var user = {
       res.json(userRes);
     })
   },
-    resetPassword: function(req, res){
+    restPassword: function(req, res){
         const userRestPasswordDetails = {
             userId: req.body.userId,
             userName: req.body.userName
         };
-        console.log(userRestPasswordDetails);
+        User.restPassword(userRestPasswordDetails,function(err, result) {
+            if(err){
+                console.log(err);
+                res.json({success: false, msg: err});
+            }
+            res.json({success: true, msg: 'Rest Password Successfully..!!!'});
+        });
     },
   changeUserPassword: function(req, res){
       const userPasswordDetails = {
