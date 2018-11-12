@@ -47,16 +47,14 @@ var history = {
             vehicleNumber: req.body.vehicleNumber,
             date: day
         };
-        console.log(searchDetails);
 
         History.searchHistory(searchDetails, function(err, historyRes){
             if (err){
                 res.json({success:false, msg:err});
             }
-            console.log(historyRes[0]);
             res.json(historyRes);
         });
     }
-}
+};
 
 module.exports = history ;
