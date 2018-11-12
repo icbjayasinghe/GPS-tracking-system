@@ -21,7 +21,7 @@ router.get('/api/user',  user.getAll);
 router.get('/api/user/:id', user.getOne);
 router.get('/api/userByName/:userName', user.findByName);
 router.post('/api/user/restPassword', user.restPassword);
-router.put('/api/user/deleteUser/:userName', user.deleteFlag);
+router.get('/api/user/deleteUser/:userId', user.deleteFlag);
 router.post('/api/user/changePassword', user.changeUserPassword);
 
 //locations(branch) routes
