@@ -7,7 +7,7 @@ var TrackingData = {
         let newTackingData = {};
         const tasks = [
             function time(cb) {
-                dateDec = hexToDec(testData.substring(25,36));
+                dateDec = hexToDec(testData.substring(20,36));
                 var date = new Date(dateDec);
                 date.setHours(date.getHours() + 5);
                 date.setMinutes(date.getMinutes() + 30);
@@ -45,6 +45,21 @@ var TrackingData = {
                 var speed = hexToDec(testData.substring(64,68));
                 newTackingData.speed=speed;
                 return cb(null, speed);
+            },
+            function noOFIo(cb){
+                var noOFIoElements = hexToDec(testData.substring(70,72));
+                elementCount=0;
+                // var oneByteState = false;
+                // var twoByteState = false;
+                // var fourByteState = false;
+                // var eightByteState = false;
+                // for(i=0;i<noOFIoElements;i++){
+                //     if(oneByteState==false){
+                //         var noOfOneByte =  hexToDec(testData.substring(72,));
+                //     }
+                    
+                // }
+                console.log("IO "+noOFIoElements);
             } 
         ];
 
@@ -58,6 +73,10 @@ var TrackingData = {
 
     getNoOfData:function(d){
         data = hexToDec(d.substring(19,20));
+        //console.log(this.splitData(d.substring(105,184)));
+        //var len = (d.length-30)/86;
+        // console.log(d);
+        // console.log("Len : "+d.length)
         return data;
     }
 }
