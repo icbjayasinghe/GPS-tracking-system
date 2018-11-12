@@ -68,7 +68,7 @@ module.exports.checkImei = function(imeiNumber,callback){
             return callback(err,false);
         }
         if (!vehicleRes){
-            return callback(null,false);
+            return callback(err,false);
         }
         else{
             return callback(null,true);

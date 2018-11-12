@@ -62,7 +62,7 @@ server.on("connection", function(socket){
             console.log("IMIE : %s  ",d );
             var IMIE = d.toString().substring(2,17);
             Vehicle.checkImei(IMIE,function(err,data){
-                if(!err){
+                if(data==true){
                     socket.write("");
                     var state= false;
                     for(i=0;i<mainArr.length;i++){
