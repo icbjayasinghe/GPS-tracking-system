@@ -111,11 +111,11 @@ module.exports.findUserByName = function(userName, callback){
     User.find({userName:userName}, callback); 
 }
 //delete user by flag
-module.exports.resetStatus = function(userName,options,callback){
-    quary = {userName:userName};
-    var update = { status: 'Deleted'}
+module.exports.resetStatus = function(userId,options,callback){
+    quary = {_id:userId};
+    var update = { status: 'Deleted'};
     User.findOneAndUpdate(quary, update, options, callback);  
-}
+};
 //reset password
 module.exports.restPassword = function(userRestPasswordDetails,callback){
     bcrypt.genSalt(10, function (err, salt) {

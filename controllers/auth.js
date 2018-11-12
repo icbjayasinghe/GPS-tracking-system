@@ -6,10 +6,10 @@ var auth = {
     var userName = req.body.userName || '';
     var password = req.body.password || '';
     if (userName === '' || password === '') {
-      res.status(401);
-      res.json({
-        "status": 401,
-        "message": "Invalid credentials"
+      res.send({
+          success: false,
+        status: 401,
+        msg: "Invalid credentials"
       });
     return;
   }

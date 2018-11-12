@@ -15,9 +15,9 @@ var user = {
     });
     User.createUser(newUser, function(err,userRes){
       if (err){
-        res.json({success: false, msg: err});
+        res.json({success: false, msg: 'Something Wrong, Try Again!', err: err});
       }
-      res.json({success: true,user: userRes});
+      res.json({success: true,user: userRes, msg: 'New User Added Successfully!'});
     })
   },
   getAll: function(req, res) {
@@ -43,19 +43,19 @@ var user = {
       if(err){
         res.json({success: false, msg: err});
       }
-      res.json(userRes);
+      res.json({success: true, userRes});
     })
   },
   deleteFlag: function(req, res){
-    var userName = req.params.userName;
-    User.resetStatus(userName,{}, function(err, userRes){
+    var userId = req.params.userId;
+    User.resetStatus(userId,{}, function(err, userRes){
       if(err){
-        res.json({success: false, msg: err});
+        res.json({success: false, msg: 'Something Wrong, Try Again!', err: err});
       }
-      res.json(userRes);
+      res.json({success: true, userRes, msg: 'User Blocked from the System Successfully!'});
     })
   },
-    restPassword: function(req, res){
+  restPassword: function(req, res){
         const userRestPasswordDetails = {
             userId: req.body.userId,
             userName: req.body.userName
@@ -63,7 +63,7 @@ var user = {
         User.restPassword(userRestPasswordDetails,function(err, result) {
             if(err){
                 console.log(err);
-                res.json({success: false, msg: err});
+                res.json({success: false, msg: 'Something Wrong, Try Again!', err: err});
             }
             res.json({success: true, msg: 'Rest Password Successfully..!!!'});
         });
@@ -81,9 +81,9 @@ var user = {
               // check if password matches
                       User.changePassword(userPasswordDetails, user,function(err, userRes){
                           if(err){
-                              res.json({success: false, msg: err});
+                              res.json({success: false, msg: 'Something Wrong, Try Again!', err: err});
                           }
-                          res.json({success: true, msg: 'Password Changed Successfully..!!!'});
+                          res.json({success: true, msg: 'Password Changed Successfully!'});
                       });
       });
   },
@@ -125,6 +125,6 @@ var user = {
       }
     });
   }
-}
+};
 
 module.exports = user;
