@@ -38,11 +38,11 @@ var history = {
     },
 
     searchHistory: function(req, res){
-        var d = new Date(); // Today!
-        d.setDate(d.getDate() + 1); 
-        var date = new Date().toISOString();
+        var d = new Date(req.body.dateFrom); // Today!
+        d.setDate(d.getDate() + 1);
+        var date = d.toISOString();
 
-        var day =date.substring(0,10)
+        var day =date.substring(0,10);
         const searchDetails = {
             vehicleNumber: req.body.vehicleNumber,
             date: day
