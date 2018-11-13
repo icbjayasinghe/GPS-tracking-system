@@ -49,18 +49,62 @@ var TrackingData = {
             function noOFIo(cb){
                 var noOFIoElements = hexToDec(testData.substring(70,72));
                 var noOfOneBytes = hexToDec(testData.substring(72,74));
-                // console.log("1byte "+noOfOneBytes);
-                if(noOfOneBytes!=0){
-                    for(i=0;i<noOfOneBytes;i++){
-                        var idEndPoint=74+2*i;
-                        var valueEndPoint=idEndPoint+2;
-                        console.log("point id"+idEndPoint+" : "+testData.substring(74,idEndPoint));
-                        console.log("value " +testData.substring(74,valueEndPoint));   
-                    }
-                    var secondEndPoint = 74+(4*noOfOneBytes);
-                    var noOfTwoBytes = hexToDec(testData.substring(secondEndPoint,secondEndPoint+2));
-                    console.log("second "+noOfTwoBytes);
+                var startTwoByte = noOfOneBytes*4+74;
+                var noOfTwoBytes = hexToDec(testData.substring(startTwoByte,startTwoByte+2));
+                var startFourByte = noOfTwoBytes*6+startTwoByte+2;
+                var noOfFourBytes = hexToDec(testData.substring(startFourByte,startFourByte+2));
+                var startEightByte = noOfFourBytes*10+startFourByte+2;
+                var noOfEightBytes = hexToDec(testData.substring(startEightByte,startEightByte+2));
+                var endOfBreaker = noOfEightBytes*18 + startEightByte+4;
+                
+                console.log("1byte "+noOfOneBytes);
+                console.log("2byte "+startTwoByte);
+                console.log("4byte "+startFourByte);
+                console.log("8byte "+startEightByte);
+                console.log("breaker "+endOfBreaker);
+                for(i=0;i<noOfOneBytes;i++){
+                    var idStartPoint = i*4+74
+                    var oneByteId = hexToDec(testData.substring(idStartPoint,idStartPoint+2));
+                    var value = hexToDec(testData.substring(idStartPoint+2,idStartPoint+4));
+                    console.log("1 byte ids "+oneByteId);
+                    console.log("1 byte values "+value);
                 }
+                for(i=0;i<noOfTwoBytes;i++){
+                    var idStartPoint = i*6+startTwoByte+2;
+                    var TwoByteId = hexToDec(testData.substring(idStartPoint,idStartPoint+2));
+                    var value = hexToDec(testData.substring(idStartPoint+2,idStartPoint+6));
+                    console.log("2 byte ids "+TwoByteId);
+                    console.log("2 byte values "+value);
+                }
+                for(i=0;i<noOfFourBytes;i++){
+                    var idStartPoint = i*10+startFourByte+2;
+                    var FourByteId = hexToDec(testData.substring(idStartPoint,idStartPoint+2));
+                    var value = hexToDec(testData.substring(idStartPoint+2,idStartPoint+10));
+                    console.log("4 byte ids "+FourByteId);
+                    console.log("4 byte values "+value);
+                }
+
+                for(i=0;i<noOfEightBytes;i++){
+                    var idStartPoint = i*18+startEightByte+2;
+                    var EightByteId = hexToDec(testData.substring(idStartPoint,idStartPoint+2));
+                    var value = hexToDec(testData.substring(idStartPoint+2,idStartPoint+18));
+                    console.log("8 byte ids "+EightByteId);
+                    console.log("8 byte values "+value);
+                }
+
+                //console.log("Digital input 1 id : "+hexToDec(testData.substring(76,78)));
+
+                // if(noOfOneBytes!=0){
+                //     for(i=0;i<noOfOneBytes;i++){
+                //         var idEndPoint=74+2*i;
+                //         var valueEndPoint=idEndPoint+2;
+                //         console.log("point id"+idEndPoint+" : "+testData.substring(74,idEndPoint));
+                //         console.log("value " +testData.substring(74,valueEndPoint));   
+                //     }
+                //     var secondEndPoint = 74+(4*noOfOneBytes);
+                //     var noOfTwoBytes = hexToDec(testData.substring(secondEndPoint,secondEndPoint+2));
+                //     console.log("second "+noOfTwoBytes);
+                // }
                 
 
                 // elementCount=0;
