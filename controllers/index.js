@@ -5,9 +5,12 @@ var user  = require('./userController.js');
 var vehicle = require('./vehicleController.js');
 var history = require('./historyController.js');
 const passport = require('passport');
+var trackingData = require('./trackingContoller');
 
 //login & registration
 router.post('/login', auth.login);
+
+router.get('/test',trackingData.splitDataNew);
 
 router.use('/', passport.authenticate('jwt', { session: false }),
     function(req, res, next) {
