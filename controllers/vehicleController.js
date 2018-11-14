@@ -26,6 +26,14 @@ var vehicle = {
             res.json(vehi)
         });
     },
+    getVehicleNumber: function(req, res){
+        Vehicle.getAllVehicleNumbers(function(err, vehicleRes){
+            if (err){
+                res.json({success: false, msg: err});
+            }
+            res.json({success: true, msg: vehicleRes});            
+        });
+    },
     searchVehicle: function(req, res){
         var vehicleNumber = req.params.vehicleNumber;
         Vehicle.findVehicle(vehicleNumber, function(err, vehicleRes){
