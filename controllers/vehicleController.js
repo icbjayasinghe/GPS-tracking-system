@@ -13,9 +13,9 @@ var vehicle = {
         });
         Vehicle.addVehicle(newVehicle,function(err,vehicleRes){
             if(err){
-                res.json({success: false, msg: err});
+                res.json({success: false, msg:'Something wrong, Try Again!',  err: err});
             }
-            res.json({success:true,vehicle:vehicleRes});
+            res.json({success:true,vehicle:vehicleRes, msg: 'New Vehicle Added Successfully!'});
         })
     },
     viewAllVehicles: function(req, res){
