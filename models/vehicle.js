@@ -47,7 +47,7 @@ module.exports.findVehicle =function(vehicleNumber, callback){
 }
 //update vehicle
 module.exports.updateVehicle = function(vehicleNumber, vehicle, options, callback){
-    Vehicle.findOneAndUpdate({vehicleNumber: vehicleNumber},{vehicleDetails: vehicle}, options, callback);
+    Vehicle.findOneAndUpdate({_id: vehicleNumber},{vehicleNumber: vehicle.vehicleNo, vehicleDetails: vehicle.vehcileDetails}, options, callback);
 }
 //vehicles by user
 module.exports.userVehicles = function(userId, callback){
