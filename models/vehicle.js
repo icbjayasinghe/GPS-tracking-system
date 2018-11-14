@@ -27,7 +27,12 @@ var vehicleSchema = mongoose.Schema({
         altitude: Number,
         angle: Number,
         satelites: Number,
-        speed: Number
+        speed: Number,
+        ignition:Number,
+        digitalInputTwo:Number,
+        fuel:Number,
+        batteryVoltage:Number,
+        temperature:Number
     }]
 });
 
