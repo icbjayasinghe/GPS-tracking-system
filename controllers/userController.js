@@ -90,16 +90,18 @@ var user = {
   addLocation: function(req,res){
     var userName = req.params.userName;
     let location = {
-      name:req.body.name,
-      type:req.body.type,
+      name:req.body.locationName,
+      type:req.body.locationType,
       latitude:req.body.latitude,
-      longitude:req.body.longitude
+      longitude:req.body.longitude,
+      range: req.body.range
     };
+    console.log(location);
     User.updateMany({'userName': userName}, {'$push': { location : location }}, function (err) {
       if (err) {
-          throw err;
+          res.json({ success: false, msg: "Something Wrong, Try Again!", err: err });
       } else {
-          res.json({ success: true, message: "successfully added location" });
+          res.json({ success: true, msg: "successfully added location" });
       }
     });
   },
