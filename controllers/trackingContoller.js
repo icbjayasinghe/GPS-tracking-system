@@ -5,8 +5,8 @@ var hexToDec = require('hex-to-dec');
 var TrackingData = {   
 
     splitDataNew:function(req, res){
-        var test = "0000000000000000080400000113fc208dff000f14f650209cca80006f00d60400040004030101150316030001460000015d0000000113fc17610b000f14ffe0209cc580006e00c00500010004030101150316010001460000015e0000000113fc284945000f150f00209cd200009501080400000004030101150016030001460000015d0000000113fc267c5b000f150a50209cccc0009300680400000004030101150016030001460000015b000400000000";
-        //var test = "00000000000000da0805000001670bffa2d0002f9ceb62041929a0003a00000e0000000401010002090030430000014800000bb800000001670bfeb870002f9ceb62041929a0003d00000f000000040101000209002c430000014800000bb800000001670bfdce10002f9ceb62041929a0003d00000d0000000401010002090012430000014800000bb800000001670bfce798002f9ceb62041929a0003f000011000000040101000209001c430000014800000bb800000001670bfbf950002f9ceb62041929a0003f00000f0000000401010002090010430000014800000bb8000500002c62";
+        //var test = "0000000000000000080400000113fc208dff000f14f650209cca80006f00d60400040004030101150316030001460000015d0000000113fc17610b000f14ffe0209cc580006e00c00500010004030101150316010001460000015e0000000113fc284945000f150f00209cd200009501080400000004030101150016030001460000015d0000000113fc267c5b000f150a50209cccc0009300680400000004030101150016030001460000015b000400000000";
+        var test = "00000000000000da0805000001670bffa2d0002f9ceb62041929a0003a00000e0000000401010002090030430000014800000bb800000001670bfeb870002f9ceb62041929a0003d00000f000000040101000209002c430000014800000bb800000001670bfdce10002f9ceb62041929a0003d00000d0000000401010002090012430000014800000bb800000001670bfce798002f9ceb62041929a0003f000011000000040101000209001c430000014800000bb800000001670bfbf950002f9ceb62041929a0003f00000f0000000401010002090010430000014800000bb8000500002c62";
         //var test = "00000000000000da0805000001670c68ebf0002f9ceb62041929a0fff40000130000000401010002090014430000014800000bb800000001670c5ed9d0002f9ceb62041929a0ffe60000120000000401010002090022430000014800000bb800000001670c54c7b0002f9ceb62041929a000190000100000000401010002090018430000014800000bb800000001670c4621b0002f9ceb62041929a0004c000010000000040101000209002c430000014800000bb800000001670c3c0f90002f9ceb62041929a0001d00000f000000040101000209002b430000014800000bb80005000004ae";
         console.log('length of the data '+test.length);
         //n== no of data
@@ -74,40 +74,53 @@ var TrackingData = {
             var w = hexToDec(data.substring(52,54));
             console.log('1byte : '+w);
             for(j=0;j<w;j++){
-                var oneByteId = hexToDec(data.substring(54+j*4,56+j*4));
-                var oneByteValue = hexToDec(data.substring(56+j*4,58+j*4));
-                console.log('id '+oneByteId);
-                console.log('value '+oneByteValue);
+                var id = hexToDec(data.substring(54+j*4,56+j*4));
+                var value = hexToDec(data.substring(56+j*4,58+j*4));
+                console.log('id : '+id+', value : '+value);
+                if (id == 1){
+                    console.log('hi');
+                    console.log('id : '+id+', value : '+value);
+                    newTackingData.ignition = value;
+                }
+                else if (id == 2){
+                    newTackingData.digitalInputTwo = value;
+                }
             }
 
             //no of 2 byte IO Elements = x
             var x = hexToDec(data.substring(54+4*w,56+4*w));
             console.log('2byte : '+x);
             for(j=0;j<x;j++){
-                var twoByteId = hexToDec(data.substring(56+4*w+j*6,58+4*w+j*6));
-                var twoByteValue = hexToDec(data.substring(58+4*w+j*6,62+4*w+j*6));
-                console.log('id '+twoByteId);
-                console.log('value '+twoByteValue);                
+                var id = hexToDec(data.substring(56+4*w+j*6,58+4*w+j*6));
+                var value = hexToDec(data.substring(58+4*w+j*6,62+4*w+j*6));
+                console.log('id : '+id+', value : '+value);   
+                if (id == 9){
+                    newTackingData.fuel = value;
+                }
+                else if (id == 64){
+                    newTackingData.batteryVoltage = value;
+                }            
             }
 
             //no of 4 byte IO Elements = y
             var y = hexToDec(data.substring(56+(4*w)+(6*x),58+(4*w)+(6*x)));
             console.log('4byte : '+y);
             for(j=0;j<y;j++){
-                var fourByteId = hexToDec(data.substring(58+(4*w)+(6*x)+10*j,60+(4*w)+(6*x)+10*j));
-                var fourByteValue = hexToDec(data.substring(60+(4*w)+(6*x)+10*j,68+(4*w)+(6*x)+10*j));
-                console.log('id '+fourByteId);
-                console.log('value '+fourByteValue);                      
+                var id = hexToDec(data.substring(58+(4*w)+(6*x)+10*j,60+(4*w)+(6*x)+10*j));
+                var value = hexToDec(data.substring(60+(4*w)+(6*x)+10*j,68+(4*w)+(6*x)+10*j));
+                console.log('id : '+id+', value : '+value);
+                if (id == 72){
+                    newTackingData.temperature = value;
+                }
             }
 
             //no of 8 byte IO Elements = z
             var z = hexToDec(data.substring(58+(4*w)+(6*x)+(10*y),60+(4*w)+(6*x)+(10*y)));
             console.log('8byte : '+z);
             for(j=0;j<z;j++){       
-                var eightByteId = hexToDec(data.substring(60+(4*w)+(6*x)+(10*y)+18*j,62+(4*w)+(6*x)+(10*y)+18*j));
-                var eightByteValue = hexToDec(data.substring(62+(4*w)+(6*x)+(10*y)+18*j,78+(4*w)+(6*x)+(10*y)+18*j));
-                console.log('id '+eightByteId);
-                console.log('value '+eightByteValue);          
+                var id = hexToDec(data.substring(60+(4*w)+(6*x)+(10*y)+18*j,62+(4*w)+(6*x)+(10*y)+18*j));
+                var value = hexToDec(data.substring(62+(4*w)+(6*x)+(10*y)+18*j,78+(4*w)+(6*x)+(10*y)+18*j));
+                console.log('id : '+id+', value : '+value);
             }
 
             dataArray[i]=newTackingData;
