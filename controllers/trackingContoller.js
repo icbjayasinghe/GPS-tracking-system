@@ -4,16 +4,6 @@ var hexToDec = require('hex-to-dec');
 
 var TrackingData = {   
 
-    getNoOfData:function(d){
-        data = hexToDec(d.substring(19,20));
-        //console.log(this.splitData(d.substring(105,184)));
-        //var len = (d.length-30)/86;
-        console.log("numb "+data);
-        console.log(d)
-        // console.log("Len : "+d.length)
-        return data;
-    },
-
     splitDataNew:function(req, res){
         var test = "0000000000000000080400000113fc208dff000f14f650209cca80006f00d60400040004030101150316030001460000015d0000000113fc17610b000f14ffe0209cc580006e00c00500010004030101150316010001460000015e0000000113fc284945000f150f00209cd200009501080400000004030101150016030001460000015d0000000113fc267c5b000f150a50209cccc0009300680400000004030101150016030001460000015b000400000000";
         //var test = "00000000000000da0805000001670bffa2d0002f9ceb62041929a0003a00000e0000000401010002090030430000014800000bb800000001670bfeb870002f9ceb62041929a0003d00000f000000040101000209002c430000014800000bb800000001670bfdce10002f9ceb62041929a0003d00000d0000000401010002090012430000014800000bb800000001670bfce798002f9ceb62041929a0003f000011000000040101000209001c430000014800000bb800000001670bfbf950002f9ceb62041929a0003f00000f0000000401010002090010430000014800000bb8000500002c62";
@@ -23,13 +13,18 @@ var TrackingData = {
         var n = hexToDec(test.substring(18,20));
         console.log('number of data '+n);
 
+        var dataArray=[];
+
         //l== length of a data set
         var l = (test.length-30)/n;
         console.log(l);
 
         for (i=0; i<n; i++){
+
+            //define new tracking data
+            let newTackingData = {};
+            console.log('_______________________________');
             console.log(i+1);
-            console.log("data range : "+(20+i*l)+'-'+(20+(i+1)*l));
             var data = test.substring(20+i*l,20+(i+1)*l);
             
             //GPS element
@@ -37,27 +32,35 @@ var TrackingData = {
             var date = new Date(dateDec);
             date.setHours(date.getHours() + 5);
             date.setMinutes(date.getMinutes() + 30);
+            newTackingData.date = date;
             console.log('date '+date);
 
             var priority = hexToDec(data.substring(16,18));
+            newTackingData.priority = priority;
             console.log('priority '+priority);
 
             var longitude = (hexToDec(data.substring(18,26)))/10000000;
+            newTackingData.longitude = longitude;
             console.log('longitude '+longitude);
 
             var latitude = (hexToDec(data.substring(26,34)))/10000000;
+            newTackingData.latitude = latitude;
             console.log('latitude '+latitude);
 
             var altitude = hexToDec(data.substring(34,38));
+            newTackingData.altitude = altitude;
             console.log('altitude '+altitude);
             
             var angle = hexToDec(data.substring(38,42));
+            newTackingData.angle = angle;
             console.log('angle '+angle);
 
             var satellites = hexToDec(data.substring(42,44));
+            newTackingData.satellites = satellites;
             console.log('satellites '+satellites);
 
             var speed = hexToDec(data.substring(44,48));
+            newTackingData.speed = speed;
             console.log('speed '+speed);
 
             var ioElementId = hexToDec(data.substring(48,50));
@@ -106,9 +109,12 @@ var TrackingData = {
                 console.log('id '+eightByteId);
                 console.log('value '+eightByteValue);          
             }
+
+            dataArray[i]=newTackingData;
             
         }
-        res.json("Hi :)");
+        //res.json(dataArray);
+        return(dataArray);
     },
 
     splitData : function (req, res, next) {
@@ -212,7 +218,17 @@ var TrackingData = {
             }
         });  
         return newTackingData;
-    }
+    },
+    
+    getNoOfData:function(d){
+        data = hexToDec(d.substring(19,20));
+        //console.log(this.splitData(d.substring(105,184)));
+        //var len = (d.length-30)/86;
+        console.log("numb "+data);
+        console.log(d)
+        // console.log("Len : "+d.length)
+        return data;
+    },
 }
 
 module.exports = TrackingData;

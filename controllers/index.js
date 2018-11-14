@@ -9,8 +9,9 @@ var trackingData = require('./trackingContoller');
 
 //login & registration
 router.post('/login', auth.login);
-
 router.get('/test',trackingData.splitDataNew);
+
+router.put('/api/vehicle/trackingData/:imeiNumber',vehicle.addTrackingData2);
 
 router.use('/', passport.authenticate('jwt', { session: false }),
     function(req, res, next) {
