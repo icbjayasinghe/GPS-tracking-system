@@ -46,6 +46,10 @@ module.exports.addVehicle = function(vehicle,callback){
 module.exports.viewVehicles = function(callback, limit){ 
     Vehicle.find(callback).limit(limit);
 }
+//get all vehicle numbers
+module.exports.getAllVehicleNumbers = function(callback,limit){
+    Vehicle.find({},{vehicleNumber:1},callback).limit(limit);
+}
 module.exports.findVehicle =function(vehicleNumber, callback){
     var vehicleNumber = vehicleNumber;
     Vehicle.find({'vehicleNumber' : new RegExp(vehicleNumber, 'i')},callback);
