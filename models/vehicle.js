@@ -27,7 +27,12 @@ var vehicleSchema = mongoose.Schema({
         altitude: Number,
         angle: Number,
         satelites: Number,
-        speed: Number
+        speed: Number,
+        ignition:Number,
+        digitalInputTwo:Number,
+        fuel:Number,
+        batteryVoltage:Number,
+        temperature:Number
     }]
 });
 
@@ -40,6 +45,10 @@ module.exports.addVehicle = function(vehicle,callback){
 //view vehicles
 module.exports.viewVehicles = function(callback, limit){ 
     Vehicle.find(callback).limit(limit);
+}
+//get all vehicle numbers
+module.exports.getAllVehicleNumbers = function(callback,limit){
+    Vehicle.find({},{vehicleNumber:1},callback).limit(limit);
 }
 module.exports.findVehicle =function(vehicleNumber, callback){
     var vehicleNumber = vehicleNumber;

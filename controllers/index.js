@@ -9,8 +9,11 @@ var trackingData = require('./trackingContoller');
 
 //login & registration
 router.post('/login', auth.login);
-
 router.get('/test',trackingData.splitDataNew);
+
+router.put('/api/vehicle/trackingData/:imeiNumber',vehicle.addTrackingData2);
+router.post('/api/history', history.create);
+router.get('/api/vehicle/getVehicleNumbers',vehicle.getVehicleNumber);
 
 router.use('/', passport.authenticate('jwt', { session: false }),
     function(req, res, next) {
@@ -48,7 +51,6 @@ router.get('/api/vehicle/trackingData/:imeiNumber', vehicle.viewPath);
 router.get('/api/vehicle/trackingDataByUser/:userId', vehicle.viewTrackingDataByUser);
 
 //history related routes
-router.post('/api/history', history.create);
 router.get('/api/history',history.getHistory);
 router.post('/api/searchHistory',history.searchHistory);
 router.get('/api/historyByUserId/:userId',history.getHistoryByUser);
