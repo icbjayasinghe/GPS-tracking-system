@@ -107,6 +107,28 @@ var vehicle = {
             }
         })
     }, 
+    addTrackingData3: function(req){
+        var imeiNumber = req.imeiNumber;
+        var rawData = req.data;
+        var dataArray = TrackingData.splitDataNew(rawData);
+        Vehicle.checkImei(imeiNumber,function(err, vehicleRes){
+            if(err){
+                console.log({success: false, msg: err});
+            }
+            if (!vehicleRes){
+                console.log({success: false, msg: "wrong imei"});
+            }
+            else{
+                Vehicle.updateMany({'imeiNumber': imeiNumber},{'$push': { trackingData:{ '$each':dataArray, '$sort':{date:-1}}}}, function (err){
+                    if (err) {
+                        console.log({ success: false, message: "error" });
+                    } else {
+                        console.log({ success: true, message: "successfully added new tracking data" });
+                    }
+                });
+            }
+        })
+    },
     checkImeiNumber : function(req, res){
         var imeiNumber = req.params.imeiNumber;
         Vehicle.checkImei(imeiNumber,function(err, vehicleRes){

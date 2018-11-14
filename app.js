@@ -96,7 +96,7 @@ server.on("connection", function(socket){
                         data:d.toString("hex")
                     }
                     //data to database
-                    addTracking.addTrackingData(dataObj);
+                    addTracking.addTrackingData3(dataObj);
                     mainArr.splice(i, 1);
                     //return;
                     console.log("buf eka langa " +socket.remotePort);
