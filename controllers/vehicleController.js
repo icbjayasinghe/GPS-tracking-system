@@ -54,12 +54,14 @@ var vehicle = {
     },  
     vehicleUpdate: function(req, res){
         var vehicleNumber = req.params.vehicleNumber;
-        var vehicle = req.body.vehicleDetails;
+        const vehicle = { vehcileDetails: req.body.details,
+                vehicleNo: req.body.vehicleNo }
+
         Vehicle.updateVehicle(vehicleNumber, vehicle, {}, function(err, vehicleRes){
             if(err){
-                res.json({success: false, msg: err});
+                res.json({success: false, msg: 'Something Wrong, Try Again!', err: err});
             }
-            res.json({success: true, msg: vehicleRes});
+            res.json({success: true, msg: 'Vehicle Details Update Successfully!'});
         })
     },
     vehicleDelete: function(req, res){
