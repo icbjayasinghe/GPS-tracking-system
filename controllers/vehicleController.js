@@ -88,8 +88,7 @@ var vehicle = {
     },   
     addTrackingData2: function(req,res){
         var imeiNumber = req.params.imeiNumber;
-        var rawData = req.body.data;
-        var newTrackingData = TrackingData.splitData(rawData);
+        var dataArray = TrackingData.splitDataNew();
         Vehicle.checkImei(imeiNumber,function(err, vehicleRes){
             if(err){
                 res.json({success: false, msg: err});
@@ -98,7 +97,7 @@ var vehicle = {
                 res.json({success: false, msg: "wrong imei"});
             }
             else{
-                Vehicle.updateMany({'imeiNumber': imeiNumber},{'$push': { trackingData:{ '$each':[newTrackingData], '$sort':{date:-1}}}}, function (err){
+                Vehicle.updateMany({'imeiNumber': imeiNumber},{'$push': { trackingData:{ '$each':dataArray, '$sort':{date:-1}}}}, function (err){
                     if (err) {
                         res.json({ success: false, message: "error" });
                     } else {
