@@ -31,7 +31,7 @@ var vehicle = {
             if (err){
                 res.json({success: false, msg: err});
             }
-            res.json({success: true, msg: vehicleRes});            
+            res.json(vehicleRes);
         });
     },
     searchVehicle: function(req, res){

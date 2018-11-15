@@ -52,7 +52,12 @@ var history = {
             if (err){
                 res.json({success:false, msg:err});
             }
-            res.json(historyRes);
+            else if (historyRes.length === 0) {
+                res.json({success:false, msg: 'Sorry No History Data in '+searchDetails.vehicleNumber});
+            } else {
+                res.json({success: true, historyRes});
+            }
+
         });
     }
 };
