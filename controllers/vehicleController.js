@@ -23,7 +23,23 @@ var vehicle = {
             if(err){
                 res.json({success: false, msg: err});
             }
-            res.json(vehi)
+            var vehicle = [];
+            var dataAmount = 0;
+            for (let i = 0; i < vehi.length; i++) {
+                let trackingData = vehi[i].trackingData.length;
+                dataAmount = dataAmount + trackingData;
+                vehicle[i] = {
+                    _id: vehi[i]._id,
+                    vehicleNumber: vehi[i].vehicleNumber,
+                    imeiNumber: vehi[i].imeiNumber,
+                    trackingData: [vehi[i].trackingData[0]]
+                };
+                if(trackingData === 0) {
+                    vehicle[i].trackingData = [];
+                }
+            }
+            console.log(vehicle);
+            res.json({vehicle, dataAmount})
         });
     },
     getVehicleNumber: function(req, res){
