@@ -38,7 +38,7 @@ var vehicle = {
                     vehicle[i].trackingData = [];
                 }
             }
-            console.log(vehicle);
+            // console.log(vehicle);
             res.json({vehicle, dataAmount})
         });
     },

@@ -20,7 +20,9 @@ var historySchema = mongoose.Schema({
         altitude: Number,
         angle: Number,
         satelites: Number,
-        speed: Number
+        speed: Number,
+        fuel: Number,
+        temperature: Number
     }]
 });
 
