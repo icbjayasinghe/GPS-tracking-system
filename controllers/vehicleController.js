@@ -25,21 +25,22 @@ var vehicle = {
             }
             var vehicle = [];
             var dataAmount = 0;
-            for (let i = 0; i < vehi.length; i++) {
+            let vehicleAmount = vehi.length;
+            for (let i = 0; i < vehicleAmount; i++) {
                 let trackingData = vehi[i].trackingData.length;
                 dataAmount = dataAmount + trackingData;
                 vehicle[i] = {
                     _id: vehi[i]._id,
                     vehicleNumber: vehi[i].vehicleNumber,
                     imeiNumber: vehi[i].imeiNumber,
+                    vehicleDetails: vehi[i].vehicleDetails,
                     trackingData: [vehi[i].trackingData[0]]
                 };
                 if(trackingData === 0) {
                     vehicle[i].trackingData = [];
                 }
             }
-            // console.log(vehicle);
-            res.json({vehicle, dataAmount})
+            res.json({vehicle, dataAmount, vehicleAmount})
         });
     },
     getVehicleNumber: function(req, res){
@@ -65,7 +66,17 @@ var vehicle = {
             if (err){
                 res.json({success: false, msg: err});
             }
-            res.json(vehicleRes)
+            var vehicle = [];
+            let vehicleAmount = vehicleRes.length;
+            for (let i = 0; i < vehicleAmount; i++) {
+                vehicle[i] = {
+                    _id: vehicleRes[i]._id,
+                    vehicleNumber: vehicleRes[i].vehicleNumber,
+                    imeiNumber: vehicleRes[i].imeiNumber,
+                    vehicleDetails: vehicleRes[i].vehicleDetails
+                };
+            }
+            res.json({vehicle, vehicleAmount});
         });
     },  
     vehicleUpdate: function(req, res){
