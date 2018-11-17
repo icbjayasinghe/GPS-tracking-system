@@ -38,8 +38,11 @@ router.put('/api/user/removeLocation/:userId',user.removeLocation);
 //vehicle related routes done
 router.post('/api/vehicle',vehicle.addVehicle);
 router.get('/api/vehicle', vehicle.viewAllVehicles);
+router.get('/api/vehicle/allVehicleDetails', vehicle.viewAdminVehicles);
 router.get('/api/vehicle/search/:vehicleNumber',vehicle.searchVehicle);
 router.get('/api/vehicle/:userId',vehicle.viewUserVehicles);
+router.get('/api/vehicle/getTrackingData/:vehicleNumber', vehicle.viewAdminAllVehiclesTrackingData);
+router.get('/api/vehicle/getTrackingData/:user/:vehicleNumber', vehicle.viewUserVehicleTrackingData);
 router.put('/api/vehicle/:vehicleNumber',vehicle.vehicleUpdate);
 router.delete('/api/vehicle/:vehicleNumber',vehicle.vehicleDelete);
 router.get('/api/vehicle/checkImei/:imeiNumber',vehicle.checkImeiNumber);
