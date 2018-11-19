@@ -25,21 +25,22 @@ var vehicle = {
             }
             var vehicle = [];
             var dataAmount = 0;
-            for (let i = 0; i < vehi.length; i++) {
+            let vehicleAmount = vehi.length;
+            for (let i = 0; i < vehicleAmount; i++) {
                 let trackingData = vehi[i].trackingData.length;
                 dataAmount = dataAmount + trackingData;
                 vehicle[i] = {
                     _id: vehi[i]._id,
                     vehicleNumber: vehi[i].vehicleNumber,
                     imeiNumber: vehi[i].imeiNumber,
+                    vehicleDetails: vehi[i].vehicleDetails,
                     trackingData: [vehi[i].trackingData[0]]
                 };
                 if(trackingData === 0) {
                     vehicle[i].trackingData = [];
                 }
             }
-            // console.log(vehicle);
-            res.json({vehicle, dataAmount})
+            res.json({vehicle, dataAmount, vehicleAmount});
         });
     },
     getVehicleNumber: function(req, res){
@@ -65,9 +66,37 @@ var vehicle = {
             if (err){
                 res.json({success: false, msg: err});
             }
-            res.json(vehicleRes)
+            var vehicle = [];
+            let vehicleAmount = vehicleRes.length;
+            for (let i = 0; i < vehicleAmount; i++) {
+                vehicle[i] = {
+                    _id: vehicleRes[i]._id,
+                    vehicleNumber: vehicleRes[i].vehicleNumber,
+                    imeiNumber: vehicleRes[i].imeiNumber,
+                    vehicleDetails: vehicleRes[i].vehicleDetails
+                };
+            }
+            res.json({vehicle, vehicleAmount});
         });
-    },  
+    },
+    viewAdminVehicles: function(req, res){
+        Vehicle.viewVehicles(function(err,vehi) {
+            if (err) {
+                res.json({success: false, msg: err});
+            }
+            var vehicle = [];
+            let vehicleAmount = vehi.length;
+            for (let i = 0; i < vehicleAmount; i++) {
+                vehicle[i] = {
+                    _id: vehi[i]._id,
+                    vehicleNumber: vehi[i].vehicleNumber,
+                    imeiNumber: vehi[i].imeiNumber,
+                    vehicleDetails: vehi[i].vehicleDetails
+                };
+            }
+            res.json({vehicle, vehicleAmount});
+        });
+    },
     vehicleUpdate: function(req, res){
         var vehicleNumber = req.params.vehicleNumber;
         const vehicle = { vehcileDetails: req.body.details,
@@ -198,6 +227,83 @@ var vehicle = {
                 res.json({success: true, msg: "tracking data deleted"});
             }
         })
+    },
+    viewAdminAllVehiclesTrackingData: function(req, res){
+        var vehicleNumber = req.params.vehicleNumber;
+        Vehicle.viewVehicles(function(err,vehi){
+            if(err){
+                res.json({success: false, msg: err});
+            }
+            var vehicle = [];
+            var dataAmount = 0;
+            let vehicleAmount = vehi.length;
+            let trackingData = [];
+            for (let i = 0; i < vehicleAmount; i++) {
+                let trackingDataLength = vehi[i].trackingData.length;
+                dataAmount = dataAmount + trackingDataLength;
+                vehicle[i] = {
+                    _id: vehi[i]._id,
+                    vehicleNumber: vehi[i].vehicleNumber,
+                    imeiNumber: vehi[i].imeiNumber,
+                    vehicleDetails: vehi[i].vehicleDetails,
+                    trackingData: [vehi[i].trackingData[0]]
+                };
+                if (vehi[i].vehicleNumber === vehicleNumber) {
+                    let data = vehi[i].trackingData.length;
+                    for (let j = 0; j < data; j++) {
+                        trackingData[j] = vehi[i].trackingData[j];
+                    }
+                    vehicle[i].trackingData = trackingData;
+                }
+                if(trackingDataLength === 0) {
+                    vehicle[i].trackingData = [];
+                }
+            }
+            console.log(vehicle);
+            res.json({vehicle, dataAmount, vehicleAmount});
+        });
+    },
+    viewUserVehicleTrackingData: function(req, res){
+        var vehicleNumber = req.params.vehicleNumber;
+        var userId = req.params.user;
+        Vehicle.userVehicles(userId,function(err, vehi){
+            if (err){
+                res.json({success: false, msg: err});
+            }
+            var vehicle = [];
+            var dataAmount = 0;
+            let vehicleAmount = vehi.length;
+            let trackingData = [];
+            for (let i = 0; i < vehicleAmount; i++) {
+                let trackingDataLength = vehi[i].trackingData.length;
+                dataAmount = dataAmount + trackingDataLength;
+                vehicle[i] = {
+                    _id: vehi[i]._id,
+                    vehicleNumber: vehi[i].vehicleNumber,
+                    imeiNumber: vehi[i].imeiNumber,
+                    vehicleDetails: vehi[i].vehicleDetails,
+                    trackingData: [vehi[i].trackingData[0]]
+                };
+                if (vehi[i].vehicleNumber === vehicleNumber) {
+                    let data = vehi[i].trackingData.length;
+                    for (let j = 0; j < data; j++) {
+                        trackingData[j] = vehi[i].trackingData[j];
+                    }
+                    vehicle[i].trackingData = trackingData;
+                }
+                if(trackingDataLength === 0) {
+                    vehicle[i].trackingData = [];
+                }
+            }
+            console.log(vehicle);
+            res.json({vehicle, dataAmount, vehicleAmount});
+        });
+
+
+
+
+
+
     },
     viewTrackingDataByUser: function(req,res){
         var userId = req.params.userId;
