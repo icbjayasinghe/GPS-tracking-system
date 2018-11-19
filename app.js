@@ -145,7 +145,7 @@ app.listen(port, function(){
     var j = schedule.scheduleJob('00 00 00 * * *', function(){
         CommonFacade.create(req, res);
         var date  = new Date;
-        console.log('date : '+date)+' @ app.js';
+        console.log('date : '+date+' @ app.js');
     });
     
 });
