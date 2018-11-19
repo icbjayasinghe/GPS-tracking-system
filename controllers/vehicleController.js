@@ -117,31 +117,8 @@ var vehicle = {
             }
             res.json({success: true, msg: resVeh});
         })
-    },
-    addTrackingData: function(req){
-        var imeiNumber = req.imeiNumber;
-        var rawData = req.data;
-        var newTrackingData = TrackingData.splitData(rawData);
-
-        Vehicle.checkImei(imeiNumber,function(err, vehicleRes){
-            if(err){
-                console.log({success: false, msg: err});
-            }
-            if (!vehicleRes){
-                console.log({success: false, msg: "wrong imei"});
-            }
-            else{
-                Vehicle.updateMany({'imeiNumber': imeiNumber},{'$push': { trackingData:{ '$each':[newTrackingData], '$sort':{date:-1}}}}, function (err){
-                    if (err) {
-                        console.log({ success: false, message: "error" });
-                    } else {
-                        console.log({ success: true, message: "successfully added new tracking data" });
-                    }
-                });
-            }
-        })
     },   
-    addTrackingData2: function(req,res){
+    addTrackingData: function(req,res){
         var imeiNumber = req.params.imeiNumber;
         var dataArray = TrackingData.splitDataNew();
         Vehicle.checkImei(imeiNumber,function(err, vehicleRes){
@@ -259,7 +236,7 @@ var vehicle = {
                     vehicle[i].trackingData = [];
                 }
             }
-            console.log(vehicle);
+            //console.log(vehicle);
             res.json({vehicle, dataAmount, vehicleAmount});
         });
     },
@@ -295,15 +272,9 @@ var vehicle = {
                     vehicle[i].trackingData = [];
                 }
             }
-            console.log(vehicle);
+            //console.log(vehicle);
             res.json({vehicle, dataAmount, vehicleAmount});
         });
-
-
-
-
-
-
     },
     viewTrackingDataByUser: function(req,res){
         var userId = req.params.userId;
