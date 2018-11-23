@@ -85,7 +85,7 @@ server.on("connection", function(socket){
             });
         }
         else {          
-            console.log(fullDataSplit.splitData(d.toString("hex")));
+            console.log(fullDataSplit.splitDataNew(d.toString("hex")));
             console.log(fullDataSplit.getNoOfData(d.toString("hex")));
             var noOfData =fullDataSplit.getNoOfData(d.toString("hex"));
             
@@ -146,8 +146,7 @@ app.listen(port, function(){
         CommonFacade.create(req, res);
         // var date  = new Date;
         // console.log('date : '+date+' @ app.js');
+
     });
     
 });
-
-
