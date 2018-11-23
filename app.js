@@ -85,7 +85,7 @@ server.on("connection", function(socket){
             });
         }
         else {          
-            console.log(fullDataSplit.splitData(d.toString("hex")));
+            console.log(fullDataSplit.splitDataNew(d.toString("hex")));
             console.log(fullDataSplit.getNoOfData(d.toString("hex")));
             var noOfData =fullDataSplit.getNoOfData(d.toString("hex"));
             
@@ -142,12 +142,10 @@ server.on("connection", function(socket){
   })
 
 app.listen(port, function(){
-    var j = schedule.scheduleJob('00 00 00 * * *', function(){
+    var j = schedule.scheduleJob('00 00 00 * * *', function(req, res){
         CommonFacade.create(req, res);
         var date  = new Date;
-        console.log('date : '+date+' @ app.js');
+        console.log('date : '+date)+' @ app.js';
     });
     
 });
-
-
