@@ -24,6 +24,8 @@
     "cron": "^1.5.0",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
+    "geodist": "^0.2.1",
+    "geolib": "^2.0.24",
     "hex-to-dec": "^1.0.1",
     "jsonwebtoken": "^8.3.0",
     "jwt-simple": "^0.5.1",
