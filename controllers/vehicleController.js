@@ -211,14 +211,13 @@ var vehicle = {
             if(err){
                 res.json({success: false, msg: err});
             }
-            var vehicle = [];
-            var dataAmount = 0;
+            let vehicle = [];
             let vehicleAmount = vehi.length;
             let trackingData = [];
+            let k = 0;
             for (let i = 0; i < vehicleAmount; i++) {
                 let trackingDataLength = vehi[i].trackingData.length;
-                dataAmount = dataAmount + trackingDataLength;
-                vehicle[i] = {
+                vehicle[k] = {
                     _id: vehi[i]._id,
                     vehicleNumber: vehi[i].vehicleNumber,
                     imeiNumber: vehi[i].imeiNumber,
@@ -230,31 +229,32 @@ var vehicle = {
                     for (let j = 0; j < data; j++) {
                         trackingData[j] = vehi[i].trackingData[j];
                     }
-                    vehicle[i].trackingData = trackingData;
+                    vehicle[k].trackingData = trackingData;
                 }
                 if(trackingDataLength === 0) {
-                    vehicle[i].trackingData = [];
+                    vehicle.splice(k, 1);
+                    k--;
                 }
+                k++;
             }
             //console.log(vehicle);
-            res.json({vehicle, dataAmount, vehicleAmount});
+            res.json(vehicle);
         });
     },
     viewUserVehicleTrackingData: function(req, res){
         var vehicleNumber = req.params.vehicleNumber;
         var userId = req.params.user;
         Vehicle.userVehicles(userId,function(err, vehi){
-            if (err){
+            if(err){
                 res.json({success: false, msg: err});
             }
-            var vehicle = [];
-            var dataAmount = 0;
+            let vehicle = [];
             let vehicleAmount = vehi.length;
             let trackingData = [];
+            let k = 0;
             for (let i = 0; i < vehicleAmount; i++) {
                 let trackingDataLength = vehi[i].trackingData.length;
-                dataAmount = dataAmount + trackingDataLength;
-                vehicle[i] = {
+                vehicle[k] = {
                     _id: vehi[i]._id,
                     vehicleNumber: vehi[i].vehicleNumber,
                     imeiNumber: vehi[i].imeiNumber,
@@ -266,14 +266,16 @@ var vehicle = {
                     for (let j = 0; j < data; j++) {
                         trackingData[j] = vehi[i].trackingData[j];
                     }
-                    vehicle[i].trackingData = trackingData;
+                    vehicle[k].trackingData = trackingData;
                 }
                 if(trackingDataLength === 0) {
-                    vehicle[i].trackingData = [];
+                    vehicle.splice(k, 1);
+                    k--;
                 }
+                k++;
             }
             //console.log(vehicle);
-            res.json({vehicle, dataAmount, vehicleAmount});
+            res.json(vehicle);
         });
     },
     viewTrackingDataByUser: function(req,res){
