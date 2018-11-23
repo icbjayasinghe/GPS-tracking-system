@@ -9,8 +9,12 @@ const net = require('net');
 var http = require('http');
 var Vehicle = require('./models/vehicle');
 var passport = require('passport');
+var CommonFacade = require('./controllers/commonFacade');
+
 const app = express();
 const cors = require('cors');
+var schedule = require('node-schedule');
+
 app.use(cors());
 mongoose.connect(config.database,{useNewUrlParser:true});
 var db = mongoose.connection;
@@ -138,7 +142,12 @@ server.on("connection", function(socket){
   })
 
 app.listen(port, function(){
-    console.log("connected");
+    var j = schedule.scheduleJob('00 00 09 * * *', function(req, res){
+        CommonFacade.create(req, res);
+        // var date  = new Date;
+        // console.log('date : '+date+' @ app.js');
+    });
+    
 });
 
 

@@ -9,11 +9,9 @@ var trackingData = require('./trackingContoller');
 
 //login & registration
 router.post('/login', auth.login);
-router.get('/test',trackingData.splitDataNew);
 
-router.put('/api/vehicle/trackingData/:imeiNumber',vehicle.addTrackingData2);
-router.post('/api/history', history.create);
-router.get('/api/vehicle/getVehicleNumbers',vehicle.getVehicleNumber);
+//tracking data spliting
+router.get('/test',trackingData.splitDataNew);
 
 router.use('/', passport.authenticate('jwt', { session: false }),
     function(req, res, next) {
@@ -21,19 +19,23 @@ router.use('/', passport.authenticate('jwt', { session: false }),
     }
 );
 
+// -------------USER COLLECTION--------------
+
 //find users done
 router.post('/api/user', user.addUser);
+router.post('/api/user/restPassword', user.restPassword);
+router.post('/api/user/changePassword', user.changeUserPassword);
 router.get('/api/user',  user.getAll);
 router.get('/api/user/:id', user.getOne);
 router.get('/api/userByName/:userName', user.findByName);
-router.post('/api/user/restPassword', user.restPassword);
 router.get('/api/user/deleteUser/:userId', user.deleteFlag);
-router.post('/api/user/changePassword', user.changeUserPassword);
 
 //locations(branch) routes
-router.put('/api/user/location/:userName', user.addLocation);
 router.get('/api/user/location/:userName', user.viewLocation);
+router.put('/api/user/location/:userName', user.addLocation);
 router.put('/api/user/removeLocation/:userId',user.removeLocation);
+
+// -------------VEHICLE COLLECTION--------------
 
 //vehicle related routes done
 router.post('/api/vehicle',vehicle.addVehicle);
@@ -41,21 +43,25 @@ router.get('/api/vehicle', vehicle.viewAllVehicles);
 router.get('/api/vehicle/allVehicleDetails', vehicle.viewAdminVehicles);
 router.get('/api/vehicle/search/:vehicleNumber',vehicle.searchVehicle);
 router.get('/api/vehicle/:userId',vehicle.viewUserVehicles);
-router.get('/api/vehicle/getTrackingData/:vehicleNumber', vehicle.viewAdminAllVehiclesTrackingData);
-router.get('/api/vehicle/getTrackingData/:user/:vehicleNumber', vehicle.viewUserVehicleTrackingData);
+router.get('/api/vehicle/getVehicleNumbers',vehicle.getVehicleNumber);
+router.get('/api/vehicle/checkImei/:imeiNumber',vehicle.checkImeiNumber);
 router.put('/api/vehicle/:vehicleNumber',vehicle.vehicleUpdate);
 router.delete('/api/vehicle/:vehicleNumber',vehicle.vehicleDelete);
-router.get('/api/vehicle/checkImei/:imeiNumber',vehicle.checkImeiNumber);
 
 //Tracking data
-router.put('/api/vehicle/trackingData/:imeiNumber',vehicle.addTrackingData2);
-router.put('/api/vehicle/removeTrackingData/:vehicleId',vehicle.removeTrackingData);
 router.get('/api/vehicle/trackingData/:imeiNumber', vehicle.viewPath);
 router.get('/api/vehicle/trackingDataByUser/:userId', vehicle.viewTrackingDataByUser);
+router.get('/api/vehicle/getTrackingData/:vehicleNumber', vehicle.viewAdminAllVehiclesTrackingData);
+router.get('/api/vehicle/getTrackingData/:user/:vehicleNumber', vehicle.viewUserVehicleTrackingData);
+router.put('/api/vehicle/trackingData/:imeiNumber',vehicle.addTrackingData);
+router.put('/api/vehicle/removeTrackingData/:vehicleId',vehicle.removeTrackingData);
+
+// -------------HISTORY COLLECTION--------------
 
 //history related routes
-router.get('/api/history',history.getHistory);
+router.post('/api/history', history.create);
 router.post('/api/searchHistory',history.searchHistory);
+router.get('/api/history',history.getHistory);
 router.get('/api/historyByUserId/:userId',history.getHistoryByUser);
 router.get('/api/historyByVehicle/:vehicleNumber',history.getHistoryByVehicle);
 
