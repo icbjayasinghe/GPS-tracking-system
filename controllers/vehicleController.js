@@ -278,14 +278,14 @@ var vehicle = {
             res.json(vehicle);
         });
     },
-    viewTrackingDataByUser: function(req,res){
+    viewVehicleNumberByUser: function(req,res){
         var userId = req.params.userId;
-        Vehicle.checkTrackingDataByUser(userId,function(err,trackingRes){
+        Vehicle.checkVehicleNumberByUser(userId,function(err,vehicleNumbers){
             if (err){
                 res.json({success: false, msg: err});
             }
             else{
-                res.json({success: true, msg: trackingRes});
+                res.json(vehicleNumbers);
 
             }
         });

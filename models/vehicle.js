@@ -63,8 +63,8 @@ module.exports.userVehicles = function(userId, callback){
     Vehicle.find({userId:userId},callback);
 }
 //tracking data by name
-module.exports.checkTrackingDataByUser = function(userId, callback){
-    Vehicle.find({userId:userId},{trackingData:1},callback);
+module.exports.checkVehicleNumberByUser = function(userId, callback){
+    Vehicle.find({userId:userId},{vehicleNumber:1},callback);
 }
 //delete vehicle
 module.exports.deleteVehicle = function(vehicleNumber, callback){
