@@ -50,7 +50,7 @@ router.delete('/api/vehicle/:vehicleNumber',vehicle.vehicleDelete);
 
 //Tracking data
 router.get('/api/vehicle/trackingData/:imeiNumber', vehicle.viewPath);
-router.get('/api/vehicle/trackingDataByUser/:userId', vehicle.viewTrackingDataByUser);
+router.get('/api/vehicle/vehicleNumberByUser/:userId', vehicle.viewVehicleNumberByUser);
 router.get('/api/vehicle/getTrackingData/:vehicleNumber', vehicle.viewAdminAllVehiclesTrackingData);
 router.get('/api/vehicle/getTrackingData/:user/:vehicleNumber', vehicle.viewUserVehicleTrackingData);
 router.put('/api/vehicle/trackingData/:imeiNumber',vehicle.addTrackingData);
