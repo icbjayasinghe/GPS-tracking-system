@@ -10,6 +10,7 @@ var http = require('http');
 var Vehicle = require('./models/vehicle');
 var passport = require('passport');
 var CommonFacade = require('./controllers/commonFacade');
+var History = require('./controllers/historyController');
 
 const app = express();
 const cors = require('cors');
@@ -113,7 +114,6 @@ server.on("connection", function(socket){
                 }
             }
             
-
             // for(i=0;i<mainArr.length;i++){
             //     if(mainArr[i][0]==remPort){
             //         //console.log(mainArr[i][1])
@@ -142,7 +142,10 @@ server.on("connection", function(socket){
   })
 
 app.listen(port, function(){
-    var j = schedule.scheduleJob('00 00 09 * * *', function(req, res){
+
+    // History.getHistoryToDist('cp VO 2020');
+
+    var j = schedule.scheduleJob('00 00 00 * * *', function(req, res){
         CommonFacade.create(req, res);
         // var date  = new Date;
         // console.log('date : '+date+' @ app.js');
