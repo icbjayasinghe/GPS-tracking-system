@@ -5,10 +5,9 @@ module.exports = {
     create : function(req,res) {
         Vehicle.viewVehicles(function(err,res){
             res.forEach(element => {
-                var date = new Date().toISOString(); // Today!
-                // date.setDate(date.getDate() - 1); // Yesterday!
-                
-                // console.log('yesterday date : '+date+' @ commonFacade.js');
+                var date = new Date() // Today!
+                date.setDate(date.getDate() - 1); // Yesterday!
+                var date = date.toISOString();
                 var d = date.substring(0,10);
                 var history = new History({
                     date : d,
