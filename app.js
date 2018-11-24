@@ -140,7 +140,10 @@ server.on("connection", function(socket){
   })
 
 app.listen(port, function(){
-    // History.getHistoryToDist('cp VO 2020');
+    History.getHistoryToDist1('cp VO 2020');
+    History.getHistoryToDist('cp VO 2020');
+    History.getHistoryToDist1('cp VO 2120');
+    History.getHistoryToDist('cp VO 2120');
     var j = schedule.scheduleJob('00 00 00 * * *', function(req, res){
         CommonFacade.create(req, res);
         // var date  = new Date;
