@@ -59,15 +59,23 @@ var UserSchema = mongoose.Schema({
 		require: true
     },
     logDetails:[{
-        logingTime: {
-            type: Date,
+        loggingTime: {
+            type: String,
             required: true
         },
         logoutTime: {
-            type: Date,
+            type: String,
+            required: true
+        },
+        expireTime: {
+            type: String,
+            required: true
+        },
+        passwordChangedTime: {
+            type: String,
             required: true
         }
-    }]
+        }]
 });
 
 UserSchema.pre('save', function (next) {
