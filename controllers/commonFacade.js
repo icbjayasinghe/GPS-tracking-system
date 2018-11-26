@@ -1,5 +1,6 @@
 var History = require('../models/history');
 var Vehicle = require('../models/vehicle');
+var historyController = require('./historyController');
 
 module.exports = {
     create : function(req,res) {
@@ -16,7 +17,6 @@ module.exports = {
                     trackingData : element.trackingData,
                     distance:0
                 });
-                History.getHistoryToDist('cp VO 2020');
                 Vehicle.removeAllTrackingData(element._id,function(err,res){
                     if(err){
                         console.log(err);
@@ -34,4 +34,17 @@ module.exports = {
         })
         console.log({success:true});
     },
+
+    addDistance : function(req){
+        //res.json({success:false, msg:err});
+        History.historyByDate(req,function(err,res){
+             
+            res.forEach(element => {                
+                historyController.updateHistoryDist(element.vehicleNumber,res);
+                console.log(element._id);
+                console.log('hiiiii '+res);
+                //History.findOneAndUpdate({}, {}, options, callback);
+            });
+        })
+    }
 }

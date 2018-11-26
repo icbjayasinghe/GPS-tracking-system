@@ -1,7 +1,5 @@
 var History  = require('../models/history');
 var CommonFacade = require('./commonFacade');
-var geolib = require('geolib');
-var geodist = require('geodist');
 var GeoPoint = require('geopoint');
 
 var history = {
@@ -63,7 +61,7 @@ var history = {
         });
     },
 
-    getHistoryToDist :function(req,res){
+    updateHistoryDist :function(req,res){
         var vehicleNumber = req;
         History.historyToDist(vehicleNumber, function(err, historyRes){
             if (err){
@@ -88,15 +86,16 @@ var history = {
                 d = d + dist ;
                 j=i;
             }
+
             console.log('number of tracking data : '+(j+2));
-            console.log('function :');
             console.log('distance : '+d);
             console.log();
+            res.json({success:true, msg:d});
             //res.json({vehicle, vehicleAmount});
             });        
     },
 
-    getHistoryToDist1 : function(req, res){
+    updateHistoryDist1 : function(req, res){
         var vehicleNumber = req;
         History.historyToDist(vehicleNumber, function(err, historyRes){
             if (err){
