@@ -140,7 +140,6 @@ server.on("connection", function(socket){
   })
 
 app.listen(port, function(){
-
     var j = schedule.scheduleJob('00 00 00 * * *', function(req, res){
         CommonFacade.create(req, res);
         // var date  = new Date;

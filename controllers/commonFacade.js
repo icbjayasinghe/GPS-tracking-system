@@ -17,6 +17,7 @@ module.exports = {
                     trackingData : element.trackingData,
                     distance:0
                 });
+                History.getHistoryToDist('cp VO 2020');
                 Vehicle.removeAllTrackingData(element._id,function(err,res){
                     if(err){
                         console.log(err);

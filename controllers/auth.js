@@ -1,6 +1,8 @@
 var User = require('../models/user');
 var jwt = require('jsonwebtoken');
 var config = require('../config/config');
+var jwtDecode = require('jwt-decode');
+const timestamp = require('unix-timestamp');
 var auth = {
   login: function(req, res) {   
     var userName = req.body.userName || '';
@@ -72,6 +74,10 @@ validateUser: function(userName) {
 // private method
 function genToken(user) {
   const token = jwt.sign(user.toJSON(),config.secret,{expiresIn: 3600});
+    let loggingTime = timestamp.toDate(timestamp.add(jwtDecode(token).iat, +19800));
+    let sessionTimeOut = timestamp.toDate(timestamp.add(jwtDecode(token).exp, +19800));
+    console.log(loggingTime);
+    console.log(sessionTimeOut);
   return {
     token: token
   };
