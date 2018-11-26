@@ -52,10 +52,6 @@ module.exports.historyByVehicle = function(vehicleNumber, callback){
 module.exports.searchHistory = function(searchDetails,callback){    
     History.find({vehicleNumber:searchDetails.vehicleNumber,date:searchDetails.date},callback);
 }
-//history bby vehicle
-module.exports.historyToDist = function(vehicleNumber, callback){
-    History.findOne({vehicleNumber:vehicleNumber},{trackingData:1},callback);
-}
 //search history by date
 module.exports.historyByDate = function(date, callback){
     History.find({date:date},callback);
