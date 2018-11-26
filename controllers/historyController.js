@@ -63,6 +63,7 @@ var history = {
         });
     },
 
+<<<<<<< HEAD
     getHistoryToDist :function(req,res){
         var vehicleNumber = req;
         History.historyToDist(vehicleNumber, function(err, historyRes){
@@ -132,6 +133,8 @@ var history = {
             //res.json({vehicle, vehicleAmount});
             });
     },
+=======
+>>>>>>> 4e71075018e48bc5609235e7dee36b4f0f997129
 };
 
 module.exports = history ;

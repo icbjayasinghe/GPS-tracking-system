@@ -140,13 +140,27 @@ server.on("connection", function(socket){
   })
 
 app.listen(port, function(){
+<<<<<<< HEAD
     History.getHistoryToDist1('cp VO 2020');
     History.getHistoryToDist('cp VO 2020');
     History.getHistoryToDist1('cp VO 2120');
     History.getHistoryToDist('cp VO 2120');
+=======
+
+>>>>>>> 4e71075018e48bc5609235e7dee36b4f0f997129
     var j = schedule.scheduleJob('00 00 00 * * *', function(req, res){
         CommonFacade.create(req, res);
         // var date  = new Date;
         // console.log('date : '+date+' @ app.js');
-    });    
+    });
+
+    var h = schedule.scheduleJob('00 10 00 * * *', function(req, res){
+        var date = new Date() // Today!
+        date.setDate(date.getDate() - 1); // Yesterday!
+        var date = date.toISOString();
+        var d = date.substring(0,10);
+        console.log(d);
+        CommonFacade.addDistance(d);
+    }); 
+ 
 });
