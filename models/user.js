@@ -57,7 +57,17 @@ var UserSchema = mongoose.Schema({
     status:{
         type: String,
 		require: true
-    }
+    },
+    logDetails:[{
+        logingTime: {
+            type: Date,
+            required: true
+        },
+        logoutTime: {
+            type: Date,
+            required: true
+        }
+    }]
 });
 
 UserSchema.pre('save', function (next) {
