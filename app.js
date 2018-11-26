@@ -146,5 +146,14 @@ app.listen(port, function(){
         // var date  = new Date;
         // console.log('date : '+date+' @ app.js');
     });
-       
+
+    var h = schedule.scheduleJob('00 10 00 * * *', function(req, res){
+        var date = new Date() // Today!
+        date.setDate(date.getDate() - 1); // Yesterday!
+        var date = date.toISOString();
+        var d = date.substring(0,10);
+        console.log(d);
+        CommonFacade.addDistance(d);
+    }); 
+ 
 });
