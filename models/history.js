@@ -44,7 +44,7 @@ module.exports.getAll = function(callback, limit){
 module.exports.historyByUser = function(userId, callback){
     History.find({userId:userId},callback);
 }
-//history bby vehicle
+//history by vehicle
 module.exports.historyByVehicle = function(vehicleNumber, callback){
     History.find({vehicleNumber:vehicleNumber},callback);
 }
@@ -55,4 +55,8 @@ module.exports.searchHistory = function(searchDetails,callback){
 //history bby vehicle
 module.exports.historyToDist = function(vehicleNumber, callback){
     History.findOne({vehicleNumber:vehicleNumber},{trackingData:1},callback);
+}
+//search history by date
+module.exports.historyByDate = function(date, callback){
+    History.find({date:date},callback);
 }

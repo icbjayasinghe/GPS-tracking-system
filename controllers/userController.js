@@ -11,7 +11,8 @@ var user = {
       password: req.body.userName,
       role: req.body.role,
       location: [],
-      status:"Active"
+      status:"Active",
+      logDetails:[]
     });
     User.createUser(newUser, function(err,userRes){
       if (err){
