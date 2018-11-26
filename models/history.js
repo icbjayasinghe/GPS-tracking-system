@@ -23,7 +23,11 @@ var historySchema = mongoose.Schema({
         speed: Number,
         fuel: Number,
         temperature: Number
-    }]
+    }],
+    distance:{
+        type:Number,
+        required:true
+    }
 });
 
 var History = module.exports = mongoose.model('History',historySchema);
