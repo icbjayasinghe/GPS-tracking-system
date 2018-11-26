@@ -1,6 +1,6 @@
 var History  = require('../models/history');
 var CommonFacade = require('./commonFacade');
-var geolib = require('geolib')
+
 
 
 var history = {
