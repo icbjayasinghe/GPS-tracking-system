@@ -1,7 +1,5 @@
 var History  = require('../models/history');
 var CommonFacade = require('./commonFacade');
-var geolib = require('geolib');
-var geodist = require('geodist');
 var GeoPoint = require('geopoint');
 
 var history = {
