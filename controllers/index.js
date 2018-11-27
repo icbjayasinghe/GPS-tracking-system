@@ -9,6 +9,7 @@ var trackingData = require('./trackingContoller');
 
 //login & registration
 router.post('/login', auth.login);
+router.get('/api/user/trackLogoutTime/:id',user.trackLogoutTime);
 
 //tracking data spliting
 router.get('/test',trackingData.splitDataNew);
