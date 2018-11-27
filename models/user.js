@@ -187,3 +187,7 @@ module.exports.viewAllLocation = function(userName, callback){
 module.exports.deleteLocation = function(userId, locationId,callback){
     User.update( {_id: userId }, { $pull: {location : {_id: locationId }} }, callback );
 }
+// update user activities
+module.exports.findUserActivity = function(userId, callback){
+    User.find({_id:userId},{logDetails: 1}, callback);
+}

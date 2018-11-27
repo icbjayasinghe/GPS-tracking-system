@@ -84,6 +84,16 @@ var user = {
                           if(err){
                               res.json({success: false, msg: 'Something Wrong, Try Again!', err: err});
                           }
+                          User.findUserActivity(userPasswordDetails.userId, function (err, logDetails) {
+                              let todayDate = new Date();
+                              logDetails[0].logDetails.reverse()[0].passwordChangedTime = todayDate;
+
+                              User.findOneAndUpdate({'_id': logDetails[0]._id}, {'$set': { logDetails :  logDetails[0].logDetails.reverse()}}, {new: true}, function (err) {
+                                  if (err) {
+                                      console.log(err);
+                                  }
+                              });
+                          });
                           res.json({success: true, msg: 'Password Changed Successfully!'});
                       });
       });
