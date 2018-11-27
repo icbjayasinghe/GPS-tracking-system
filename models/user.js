@@ -67,10 +67,6 @@ var UserSchema = mongoose.Schema({
             type: String,
             required: true
         },
-        expireTime: {
-            type: String,
-            required: true
-        },
         passwordChangedTime: {
             type: String,
             required: true

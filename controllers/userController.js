@@ -87,6 +87,7 @@ var user = {
                           User.findUserActivity(userPasswordDetails.userId, function (err, logDetails) {
                               let todayDate = new Date();
                               logDetails[0].logDetails.reverse()[0].passwordChangedTime = todayDate;
+                              console.log(logDetails[0].logDetails);
 
                               User.findOneAndUpdate({'_id': logDetails[0]._id}, {'$set': { logDetails :  logDetails[0].logDetails.reverse()}}, {new: true}, function (err) {
                                   if (err) {
@@ -137,7 +138,28 @@ var user = {
         res.json({success:true, message:"location deleted"});
       }
     });
-  }
+  },
+    trackLogoutTime: function(req,res){
+        let userId = req.params.id;
+        console.log(userId);
+        User.findUserActivity(userId, function (err, logDetails) {
+            if (err){
+                res.json({success:false, message:err});
+                //throw err ;
+            }else{
+                let todayDate = new Date();
+                logDetails[0].logDetails.reverse()[0].logoutTime = todayDate;
+                console.log(logDetails[0].logDetails[0]);
+
+                User.findOneAndUpdate({'_id': logDetails[0]._id}, {'$set': { logDetails :  logDetails[0].logDetails.reverse()}}, {new: true}, function (err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                });
+                res.json({success:true, message:"TrackedLogoutTime"});
+            }
+        });
+    }
 };
 
 module.exports = user;
