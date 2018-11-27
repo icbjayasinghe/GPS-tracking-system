@@ -9,7 +9,6 @@ var trackingData = require('./trackingContoller');
 
 //login & registration
 router.post('/login', auth.login);
-router.get('/api/user/trackLogoutTime/:id',user.trackLogoutTime);
 
 //tracking data spliting
 router.get('/test',trackingData.splitDataNew);
@@ -26,6 +25,7 @@ router.use('/', passport.authenticate('jwt', { session: false }),
 router.post('/api/user', user.addUser);
 router.post('/api/user/restPassword', user.restPassword);
 router.post('/api/user/changePassword', user.changeUserPassword);
+router.get('/api/user/trackLogoutTime/:id',user.trackLogoutTime);
 router.get('/api/user',  user.getAll);
 router.get('/api/user/:id', user.getOne);
 router.get('/api/userByName/:userName', user.findByName);
