@@ -76,19 +76,14 @@ function genToken(user) {
   const token = jwt.sign(user.toJSON(),config.secret,{expiresIn: 3600});
    let userId = jwtDecode(token)._id;
     let loggingTime = timestamp.toDate(jwtDecode(token).iat);
-    let expireTime = timestamp.toDate(jwtDecode(token).exp);
     let activity = {
-        loggingTime: loggingTime,
-        expireTime: expireTime,
+        loggingTime: loggingTime
     };
     User.updateMany({'_id': userId}, {'$push': { logDetails : activity }}, function (err) {
         if (err) {
             console.log(err);
         }
     });
-    // console.log(userId);
-    // console.log(loggingTime);
-    // console.log(expireTime);
   return {
     token: token
   };
