@@ -116,6 +116,10 @@ module.exports.getUsers = function(callback, limit){
 module.exports.getUser = function(_id, callback){
 	User.findById(_id, callback);
 }
+//Get User Name
+module.exports.getUserName = function(_id, callback){
+	User.findById(_id,{userName:1} ,callback);
+}
 //find user by name
 module.exports.findUserByName = function(userName, callback){
     User.find({userName:userName}, callback); 

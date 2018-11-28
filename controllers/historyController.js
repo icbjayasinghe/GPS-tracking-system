@@ -4,7 +4,7 @@ var CommonFacade = require('./commonFacade');
 var history = {
     
     create : function(req,res) {
-        CommonFacade.create(req, res);
+        CommonFacade.createHistory(req, res);
     },
 
     getHistory: function(req,res){
