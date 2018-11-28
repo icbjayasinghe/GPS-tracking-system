@@ -19,7 +19,7 @@ var vehicle = {
         })
     },
     viewAllVehicles: function(req, res){
-        Vehicle.viewVehicles(function(err,vehi){
+        Vehicle.viewVehiclesWithTrackingData(function(err,vehi){
             if(err){
                 res.json({success: false, msg: err});
             }
@@ -207,7 +207,7 @@ var vehicle = {
     },
     viewAdminAllVehiclesTrackingData: function(req, res){
         var vehicleNumber = req.params.vehicleNumber;
-        Vehicle.viewVehicles(function(err,vehi){
+        Vehicle.viewVehiclesWithTrackingData(function(err,vehi){
             if(err){
                 res.json({success: false, msg: err});
             }
