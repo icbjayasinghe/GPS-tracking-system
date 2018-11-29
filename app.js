@@ -139,12 +139,10 @@ server.on("connection", function(socket){
     console.log("Port 1245 is open, server listening to %j", server.address());
   })
 
-app.listen(port, function(){    
-
-    var x = schedule.scheduleJob('00 00 00 * * *', function(req, res){
-        console.log('app.listen port')
-        CommonFacade.getVehicleListWithUserName(req,res);
-    });
+app.listen(port, function(req,res){   
+    
+    // console.log('app.listen port1');
+    // CommonFacade.getVehicleListWithUserName(req,res);
     
     var j = schedule.scheduleJob('00 00 00 * * *', function(req, res){
         CommonFacade.createHistory(req, res);
