@@ -44,6 +44,10 @@ module.exports.addVehicle = function(vehicle,callback){
 }
 //view vehicles
 module.exports.viewVehicles = function(callback, limit){ 
+    Vehicle.find({},{trackingData:0},callback).limit(limit);
+}
+//view vehicles
+module.exports.viewVehiclesWithTrackingData = function(callback, limit){ 
     Vehicle.find(callback).limit(limit);
 }
 //get all vehicle numbers

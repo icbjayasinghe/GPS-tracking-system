@@ -139,9 +139,15 @@ server.on("connection", function(socket){
     console.log("Port 1245 is open, server listening to %j", server.address());
   })
 
-app.listen(port, function(){
+app.listen(port, function(){    
+
+    var x = schedule.scheduleJob('00 00 00 * * *', function(req, res){
+        console.log('app.listen port')
+        CommonFacade.getVehicleListWithUserName(req,res);
+    });
+    
     var j = schedule.scheduleJob('00 00 00 * * *', function(req, res){
-        CommonFacade.create(req, res);
+        CommonFacade.createHistory(req, res);
         // var date  = new Date;
         // console.log('date : '+date+' @ app.js');
     });
@@ -152,7 +158,7 @@ app.listen(port, function(){
         var date = date.toISOString();
         var d = date.substring(0,10);
         console.log(d);
-        CommonFacade.addDistance(d);
+        CommonFacade.addDistanceToHistory(d);
     }); 
  
 });
