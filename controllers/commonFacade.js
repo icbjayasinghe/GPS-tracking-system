@@ -81,57 +81,32 @@ module.exports = {
     },
 
     getVehicleListWithUserName : function(req,res){
-        // Vehicle.viewVehicles(function(err,vehi) {
-        //     if (err) {
-        //         res.json({success: false, msg: err});
-        //     }
-        //     var vehicle = [];
-        //     let vehicleAmount = vehi.length;
-        //     for (let i = 0; i < vehicleAmount; i++) {
-        //         vehicle[i] = {
-        //             _id: vehi[i]._id,
-        //             vehicleNumber: vehi[i].vehicleNumber,
-        //             imeiNumber: vehi[i].imeiNumber,
-        //             vehicleDetails: vehi[i].vehicleDetails
-        //         };
-        //     }
-        //     console.log({vehicle});
-        // });
-        Vehicle.viewVehicles(function(err,res){         
-            console.log('viewVehicles function');
-            var vehicle = [];
-            var len = res.length;
+        var vehicle = [];
+        Vehicle.viewVehicles(function(err,res){                     
             var i =0;
-            console.log(len);
             res.forEach(element => {     
                 if (err){
                     console.log(err);
                 }
-                var un = ".";
                 var userId = element.userId;
-                console.log('userId : '+userId);
                 User.getUserName(userId, function(err, res){
                     if (err){
                         console.log(err);
                     }
-                    console.log('element id : '+element._id);
-                    console.log('user id : '+element.userId);
-                    un = res.userName;
+                    vehicle[i] = {
+                        _id: element._id,
+                        vehicleNumber: element.vehicleNumber,
+                        imeiNumber: element.imeiNumber,
+                        vehicleDetails: element.vehicleDetails,
+                        userName: res.userName
+                    };
+                    console.log('i : '+i);
+                    console.log("vehicle "+i+" : "+vehicle[i]);
                     console.log('______________________________________');
-
-                })
-                console.log('user name : '+un);
-                vehicle[i] = {
-                    _id: element._id,
-                    vehicleNumber: element.vehicleNumber,
-                    imeiNumber: element.imeiNumber,
-                    vehicleDetails: element.vehicleDetails,
-                    userName: res.userName
-                };
-                console.log("vehicle "+i+' vehicle number is '+vehicle[i].vehicleNumber);
-                i++
+                    i++
+                });
             });
-            console.log("vehicle : "+vehicle);
+            console.log('vehicle : '+vehicle);          
         });
     }
 }

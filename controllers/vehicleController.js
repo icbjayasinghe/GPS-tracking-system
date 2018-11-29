@@ -1,5 +1,6 @@
 var Vehicle = require('../models/vehicle');
 var TrackingData = require('./trackingContoller');
+var CommonFacade = require('./commonFacade');
 
 var vehicle = {
     addVehicle: function(req, res){
@@ -50,6 +51,9 @@ var vehicle = {
             }
             res.json(vehicleRes);
         });
+    },
+    getVehiclesWithUserName: function(req, res){
+        CommonFacade.getVehicleListWithUserName(req,res);
     },
     searchVehicle: function(req, res){
         var vehicleNumber = req.params.vehicleNumber;
