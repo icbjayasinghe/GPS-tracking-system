@@ -107,6 +107,7 @@ var user = {
                 res.json({success: false, message: 'Something Went Wrong, Try Again!'});
                 //throw err ;
             } else {
+                logDetails[0].logDetails.reverse();
                 res.json({success: true, logDetails: logDetails});
             }
         });
