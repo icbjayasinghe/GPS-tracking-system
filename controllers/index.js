@@ -22,14 +22,15 @@ router.use('/', passport.authenticate('jwt', { session: false }),
 // -------------USER COLLECTION--------------
 
 //find users done
+router.get('/api/user',  user.getAll);
 router.post('/api/user', user.addUser);
+router.get('/api/user/:id', user.getOne);
 router.post('/api/user/restPassword', user.restPassword);
 router.post('/api/user/changePassword', user.changeUserPassword);
 router.get('/api/user/trackLogoutTime/:id',user.trackLogoutTime);
-router.get('/api/user',  user.getAll);
-router.get('/api/user/:id', user.getOne);
-router.get('/api/userByName/:userName', user.findByName);
+router.get('/api/getUserLogs/:id',user.getUserLogs);
 router.get('/api/user/deleteUser/:userId', user.deleteFlag);
+router.get('/api/userByName/:userName', user.findByName);
 
 //locations(branch) routes
 router.get('/api/user/location/:userName', user.viewLocation);
