@@ -99,6 +99,18 @@ var user = {
                       });
       });
   },
+    getUserLogs: function(req, res){
+        let userId = req.params.id;
+        User.findUserActivity(userId, function (err, logDetails) {
+            if (err) {
+                console.log(err);
+                res.json({success: false, message: 'Something Went Wrong, Try Again!'});
+                //throw err ;
+            } else {
+                res.json({success: true, logDetails: logDetails});
+            }
+        });
+    },
   addLocation: function(req,res){
     var userName = req.params.userName;
     let location = {
