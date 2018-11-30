@@ -80,16 +80,16 @@ module.exports = {
         });
     },
 
-    getVehicleListWithUserName : function(req,res){
-        var vehicle = [];
-        Vehicle.viewVehicles(function(err,res){                     
+    getVehicleListWithUserName : function(req,response){
+        Vehicle.viewVehicles(function(err,res){
             var i =0;
-            res.forEach(element => {     
+            var vehicle = [];
+            res.forEach(element => {
                 if (err){
                     console.log(err);
                 }
                 var userId = element.userId;
-                User.getUserName(userId, function(err, res){
+                User.getUserName(userId, function(err, result){
                     if (err){
                         console.log(err);
                     }
@@ -98,15 +98,17 @@ module.exports = {
                         vehicleNumber: element.vehicleNumber,
                         imeiNumber: element.imeiNumber,
                         vehicleDetails: element.vehicleDetails,
-                        userName: res.userName
+                        userName: result.userName
                     };
-                    console.log('i : '+i);
-                    console.log("vehicle "+i+" : "+vehicle[i]);
-                    console.log('______________________________________');
-                    i++
+
+                    i++;
+
+                    if (i >= res.length) {
+                        response.json({vehicle: vehicle});
+                    }
                 });
             });
-            console.log('vehicle : '+vehicle);          
+
         });
     }
-}
+};

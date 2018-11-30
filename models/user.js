@@ -126,7 +126,7 @@ module.exports.getUserName = function(_id, callback){
 }
 //find user by name
 module.exports.findUserByName = function(userName, callback){
-    User.find({userName:userName}, callback); 
+    User.find({userName:userName}, callback);
 }
 //delete user by flag
 module.exports.resetStatus = function(userId,options,callback){
