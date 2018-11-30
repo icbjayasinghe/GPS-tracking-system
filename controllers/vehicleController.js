@@ -1,3 +1,4 @@
+var User =  require("../models/user");
 var Vehicle = require('../models/vehicle');
 var TrackingData = require('./trackingContoller');
 var CommonFacade = require('./commonFacade');
@@ -88,14 +89,14 @@ var vehicle = {
             if (err) {
                 res.json({success: false, msg: err});
             }
-            var vehicle = [];
+            var vehicles = [];
             let vehicleAmount = vehi.length;
             for (let i = 0; i < vehicleAmount; i++) {
-                vehicle[i] = {
+                vehicles[i] = {
                     _id: vehi[i]._id,
                     vehicleNumber: vehi[i].vehicleNumber,
                     imeiNumber: vehi[i].imeiNumber,
-                    vehicleDetails: vehi[i].vehicleDetails
+                    vehicleDetails: vehi[i].vehicleDetails,
                 };
             }
             res.json({vehicle, vehicleAmount});
@@ -294,5 +295,6 @@ var vehicle = {
             }
         });
     }
-}
+};
+
 module.exports = vehicle;
