@@ -4,7 +4,7 @@ var User = require('../models/user');
 
 module.exports = {
     createHistory : function(req,res) {
-        Vehicle.viewVehicles(function(err,res){
+        Vehicle.viewVehiclesWithTrackingData(function(err,res){
             res.forEach(element => {
                 var date = new Date() // Today!
                 date.setDate(date.getDate() - 1); // Yesterday!
