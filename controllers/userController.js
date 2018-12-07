@@ -21,6 +21,24 @@ var user = {
       res.json({success: true,user: userRes, msg: 'New User Added Successfully!'});
     })
   },
+
+    editUser: function(req, res) {
+        let updateUser = {
+            fullName: req.body.fullName,
+            address: req.body.address,
+            contactNumber: req.body.contactNumber,
+            emailAddress: req.body.emailAddress,
+            userName: req.body.userName,
+            roles: req.body.roles,
+            status: req.body.status
+        };
+        User.editUser(updateUser, req.body.userId, function(err,result){
+            if (err){
+                res.json({success: false, msg: 'Something Wrong, Try Again!', err: err});
+            }
+            res.json({success: true, msg: 'User Update Successfully!'});
+        })
+    },
   getAll: function(req, res) {
     User.getUsers(function(err,userRes){
       if (err){

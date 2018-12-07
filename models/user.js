@@ -30,7 +30,7 @@ var UserSchema = mongoose.Schema({
 	},
 	roles: {
         type: String,
-        default: ['user']
+        default: ['User']
     },
     location:[{
         name: {
@@ -127,6 +127,10 @@ module.exports.getUserName = function(_id, callback){
 //find user by name
 module.exports.findUserByName = function(userName, callback){
     User.find({userName:userName}, callback);
+}
+// edit user
+module.exports.editUser = function(user, userId, callback){
+    User.findOneAndUpdate({_id: userId}, user, {new: true}, callback);
 }
 //delete user by flag
 module.exports.resetStatus = function(userId,options,callback){

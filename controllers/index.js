@@ -13,11 +13,11 @@ router.post('/login', auth.login);
 //tracking data spliting
 router.get('/test',trackingData.splitDataNew);
 
-// router.use('/', passport.authenticate('jwt', { session: false }),
-//     function(req, res, next) {
-//         next();
-//     }
-// );
+router.use('/', passport.authenticate('jwt', { session: false }),
+    function(req, res, next) {
+        next();
+    }
+);
 
 // -------------USER COLLECTION--------------
 
@@ -25,6 +25,7 @@ router.get('/test',trackingData.splitDataNew);
 router.get('/api/user',  user.getAll);
 router.post('/api/user', user.addUser);
 router.get('/api/user/:id', user.getOne);
+router.post('/api/user/editUser', user.editUser);
 router.post('/api/user/restPassword', user.restPassword);
 router.post('/api/user/changePassword', user.changeUserPassword);
 router.get('/api/user/trackLogoutTime/:id',user.trackLogoutTime);

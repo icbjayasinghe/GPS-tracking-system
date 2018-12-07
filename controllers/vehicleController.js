@@ -105,7 +105,7 @@ var vehicle = {
     vehicleUpdate: function(req, res){
         var vehicleNumber = req.params.vehicleNumber;
         const vehicle = { vehcileDetails: req.body.details,
-                vehicleNo: req.body.vehicleNo }
+                vehicleNo: req.body.vehicleNo };
 
         Vehicle.updateVehicle(vehicleNumber, vehicle, {}, function(err, vehicleRes){
             if(err){
