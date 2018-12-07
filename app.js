@@ -143,8 +143,8 @@ app.listen(port, function(req,res){
     
     schedule.scheduleJob('00 00 00 * * *', function(req, res){
         CommonFacade.createHistory(req, res);
-        // var date  = new Date;
-        // console.log('date : '+date+' @ app.js');
+        var date  = new Date;
+        console.log('date : '+date+' @ app.js');
     });
 
     schedule.scheduleJob('00 10 00 * * *', function(req, res){
