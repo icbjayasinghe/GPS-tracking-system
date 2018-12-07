@@ -141,16 +141,13 @@ server.on("connection", function(socket){
 
 app.listen(port, function(req,res){   
     
-    // console.log('app.listen port1');
-    // CommonFacade.getVehicleListWithUserName(req,res);
-    
-    var j = schedule.scheduleJob('00 00 00 * * *', function(req, res){
+    schedule.scheduleJob('00 00 00 * * *', function(req, res){
         CommonFacade.createHistory(req, res);
         // var date  = new Date;
         // console.log('date : '+date+' @ app.js');
     });
 
-    var h = schedule.scheduleJob('00 10 00 * * *', function(req, res){
+    schedule.scheduleJob('00 10 00 * * *', function(req, res){
         var date = new Date() // Today!
         date.setDate(date.getDate() - 1); // Yesterday!
         var date = date.toISOString();
