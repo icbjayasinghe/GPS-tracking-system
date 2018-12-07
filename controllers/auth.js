@@ -41,7 +41,7 @@ var auth = {
 },
    
 validate: function(userName, password, cb) {
-  User.findOne({userName: userName},function(err, user) {
+  User.findOne({userName: userName, status: 'Active'},function(err, user) {
     if (err) throw err;
     if (!user) {
       cb(null, null);

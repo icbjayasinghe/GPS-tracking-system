@@ -118,9 +118,9 @@ var vehicle = {
         var vehicleNumber = req.params.vehicleNumber;
         Vehicle.deleteVehicle(vehicleNumber,function(err, resVeh){
             if(err){
-                res.json({success: false, msg: err});
+                res.json({success: false, msg: 'Something Wrong, Try Again!', err: err});
             }
-            res.json({success: true, msg: resVeh});
+            res.json({success: true, msg: 'Vehicle Deleted Successfully!'});
         })
     },   
     addTrackingData: function(req,res){
