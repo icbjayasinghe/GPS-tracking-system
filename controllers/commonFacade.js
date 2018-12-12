@@ -7,8 +7,8 @@ module.exports = {
         Vehicle.viewVehiclesWithTrackingData(function(err,res){
             res.forEach(element => {
                 var date = new Date() // Today!
-                date.setDate(date.getDate() - 1); // Yesterday!
                 var date = date.toISOString();
+                console.log(date);
                 var d = date.substring(0,10);
                 var history = new History({
                     date : d,
@@ -37,8 +37,8 @@ module.exports = {
     },
 
     addDistanceToHistory : function(req){
-        //res.json({success:false, msg:err});
-        History.historyByDate(req,function(err,res){             
+        History.historyByDate(req,function(err,res){   
+            var date = req ;         
             res.forEach(element => { 
                 if (err){
                     res.json({success:false, msg:err});
@@ -64,13 +64,11 @@ module.exports = {
                     j=i;
                 }
                 console.log('__________________________________');
-                console.log(element._id);
-                console.log('number of tracking data : '+(j+2));
-                console.log('distance : '+distance);
-                console.log('vehicle number : '+vehicleNumber);
+                console.log(element._id+'/'+vehicleNumber+' has'+(j+2)+' number of tracking data on '+date);
+                console.log('Total distance : '+distance);
                 console.log('__________________________________');
 
-                History.updateHistoryTrackingDistance(vehicleNumber,distance, function(err, res){
+                History.updateHistoryTrackingDistance(vehicleNumber, date, distance, function(err, res){
                     if(err){
                       console.log(err);
                     }
