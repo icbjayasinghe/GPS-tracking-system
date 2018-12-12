@@ -140,19 +140,15 @@ server.on("connection", function(socket){
   })
 
 app.listen(port, function(req,res){   
-    
+
     schedule.scheduleJob('00 00 00 * * *', function(req, res){
         CommonFacade.createHistory(req, res);
-        var date  = new Date;
-        console.log('date : '+date+' @ app.js');
     });
 
     schedule.scheduleJob('00 10 00 * * *', function(req, res){
-        var date = new Date() // Today! -> yesterday in (0,0)
-        //date.setDate(date.getDate() - 1); // Yesterday!
+        var date = new Date(); 
         var date = date.toISOString();
         var d = date.substring(0,10);
-        console.log(d);
         CommonFacade.addDistanceToHistory(d);
     }); 
  
