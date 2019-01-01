@@ -1,6 +1,7 @@
 var History = require('../models/history');
 var Vehicle = require('../models/vehicle');
 var User = require('../models/user');
+var Summary = require('../models/summary');
 
 module.exports = {
     createHistory : function(req,res) {
@@ -108,5 +109,32 @@ module.exports = {
             });
 
         });
+    },
+    
+    addNewSummary : function(req,res){
+        //console.log('hi');
+        Vehicle.viewVehicles(function(err,res){
+            res.forEach(element => {
+                var date = new Date() // Today!
+                var date = date.toISOString();
+                console.log(date);
+                var d = date.substring(0,10);
+                var newSummary = new Summary({
+                    userId: element.userId,
+                    vehicleNumber: element.vehicleNumber,
+                    date : req,
+                    distance : 0,
+                    trips : 0
+                });
+                Summary.addNewSummary(newSummary,function(err,summaryRes){
+                    if(err){
+                        console.log({success: false, msg:'Something wrong, Try Again!',  err: err});
+                    }
+                    console.log({success:true,summary:summaryRes, msg: 'New Summary Added Successfully!'});
+                })
+                console.log(element._id);
+            });
+        })
+        console.log({success:true});
     }
 };
