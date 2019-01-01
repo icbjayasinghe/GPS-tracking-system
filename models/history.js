@@ -58,5 +58,6 @@ module.exports.historyByDate = function(date, callback){
 }
 //update history distance
 module.exports.updateHistoryTrackingDistance = function(vehicleNumber, date, distance, options, callback){
+    console.log('update history')
     History.findOneAndUpdate({vehicleNumber: vehicleNumber,date:date},{distance:distance}, options, callback);
 }

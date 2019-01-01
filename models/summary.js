@@ -30,17 +30,17 @@ module.exports.addNewSummary = function(summary, callback){
     summary.save(callback);
 }
 //search summary
-module.exports.findSummary = function(vehicleNumber, date, callback){
-    Summary.find({vehicleNumber:vehicleNumber, date:date}, {_id:0,distance:1}, callback);
+module.exports.getSummary = function(vehicleNumber, date, callback){
+    console.log('hi');
+    Summary.findOne({vehicleNumber:vehicleNumber, date:date}, {_id:0, distance:1, trips:1}, callback);
 }
 //view all summary
 module.exports.getAll = function(callback, limit){ 
     Summary.find(callback).limit(limit);
 }
 //update summary
-module.exports.updateSummary = function(vehicleNumber, date, dis ,options,callback){
-    console.log(dis);
+module.exports.updateSummary = function(vehicleNumber, date, distance, trips ,options,callback){
     quary = {vehicleNumber:vehicleNumber, date:date};
-    var update = { distance: dis, trips:1};
+    var update = { distance: distance, trips: trips};
     Summary.findOneAndUpdate(quary, update, options, callback); 
 }

@@ -141,8 +141,6 @@ server.on("connection", function(socket){
 
 app.listen(port, function(req,res){ 
 
-    console.log('hi');
-
     schedule.scheduleJob('00 00 00 * * *', function(req, res){
         CommonFacade.createHistory(req, res);
     });
@@ -151,7 +149,7 @@ app.listen(port, function(req,res){
         var date = new Date(); 
         var date = date.toISOString();
         var d = date.substring(0,10);
-        CommonFacade.addDistanceToHistory(d);
+        History.calculateDistance(d,res);
     }); 
     
     schedule.scheduleJob('00 15 00 01 * *', function(req, res){
