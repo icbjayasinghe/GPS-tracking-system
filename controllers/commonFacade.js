@@ -3,6 +3,8 @@ var Vehicle = require('../models/vehicle');
 var User = require('../models/user');
 var Summary = require('../models/summary');
 
+var async = require('async');
+
 module.exports = {
     createHistory : function(req,res) {
         Vehicle.viewVehiclesWithTrackingData(function(err,res){
@@ -110,7 +112,7 @@ module.exports = {
 
         });
     },
-    
+
     addNewSummary : function(req,res){
         //console.log('hi');
         Vehicle.viewVehicles(function(err,res){
@@ -136,5 +138,58 @@ module.exports = {
             });
         })
         console.log({success:true});
+    },
+
+    function1 : function(req, res, next) {
+        vehicleNumber = req.vehicleNumber;
+        date = req.date;
+        dt = date.substring(0,7);
+        dis = req.distance;
+        let rsp = {};
+        const tasks = [
+            function addHistoryDistance(cb) {
+                History.updateHistoryTrackingDistance(vehicleNumber, date, dis, function(err, res){
+                    if(err){
+                      console.log(err);
+                    }
+                    console.log('tracking distance calculated');
+                    rsp.dis = dis;
+                    return cb(null, dis);
+                })
+            },
+            function getSummaryData(cb) {              
+                Summary.getSummary(vehicleNumber, dt, function(err, res){
+                    if (err){
+                        console.log(err);
+                    }
+                    console.log(res)
+                    rsp.summaryDis = res.distance;
+                    rsp.trips = res.trips;
+                    return cb(null, res.distance);
+                })
+            },
+            function updateSummaryData(cb) {
+                totalDist = rsp.dis + rsp.summaryDis ;
+                newTrips = rsp.trips +1 ;
+                console.log('rsp dis : '+rsp.dis);
+                console.log('rsp distance : '+rsp.summaryDis);
+                console.log('total : ' + totalDist);
+                Summary.updateSummary(vehicleNumber, dt, totalDist, newTrips, function(err,res){
+                    if (err){
+                        console.log(err);
+                    }
+                    rsp.res = res;
+                    return cb(null, res); 
+                })
+            }
+        ];
+        async.series(tasks, (err, results) => {
+            if (err) {
+                console.log(err);
+                //return res.json("error:"+err);
+            }
+            console.log(results);
+            //return res.json(results);
+        });
     }
 };
