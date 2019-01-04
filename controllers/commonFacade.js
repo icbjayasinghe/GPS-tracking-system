@@ -1,6 +1,9 @@
 var History = require('../models/history');
 var Vehicle = require('../models/vehicle');
 var User = require('../models/user');
+var Summary = require('../models/summary');
+
+var async = require('async');
 
 module.exports = {
     createHistory : function(req,res) {
@@ -107,6 +110,93 @@ module.exports = {
                 });
             });
 
+        });
+    },
+
+    addNewSummary : function(req,res){
+        //console.log('hi');
+        Vehicle.viewVehicles(function(err,res){
+            res.forEach(element => {
+                var date = new Date() // Today!
+                var date = date.toISOString();
+                var d = date.substring(0,10);
+                var newSummary = new Summary({
+                    userId: element.userId,
+                    vehicleNumber: element.vehicleNumber,
+                    date : req,
+                    distance : 0,
+                    trips : 0
+                });
+                Summary.addNewSummary(newSummary,function(err,summaryRes){
+                    if(err){
+                        console.log({success: false, msg:'Something wrong, Try Again!',  err: err});
+                    }
+                    console.log({success:true,summary:summaryRes, msg: 'New Summary Added Successfully!'});
+                })
+            });
+        })
+        console.log({success:true});
+    },
+
+    function1 : function(req, res, next) {
+        vehicleNumber = req.vehicleNumber;
+        date = req.date;
+        dt = date.substring(0,7);
+        distance = req.distance;
+        let rsp = {};
+        const tasks = [
+            function getHistoryDistance(cb) {
+                console.log(vehicleNumber);
+                History.find({vehicleNumber:vehicleNumber,date:date},function(err, res){
+                    if(err){
+                      console.log(err);
+                    }
+                    rsp.distance = distance;
+                    //console.log(distance);
+                    return cb(null, distance);
+                });
+            },
+            function getSummaryData(cb) {  
+                Summary.findOne({vehicleNumber:vehicleNumber, date:dt}, {_id:0, distance:1, trips:1}, function(err, res){
+                    if (err){
+                        console.log(err);
+                    }
+                    rsp.summaryDis = res.distance;
+                    rsp.trips = res.trips;
+                    console.log(res);
+                    return cb(null, res.distance);
+                });            
+            },
+            function updateSummaryData(cb) {
+                totalDist = rsp.distance + rsp.summaryDis ;
+                if (rsp.distance != 0){
+                    newTrips = rsp.trips +1 ;
+                }else{
+                    newTrips = rsp.trips;
+                }
+                console.log('vehicleNumber : '+vehicleNumber);
+                console.log('dt : '+dt);
+                console.log('totalDist : '+totalDist);
+                console.log('newTrips : '+newTrips);
+                var j=j+1;
+                //return cb(null,newTrips);
+                Summary.updateSummary(vehicleNumber, dt, totalDist, newTrips, function(err,res){
+                    if (err){
+                        console.log(err);
+                    }
+                    //rsp.res = res;
+                    return cb(null, res); 
+                })
+            }
+        ];
+
+        async.series(tasks, (err, results) => {
+            if (err) {
+                console.log(err);
+            }
+            going = false;
+
+            //console.log(results);
         });
     }
 };

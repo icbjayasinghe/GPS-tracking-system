@@ -10,7 +10,7 @@ var http = require('http');
 var Vehicle = require('./models/vehicle');
 var passport = require('passport');
 var CommonFacade = require('./controllers/commonFacade');
-var History = require('./controllers/historyController');
+var History = require('./controllers/historyController')
 
 const app = express();
 const cors = require('cors');
@@ -139,7 +139,7 @@ server.on("connection", function(socket){
     console.log("Port 1245 is open, server listening to %j", server.address());
   })
 
-app.listen(port, function(req,res){   
+app.listen(port, function(req,res){ 
 
     schedule.scheduleJob('00 00 00 * * *', function(req, res){
         CommonFacade.createHistory(req, res);
@@ -149,7 +149,21 @@ app.listen(port, function(req,res){
         var date = new Date(); 
         var date = date.toISOString();
         var d = date.substring(0,10);
-        CommonFacade.addDistanceToHistory(d);
+        CommonFacade.addDistanceToHistory(d,res);
     }); 
+
+    schedule.scheduleJob('00 15 00 * * *', function(req, res){
+        var date = new Date(); 
+        var date = date.toISOString();
+        var d = date.substring(0,10);
+        History.updateSummary(d,res);
+    });
+    
+    schedule.scheduleJob('00 00 06 01 * *', function(req, res){
+        var date = new Date(); 
+        var date = date.toISOString();
+        var d = date.substring(0,7);
+        CommonFacade.addNewSummary(d,res);
+    });
  
 });

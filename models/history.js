@@ -48,13 +48,19 @@ module.exports.historyByUser = function(userId, callback){
 module.exports.historyByVehicle = function(vehicleNumber, callback){
     History.find({vehicleNumber:vehicleNumber},callback);
 }
+module.exports.getHistory = function(vehicleNumber, date, callback){
+    History.find({vehicleNumber:vehicleNumber,date:date},callback);
+}
+module.exports.getHistoryDistance = function(vehicleNumber, date, callback){
+    History.findOne({vehicleNumber:vehicleNumber,date:date},{_id:0,distance:1},callback);
+}
 //history search
 module.exports.searchHistory = function(searchDetails,callback){    
     History.find({vehicleNumber:searchDetails.vehicleNumber,date:searchDetails.date},callback);
 }
 //search history by date
 module.exports.historyByDate = function(date, callback){
-    History.find({date:date},callback);
+    History.find({date:date},{_id:0, vehicleNumber:1,distance:1,date:1},callback);
 }
 //update history distance
 module.exports.updateHistoryTrackingDistance = function(vehicleNumber, date, distance, options, callback){
