@@ -31,7 +31,6 @@ module.exports.addNewSummary = function(summary, callback){
 }
 //search summary
 module.exports.getSummary = function(vehicleNumber, date, callback){
-    console.log('hi');
     Summary.findOne({vehicleNumber:vehicleNumber, date:date}, {_id:0, distance:1, trips:1}, callback);
 }
 //view all summary

@@ -103,8 +103,27 @@ var history = {
                 })
             });
         });
-    }
+    },
+    
+    updateSummary : function(req, res){
+        History.historyByDate(req,function(err,history){
+            if (err){
+                console.log(err);
+            }
+            for (let i = 0; i < history.length; i++){
+                setDelay(i)
+                function setDelay(i) {
+                    setTimeout(function(){
+                      console.log(i);
+                      CommonFacade.function1(history[i],res);       
+                    }, i*1000);
+                  }    
+            }
+        });
+    },
 
+    
+    
 };
 
 module.exports = history ;
