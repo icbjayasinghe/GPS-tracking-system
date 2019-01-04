@@ -190,7 +190,7 @@ module.exports = {
             }
         ];
 
-        async.series(tasks, (err, results) => {
+        async.async.series(tasks, (err, results) => {
             if (err) {
                 console.log(err);
             }

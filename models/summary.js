@@ -38,8 +38,8 @@ module.exports.searchSummaryByUser = function(userId, date, callback){
     Summary.find({userId:userId, date:date}, {_id:0, distance:1, trips:1}, callback);
 }
 //view all summary
-module.exports.getSummaries = function(callback, limit){ 
-    Summary.find(callback).limit(limit);
+module.exports.getSummaries = function(date,callback, limit){ 
+    Summary.find({date:date},callback).limit(limit);
 }
 //update summary
 module.exports.updateSummary = function(vehicleNumber, date, distance, trips ,options,callback){
