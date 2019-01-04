@@ -28,6 +28,21 @@ var historySchema = mongoose.Schema({
         type:Number,
         required:true
     }
+    // ,
+    // stopDetails:[{
+    //     stopedTime :{
+    //         Type: Date,
+    //         required : true
+    //     },
+    //     startedTime:{
+    //         Type: Date,
+    //         required:true
+    //     },
+    //     location:{
+    //         longitude: Number,
+    //         latitude: Number
+    //     }
+    // }]
 });
 
 var History = module.exports = mongoose.model('History',historySchema);

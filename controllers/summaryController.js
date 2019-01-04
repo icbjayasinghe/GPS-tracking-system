@@ -2,11 +2,12 @@ var Summary  = require('../models/summary.js');
 
 var summary = {
     getAll : function(req, res) {
-        Summary.getSummaries(function(err,userRes){
+        var date = req.params.date;
+        Summary.getSummaries(date,function(err,userRes){
           if (err){
-            res.json({success: false, msg: err});
+            res.json({success: false, msg: 'Something Wrong, Try Again!'});
           }
-          res.json(userRes);
+          res.json({success: true,userRes});
         })
     },
     searchSummary : function(req, res) {
@@ -15,9 +16,9 @@ var summary = {
         console.log(user+'  '+date);
         Summary.searchSummaryByUser(user, date ,function(err,userRes){
           if (err){
-            res.json({success: false, msg: err});
+            res.json({success: false, msg: 'Something Wrong, Try Again!'});
           }
-          res.json(userRes);
+          res.json({success: true,userRes});
         })
     }
 }

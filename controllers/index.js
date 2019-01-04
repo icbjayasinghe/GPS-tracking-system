@@ -73,7 +73,7 @@ router.get('/api/historyByVehicle/:vehicleNumber',history.getHistoryByVehicle);
 // -------------SUMMARY COLLECTION--------------
 
 //summary related routes
-router.get('/api/summary',summary.getAll);
+router.get('/api/summary/:date',summary.getAll);
 router.get('/api/summaryByUser/:userId/:date',summary.searchSummary)
 
 module.exports = router;
