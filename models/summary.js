@@ -34,7 +34,7 @@ module.exports.getSummary = function(vehicleNumber, date, callback){
     Summary.findOne({vehicleNumber:vehicleNumber, date:date}, {_id:0, distance:1, trips:1}, callback);
 }
 //view all summary
-module.exports.getAll = function(callback, limit){ 
+module.exports.getSummaries = function(callback, limit){ 
     Summary.find(callback).limit(limit);
 }
 //update summary

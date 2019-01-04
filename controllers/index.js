@@ -4,6 +4,7 @@ var auth = require('./auth.js');
 var user  = require('./userController.js');
 var vehicle = require('./vehicleController.js');
 var history = require('./historyController.js');
+var summary = require('./summaryController.js');
 const passport = require('passport');
 var trackingData = require('./trackingContoller');
 
@@ -68,5 +69,12 @@ router.post('/api/searchHistory',history.searchHistory);
 router.get('/api/history',history.getHistory);
 router.get('/api/historyByUserId/:userId',history.getHistoryByUser);
 router.get('/api/historyByVehicle/:vehicleNumber',history.getHistoryByVehicle);
+
+// -------------SUMMARY COLLECTION--------------
+
+//summary related routes
+router.get('/api/summary',summary.getAll);
+
+
 
 module.exports = router;
