@@ -33,6 +33,10 @@ module.exports.addNewSummary = function(summary, callback){
 module.exports.getSummary = function(vehicleNumber, date, callback){
     Summary.findOne({vehicleNumber:vehicleNumber, date:date}, {_id:0, distance:1, trips:1}, callback);
 }
+//search summary by user and date
+module.exports.searchSummaryByUser = function(userId, date, callback){
+    Summary.find({userId:userId, date:date}, {_id:0, distance:1, trips:1}, callback);
+}
 //view all summary
 module.exports.getSummaries = function(callback, limit){ 
     Summary.find(callback).limit(limit);
