@@ -31,11 +31,11 @@ module.exports.addNewSummary = function(summary, callback){
 }
 //search summary
 module.exports.getSummary = function(vehicleNumber, date, callback){
-    Summary.findOne({vehicleNumber:vehicleNumber, date:date}, {_id:0, distance:1, trips:1}, callback);
+    Summary.findOne({vehicleNumber:vehicleNumber, date:date}, {_id:0, distance:1, vehicleNumber: 1, trips:1}, callback);
 }
 //search summary by user and date
 module.exports.searchSummaryByUser = function(userId, date, callback){
-    Summary.find({userId:userId, date:date}, {_id:0, distance:1, trips:1}, callback);
+    Summary.find({userId:userId, date:date}, {_id:0, distance:1, vehicleNumber: 1, trips:1}, callback);
 }
 //view all summary
 module.exports.getSummaries = function(date,callback, limit){ 
