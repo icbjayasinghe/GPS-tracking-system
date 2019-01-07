@@ -7,7 +7,7 @@ var summary = {
           if (err){
             res.json({success: false, msg: 'Something Wrong, Try Again!'});
           }
-          res.json({success: true,userRes});
+          res.json({success: true, msg: 'All Vehicle Monthly Summary Access Allowed',userRes});
         })
     },
     searchSummary : function(req, res) {
@@ -18,7 +18,7 @@ var summary = {
           if (err){
             res.json({success: false, msg: 'Something Wrong, Try Again!'});
           }
-          res.json({success: true,userRes});
+          res.json({success: true, msg: 'Your Vehicle Monthly Summary Access Allowed',userRes});
         })
     }
 }
