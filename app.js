@@ -156,6 +156,13 @@ app.listen(port, function(req,res){
         var date = new Date(); 
         var date = date.toISOString();
         var d = date.substring(0,10);
+        History.getZeroSpeedTrackingData(d);
+    });
+
+    schedule.scheduleJob('00 20 00 * * *', function(req, res){
+        var date = new Date(); 
+        var date = date.toISOString();
+        var d = date.substring(0,10);
         History.updateSummary(d,res);
     });
     

@@ -122,8 +122,83 @@ var history = {
         });
     },
 
-    
-    
+    getZeroSpeedTrackingData : function(date, res){
+        History.historyTrackingSpeedByDate(date,function(err,res){
+            if (err){
+                console.log(err);
+            }
+
+            var l = res.length;
+            for (i=0;i<l;i++){
+                let da = 0;
+                var dataArray=[];
+                var trackingData = res[i].trackingData;
+                var vehicleNumber = res[i].vehicleNumber;
+                let k = 0;
+                let zeroSpeed = [];
+                let stopedDetails = {} ;
+                let l = trackingData.length;
+                if (l>2){
+                    for (j=0; j<l; j++){
+                        if (res[i].trackingData[j].speed===0){
+                            zeroSpeed[k]=j
+                            k++;
+                        }
+                    }
+
+                    let zl = zeroSpeed.length;
+                    stopedTime = trackingData[zeroSpeed[0]].date
+                    for (j=0;j<zl-1;j++){
+                        if (zeroSpeed[j]+1 != zeroSpeed[j+1]){
+                            startTime = trackingData[zeroSpeed[j]].date;
+                            longitude =  trackingData[zeroSpeed[j]].longitude ;
+                            latitude =  trackingData[zeroSpeed[j]].latitude ;
+                            location = {
+                                longitude :longitude,
+                                latitude : latitude
+                            };
+
+                            stopedDetails.stopedTime = stopedTime ;
+                            stopedDetails.startedTime = startTime ;
+                            stopedDetails.location = location ;
+
+                            dataArray[da]=stopedDetails;
+                            da++;
+                        }
+                        if (zeroSpeed[j]+1 != zeroSpeed[j+1]){
+                            stopedTime = trackingData[zeroSpeed[j+1]].date
+                        }
+                    }
+
+                    if (stopedTime != null){
+                        startTime = trackingData[zeroSpeed[zl-1]].date;
+                        longitude =  trackingData[zeroSpeed[zl-1]].longitude,
+                        latitude =  trackingData[zeroSpeed[zl-1]].latitude
+                        location = {
+                            longitude :longitude,
+                            latitude : latitude
+                        };
+
+                        stopedDetails.stopedTime = stopedTime ;
+                        stopedDetails.startedTime = startTime ;
+                        stopedDetails.location = location ;
+                        dataArray[da]=stopedDetails
+                        da++
+                    }
+
+                    console.log(dataArray)
+
+                    // History.updateMany({'vehicleNumber': vehicleNumber},{'$push': { stopDetails:{ '$each':dataArray, '$sort':{stopedTime:-1}}}}, function (err){
+                    //     if (err) {
+                    //         console.log({ success: false, message: "error"+err });
+                    //     } else {
+                    //         console.log({ success: true, message: "successfully added new stoped details" });
+                    //     }
+                    // });
+                }
+            }
+        });
+    }
 };
 
 module.exports = history ;
