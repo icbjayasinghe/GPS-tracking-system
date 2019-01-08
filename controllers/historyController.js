@@ -188,13 +188,13 @@ var history = {
 
                     console.log(dataArray)
 
-                    // History.updateMany({'vehicleNumber': vehicleNumber},{'$push': { stopDetails:{ '$each':dataArray, '$sort':{stopedTime:-1}}}}, function (err){
-                    //     if (err) {
-                    //         console.log({ success: false, message: "error"+err });
-                    //     } else {
-                    //         console.log({ success: true, message: "successfully added new stoped details" });
-                    //     }
-                    // });
+                    History.updateMany({'vehicleNumber': vehicleNumber},{'$push': { stopDetails:{ '$each':dataArray, '$sort':{stopedTime:-1}}}}, function (err){
+                        if (err) {
+                            console.log({ success: false, message: "error"+err });
+                        } else {
+                            console.log({ success: true, message: "successfully added new stoped details" });
+                        }
+                    });
                 }
             }
         });
