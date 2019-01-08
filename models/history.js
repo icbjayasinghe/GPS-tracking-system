@@ -27,22 +27,15 @@ var historySchema = mongoose.Schema({
     distance:{
         type:Number,
         required:true
-    }
-    // ,
-    // stopDetails:[{
-    //     stopedTime :{
-    //         Type: Date,
-    //         required : true
-    //     },
-    //     startedTime:{
-    //         Type: Date,
-    //         required:true
-    //     },
-    //     location:{
-    //         longitude: Number,
-    //         latitude: Number
-    //     }
-    // }]
+    },
+    stopDetails:[{
+        stopedTime :Date,
+        startedTime:Date,
+        location:{
+            longitude: Number,
+            latitude: Number
+        }
+    }]
 });
 
 var History = module.exports = mongoose.model('History',historySchema);
@@ -80,4 +73,8 @@ module.exports.historyByDate = function(date, callback){
 //update history distance
 module.exports.updateHistoryTrackingDistance = function(vehicleNumber, date, distance, options, callback){
     History.findOneAndUpdate({vehicleNumber: vehicleNumber,date:date},{distance:distance}, options, callback);
+}
+//get history tracking data where tracking speed is equal to  0
+module.exports.historyTrackingSpeedByDate = function(date, callback){
+    History.find({date:date},{_id:0,trackingData:1,vehicleNumber:1},callback);
 }
