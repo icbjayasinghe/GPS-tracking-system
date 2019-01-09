@@ -35,6 +35,10 @@ var historySchema = mongoose.Schema({
             longitude: Number,
             latitude: Number
         }
+    }],
+    speededDetails:[{
+        speedUpIndex: Number,
+        speedDownIndex: Number
     }]
 });
 

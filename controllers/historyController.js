@@ -122,15 +122,14 @@ var history = {
         });
     },
 
-    getZeroSpeedTrackingData : function(date, res){
+    updateHistoryStopDeytails : function(date, res){
         History.historyTrackingSpeedByDate(date,function(err,res){
             if (err){
                 console.log(err);
             }
-
-            var l = res.length;
-            for (i=0;i<l;i++){
-                let da = 0;
+            var len = res.length;
+            for (i=0;i<len;i++){
+                var da = 0;
                 var dataArray=[];
                 var trackingData = res[i].trackingData;
                 var vehicleNumber = res[i].vehicleNumber;
@@ -148,7 +147,7 @@ var history = {
 
                     let zl = zeroSpeed.length;
                     stopedTime = trackingData[zeroSpeed[0]].date
-                    for (j=0;j<zl-1;j++){
+                    for (j=1;j<zl-1;j++){
                         if (zeroSpeed[j]+1 != zeroSpeed[j+1]){
                             startTime = trackingData[zeroSpeed[j]].date;
                             longitude =  trackingData[zeroSpeed[j]].longitude ;
@@ -158,15 +157,19 @@ var history = {
                                 latitude : latitude
                             };
 
-                            stopedDetails.stopedTime = stopedTime ;
-                            stopedDetails.startedTime = startTime ;
+                            stopedDetails.stopedTime = startTime ;
+                            stopedDetails.startedTime = stopedTime ;
                             stopedDetails.location = location ;
-
+                            var x = da ;
+                            console.log(da)
+                            console.log(stopedDetails)                           
                             dataArray[da]=stopedDetails;
+                            //console.log(dataArray)
                             da++;
-                        }
-                        if (zeroSpeed[j]+1 != zeroSpeed[j+1]){
-                            stopedTime = trackingData[zeroSpeed[j+1]].date
+                            
+                            if (da!=x){
+                                stopedTime = trackingData[zeroSpeed[j+1]].date
+                            }
                         }
                     }
 
@@ -179,14 +182,19 @@ var history = {
                             latitude : latitude
                         };
 
-                        stopedDetails.stopedTime = stopedTime ;
-                        stopedDetails.startedTime = startTime ;
+                        stopedDetails.stopedTime = startTime ;
+                        stopedDetails.startedTime = stopedTime ;
                         stopedDetails.location = location ;
+                        console.log(da)
+                        console.log(stopedDetails)
+                        
                         dataArray[da]=stopedDetails
+                        //console.log(dataArray)
                         da++
                     }
 
-                    console.log(dataArray)
+                    //console.log(dataArray)
+                    console.log()
 
                     History.updateMany({'vehicleNumber': vehicleNumber},{'$push': { stopDetails:{ '$each':dataArray, '$sort':{stopedTime:-1}}}}, function (err){
                         if (err) {
@@ -197,6 +205,46 @@ var history = {
                     });
                 }
             }
+        });
+    },
+
+    updateOverSpeedTrackingData :function(date,res){
+        History.historyTrackingSpeedByDate(date,function(err,res){
+            if (err){
+                console.log(err);
+            }
+
+            let numberOfHistoryVehicles = res.length;
+
+            for(i=0 ; i<numberOfHistoryVehicles; i++){
+                var vehicleNumber = res[i].vehicleNumber;
+                var trackingData = res[i].trackingData;
+                console.log(vehicleNumber);
+                var trackingDataLength = trackingData.length
+                var k = 0;
+                var overSpeedIndexArray = []
+                dataArray = []
+                speededDetails = {}
+                if (trackingDataLength>2){
+                    for(j=0;j<trackingDataLength;j++){
+                        if (trackingData[j].speed>60){
+                            overSpeedIndexArray[k]=j;
+                            k++
+                        }
+                    }
+                    var numberOfOverSpeedData = overSpeedIndexArray.length;
+                    if (numberOfOverSpeedData>2){
+                        console.log(overSpeedIndexArray[numberOfOverSpeedData-1]);
+                        for(j=(numberOfOverSpeedData-1);j>0;j--){
+                            if((overSpeedIndexArray[j]-1)!=(overSpeedIndexArray[j-1])){
+                                console.log(overSpeedIndexArray[j])
+                                console.log(overSpeedIndexArray[j-1])
+                            }
+                        }
+                    }
+                    
+                }                
+            }           
         });
     }
 };
