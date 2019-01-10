@@ -38,7 +38,30 @@ var historySchema = mongoose.Schema({
     }],
     speededDetails:[{
         speedUpIndex: Number,
-        speedDownIndex: Number
+        speedDownIndex: Number,
+        speedUpDetails: {
+            date : Date,
+            longitude: Number,
+            latitude: Number,
+            altitude: Number,
+            angle: Number,
+            satelites: Number,
+            speed: Number,
+            fuel: Number,
+            temperature: Number
+        },
+        speedDownDetails:{
+            date : Date,
+            longitude: Number,
+            latitude: Number,
+            altitude: Number,
+            angle: Number,
+            satelites: Number,
+            speed: Number,
+            fuel: Number,
+            temperature: Number
+        },
+        
     }]
 });
 
@@ -82,3 +105,10 @@ module.exports.updateHistoryTrackingDistance = function(vehicleNumber, date, dis
 module.exports.historyTrackingSpeedByDate = function(date, callback){
     History.find({date:date},{_id:0,trackingData:1,vehicleNumber:1},callback);
 }
+module.exports.getUserOverSpeedData = function(vehicleNumber, date, callback){
+    History.findOne({date:date,vehicleNumber:vehicleNumber},{_id:0,speededDetails:1},callback);
+}
+module.exports.getUserOverSpeedPath = function(vehicleNumber, date, callback){
+    History.find({date:date,vehicleNumber:vehicleNumber},{_id:0,speededDetails:1,trackingData:1},callback);
+}
+

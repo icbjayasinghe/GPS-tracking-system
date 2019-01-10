@@ -14,11 +14,11 @@ router.post('/login', auth.login);
 //tracking data spliting
 router.get('/test',trackingData.splitDataNew);
 
-// router.use('/', passport.authenticate('jwt', { session: false }),
-//     function(req, res, next) {
-//         next();
-//     }
-// );
+router.use('/', passport.authenticate('jwt', { session: false }),
+    function(req, res, next) {
+        next();
+    }
+);
 
 // -------------USER COLLECTION--------------
 
@@ -43,6 +43,7 @@ router.put('/api/user/removeLocation/:userId',user.removeLocation);
 
 //vehicle related routes done
 router.post('/api/vehicle',vehicle.addVehicle);
+
 // router.get('/api/vehicle', vehicle.viewAllVehicles);
 router.get('/api/vehicle/vehicleDetailsWithUserName',vehicle.getVehiclesWithUserName);
 router.get('/api/vehicle/allVehicleDetails', vehicle.viewAdminVehicles);
@@ -69,6 +70,8 @@ router.post('/api/searchHistory',history.searchHistory);
 router.get('/api/history',history.getHistory);
 router.get('/api/historyByUserId/:userId',history.getHistoryByUser);
 router.get('/api/historyByVehicle/:vehicleNumber',history.getHistoryByVehicle);
+router.get('/api/speedDeailsByVehicle/:vehicleNumber',history.getOverSpeed);
+//router.get('/api/speedPath/:vehicleNumber',history.getOverSpeedPath);
 
 // -------------SUMMARY COLLECTION--------------
 
