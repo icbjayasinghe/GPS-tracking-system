@@ -70,8 +70,8 @@ router.post('/api/searchHistory',history.searchHistory);
 router.get('/api/history',history.getHistory);
 router.get('/api/historyByUserId/:userId',history.getHistoryByUser);
 router.get('/api/historyByVehicle/:vehicleNumber',history.getHistoryByVehicle);
-router.get('/api/speedDeailsByVehicle/:vehicleNumber',history.getOverSpeed);
-//router.get('/api/speedPath/:vehicleNumber',history.getOverSpeedPath);
+router.get('/api/historyStopedLocations/:vehicleNumber/:date',history.getStopedData);
+router.get('/api/speedDeailsByVehicle/:vehicleNumber/:date',history.getOverSpeed);
 
 // -------------SUMMARY COLLECTION--------------
 
