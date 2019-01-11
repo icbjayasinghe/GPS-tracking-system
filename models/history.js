@@ -61,7 +61,7 @@ var historySchema = mongoose.Schema({
             fuel: Number,
             temperature: Number
         },
-        
+        //speedDuration :         
     }]
 });
 
@@ -105,10 +105,11 @@ module.exports.updateHistoryTrackingDistance = function(vehicleNumber, date, dis
 module.exports.historyTrackingSpeedByDate = function(date, callback){
     History.find({date:date},{_id:0,trackingData:1,vehicleNumber:1},callback);
 }
+//get history tracking data where tracking data got over speed
 module.exports.getUserOverSpeedData = function(vehicleNumber, date, callback){
-    History.findOne({date:date,vehicleNumber:vehicleNumber},{_id:0,speededDetails:1},callback);
+    History.find({date:date,vehicleNumber:vehicleNumber},{date:1,vehicleNumber:1,speededDetails:1},callback);
 }
-module.exports.getUserOverSpeedPath = function(vehicleNumber, date, callback){
-    History.find({date:date,vehicleNumber:vehicleNumber},{_id:0,speededDetails:1,trackingData:1},callback);
+//get history tracking data where tracking speed is equal to  0
+module.exports.getUserStoppedData = function(vehicleNumber, date, callback){
+    History.find({vehicleNumber:vehicleNumber, date:date},{_id:0,stopDetails:1,vehicleNumber:1},callback);
 }
-

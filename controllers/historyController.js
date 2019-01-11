@@ -1,5 +1,6 @@
 var History  = require('../models/history');
 var CommonFacade = require('./commonFacade');
+var moment = require('moment');
 
 var history = {
     
@@ -28,7 +29,8 @@ var history = {
 
     getHistoryByVehicle : function(req, res){
         var vehicleNumber = req.params.vehicleNumber;
-        History.historyByVehicle(vehicleNumber, function(err, historyRes){
+        var date = req.params.date;
+        History.getHistory(vehicleNumber,date, function(err, historyRes){
             if (err){
                 res.json({success:false, msg:err});
             }
@@ -262,6 +264,10 @@ var history = {
                         speededDetails.speedDownIndex = speedDownIndex;
                         speededDetails.speedUpDetails = trackingData[speedUpIndex] ;
                         speededDetails.speedDownDetails = trackingData[speedDownIndex];
+                        // start_date = trackingData[speedUpIndex].date;
+                        // end_date =trackingData[speedDownIndex].date;
+                        // var duration = moment.utc(end_date.diff(start_date));
+                        // console.log(duration);
                         dataArray[da] = speededDetails;
                     }  
                     
@@ -280,7 +286,7 @@ var history = {
 
     getOverSpeed :function(req,res){
         vehicleNumber = req.params.vehicleNumber;
-        date = '2019-01-10'
+        date = req.params.date;
         History.getUserOverSpeedData(vehicleNumber,date,function(err,history){
             if (err){
                 console.log(err);
@@ -290,19 +296,20 @@ var history = {
             }            
         });
     },
-    
-    getOverSpeedPath :function(req,res){
-        vehicleNumber = req
-        date = '2019-01-10'
-        History.getUserOverSpeedPath(vehicleNumber,date,function(err,res){
+
+    getStopedData:function(req,res){
+        vehicleNumber = req.params.vehicleNumber;
+        date = req.params.date;
+        History.getUserStoppedData(vehicleNumber,date,function(err,history){
             if (err){
                 console.log(err);
             }
-            //overSpeedTrackingData = []
-
-            console.log(res);        
+            else {
+                res.json({success: true, history});
+            }            
         });
-    }
+    },
+    
 };
 
 module.exports = history ;

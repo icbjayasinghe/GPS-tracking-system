@@ -141,8 +141,6 @@ server.on("connection", function(socket){
 
 app.listen(port, function(req,res){ 
 
-    // History.getOverSpeedPath('wp LF 2512')
-
     schedule.scheduleJob('00 00 00 * * *', function(req, res){
         CommonFacade.createHistory(req, res);
     });
