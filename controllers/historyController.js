@@ -355,7 +355,7 @@ var history = {
     },
 
     calculateAvgSpeed : function(req, res){
-        date ='2019-01-11' ;
+        date = req ;
         History.historyTrackingSpeedByDate(date, function(err,historyRes){
             if (err){
                 console.log(err);
@@ -395,7 +395,7 @@ var history = {
                     if(err){
                       console.log(err);
                     }
-                    console.log('add avg speed');
+                    console.log('add avg speeds');
                   })
 
             }
