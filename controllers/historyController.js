@@ -1,5 +1,6 @@
 var History  = require('../models/history');
 var CommonFacade = require('./commonFacade');
+var moment = require('moment');
 
 var history = {
     
@@ -28,7 +29,8 @@ var history = {
 
     getHistoryByVehicle : function(req, res){
         var vehicleNumber = req.params.vehicleNumber;
-        History.historyByVehicle(vehicleNumber, function(err, historyRes){
+        var date = req.params.date;
+        History.getHistory(vehicleNumber,date, function(err, historyRes){
             if (err){
                 res.json({success:false, msg:err});
             }
@@ -122,7 +124,191 @@ var history = {
         });
     },
 
-    
+    updateHistoryStopDeytails : function(date, res){
+        History.historyTrackingSpeedByDate(date,function(err,res){
+            if (err){
+                console.log(err);
+            }
+            var len = res.length;
+            for (i=0;i<len;i++){
+                var da = 0;
+                var dataArray=[];
+                var trackingData = res[i].trackingData;
+                var vehicleNumber = res[i].vehicleNumber;
+                let k = 0;
+                let zeroSpeed = [];
+                let l = trackingData.length;
+                if (l>2){
+                    for (j=0; j<l; j++){
+                        if (res[i].trackingData[j].speed===0){
+                            zeroSpeed[k]=j
+                            k++;
+                        }
+                    }
+
+                    let zl = zeroSpeed.length;
+                    stopedTime = trackingData[zeroSpeed[0]].date
+                    for (j=1;j<zl-1;j++){
+                        if (zeroSpeed[j]+1 != zeroSpeed[j+1]){
+                            startTime = trackingData[zeroSpeed[j]].date;
+                            longitude =  trackingData[zeroSpeed[j]].longitude ;
+                            latitude =  trackingData[zeroSpeed[j]].latitude ;
+                            location = {
+                                longitude :longitude,
+                                latitude : latitude
+                            };
+                            let stopedDetails = {} ;
+                            stopedDetails.stopedTime = startTime ;
+                            stopedDetails.startedTime = stopedTime ;
+                            stopedDetails.location = location ;
+                            var x = da ;
+                            console.log(da)
+                            console.log(stopedDetails)                           
+                            dataArray[da] = stopedDetails;
+                            console.log(dataArray)
+                            da++;
+                            
+                            if (da!=x){
+                                stopedTime = trackingData[zeroSpeed[j+1]].date
+                            }
+                        }
+                    }
+
+                    if (stopedTime != null){
+                        startTime = trackingData[zeroSpeed[zl-1]].date;
+                        longitude =  trackingData[zeroSpeed[zl-1]].longitude,
+                        latitude =  trackingData[zeroSpeed[zl-1]].latitude
+                        location = {
+                            longitude :longitude,
+                        latitude : latitude
+                        };
+                        let stopedDetails = {} ;
+                        stopedDetails.stopedTime = startTime ;
+                        stopedDetails.startedTime = stopedTime ;
+                        stopedDetails.location = location ;
+                        console.log(da)
+                        console.log(stopedDetails)
+                        
+                        dataArray[da] = stopedDetails;
+                        console.log(dataArray)
+                        da++
+                    }
+
+                    //console.log(dataArray)
+                    console.log()
+
+                    History.updateMany({'vehicleNumber': vehicleNumber},{'$push': { stopDetails:{ '$each':dataArray, '$sort':{stopedTime:-1}}}}, function (err){
+                        if (err) {
+                            console.log({ success: false, message: "error"+err });
+                        } else {
+                            console.log({ success: true, message: "successfully added new stoped details" });
+                        }
+                    });
+                }
+            }
+        });
+    },
+
+    updateOverSpeedTrackingData :function(date,res){
+        History.historyTrackingSpeedByDate(date,function(err,res){
+            if (err){
+                console.log(err);
+            }
+
+            let numberOfHistoryVehicles = res.length;
+
+            for(i=0 ; i<numberOfHistoryVehicles; i++){
+                var vehicleNumber = res[i].vehicleNumber;
+                var trackingData = res[i].trackingData;
+                console.log(vehicleNumber);
+                var trackingDataLength = trackingData.length
+                var k = 0;
+                var da = 0 ;
+                var overSpeedIndexArray = []
+                dataArray = []
+                if (trackingDataLength>2){
+                    for(j=0;j<trackingDataLength;j++){
+                        if (trackingData[j].speed>60){
+                            overSpeedIndexArray[k]=j;
+                            k++
+                        }
+                    }
+                    var numberOfOverSpeedData = overSpeedIndexArray.length;
+                    if (numberOfOverSpeedData>2){
+                        speedUpIndex = overSpeedIndexArray[numberOfOverSpeedData-1] ;
+                        speedUpTime = trackingData[speedUpIndex].date;
+
+                        for(j=(numberOfOverSpeedData-1);j>0;j--){
+                            if((overSpeedIndexArray[j]-1)!=(overSpeedIndexArray[j-1])){
+                                speedDownIndex = overSpeedIndexArray[j] ;
+                                speedDownTime = trackingData[speedDownIndex].date; 
+
+                                speededDetails = {}
+                                speededDetails.speedUpIndex = speedUpIndex ;
+                                speededDetails.speedDownIndex = speedDownIndex;
+                                speededDetails.speedUpDetails = trackingData[speedUpIndex] ;
+                                speededDetails.speedDownDetails = trackingData[speedDownIndex];
+                                dataArray[da] = speededDetails;
+                                da++;
+
+                                speedUpIndex = overSpeedIndexArray[j-1] ;
+                                speedUpTime = trackingData[speedUpIndex].date;
+
+                            }
+                        }
+
+                        speedDownIndex = overSpeedIndexArray[0] ;
+                        speedDownTime = trackingData[speedDownIndex].date;
+                        speededDetails = {}
+                        speededDetails.speedUpIndex = speedUpIndex ;
+                        speededDetails.speedDownIndex = speedDownIndex;
+                        speededDetails.speedUpDetails = trackingData[speedUpIndex] ;
+                        speededDetails.speedDownDetails = trackingData[speedDownIndex];
+                        // start_date = trackingData[speedUpIndex].date;
+                        // end_date =trackingData[speedDownIndex].date;
+                        // var duration = moment.utc(end_date.diff(start_date));
+                        // console.log(duration);
+                        dataArray[da] = speededDetails;
+                    }  
+                    
+                    console.log(dataArray);
+                    History.updateMany({'vehicleNumber': vehicleNumber},{'$push': { speededDetails:{ '$each':dataArray}}}, function (err){
+                        if (err) {
+                            console.log({ success: false, message: "error"+err });
+                        } else {
+                            console.log({ success: true, message: "successfully added new stoped details" });
+                        }
+                    });
+                }                
+            }           
+        });
+    },
+
+    getOverSpeed :function(req,res){
+        vehicleNumber = req.params.vehicleNumber;
+        date = req.params.date;
+        History.getUserOverSpeedData(vehicleNumber,date,function(err,history){
+            if (err){
+                console.log(err);
+            }
+            else {
+                res.json({success: true, history});
+            }            
+        });
+    },
+
+    getStopedData:function(req,res){
+        vehicleNumber = req.params.vehicleNumber;
+        date = req.params.date;
+        History.getUserStoppedData(vehicleNumber,date,function(err,history){
+            if (err){
+                console.log(err);
+            }
+            else {
+                res.json({success: true, history});
+            }            
+        });
+    },
     
 };
 

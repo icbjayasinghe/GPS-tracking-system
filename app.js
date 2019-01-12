@@ -156,6 +156,20 @@ app.listen(port, function(req,res){
         var date = new Date(); 
         var date = date.toISOString();
         var d = date.substring(0,10);
+        History.updateHistoryStopDeytails(d);
+    });
+
+    schedule.scheduleJob('00 20 00 * * *', function(req, res){
+        var date = new Date(); 
+        var date = date.toISOString();
+        var d = date.substring(0,10);
+        History.updateOverSpeedTrackingData(d);
+    });
+
+    schedule.scheduleJob('00 25 00 * * *', function(req, res){
+        var date = new Date(); 
+        var date = date.toISOString();
+        var d = date.substring(0,10);
         History.updateSummary(d,res);
     });
     
