@@ -328,10 +328,11 @@ var history = {
             reports = {}
             overSpeedData = {}
             stopDetails = []
-            for(i=0;i<historyRes.trackingData.length;i++){
+            for(i=(historyRes.trackingData.length-1);i>0;i--){
+                console.log(historyRes.trackingData[i])
                 if (historyRes.trackingData[i].speed>0){
                     var startTime = historyRes.trackingData[i].date;
-                    i = historyRes.trackingData.length;
+                    i = 0;
                 }
             }
             //console.log(history);
@@ -341,6 +342,7 @@ var history = {
 
             reports.distance = historyRes.distance;
             reports.startTime = startTime;
+            reports.stopTime = historyRes.stopDetails[0].stopedTime;
             reports.avarageSpeed = historyRes.avarageSpeed;
 
             overSpeedData.speedingTime = historyRes.speededDetails.length ;
@@ -355,7 +357,7 @@ var history = {
     },
 
     calculateAvgSpeed : function(req, res){
-        date ='2019-01-11' ;
+        date = req ;
         History.historyTrackingSpeedByDate(date, function(err,historyRes){
             if (err){
                 console.log(err);
@@ -395,7 +397,7 @@ var history = {
                     if(err){
                       console.log(err);
                     }
-                    console.log('add avg speed');
+                    console.log('add avg speeds');
                   })
 
             }
