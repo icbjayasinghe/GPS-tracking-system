@@ -285,30 +285,124 @@ var history = {
     },
 
     getOverSpeed :function(req,res){
-        vehicleNumber = req.params.vehicleNumber;
-        date = req.params.date;
+        vehicleNumber = 'wp LF 2512'
+        //req.params.vehicleNumber;
+        date = '2019-01-11'
+        //req.params.date;
         History.getUserOverSpeedData(vehicleNumber,date,function(err,history){
             if (err){
                 console.log(err);
             }
-            else {
-                res.json({success: true, history});
-            }            
+            let l = history.speededDetails.length;
+            for(i=0;i<l;i++){
+                console.log(i);
+                console.log(history.speededDetails[i]);
+            }
+           
         });
     },
 
     getStopedData:function(req,res){
-        vehicleNumber = req.params.vehicleNumber;
-        date = req.params.date;
+        vehicleNumber = 'wp LF 2512'
+        //req.params.vehicleNumber;
+        date = '2019-01-11'
+        //req.params.date;
         History.getUserStoppedData(vehicleNumber,date,function(err,history){
             if (err){
                 console.log(err);
             }
-            else {
-                res.json({success: true, history});
-            }            
+            console.log(history.stopDetails);          
         });
     },
+
+    getReport: function(req,res){
+        // vehicleNumber = 'wp LF 2512'
+        // date = '2019-01-11'
+        vehicleNumber =req.params.vehicleNumber;
+        date = req.params.date;
+        History.getHistory(vehicleNumber,date,function(err,historyRes){
+            if (err){
+                console.log('err')
+            }
+            history = {};
+            reports = {}
+            overSpeedData = {}
+            stopDetails = []
+            for(i=(historyRes.trackingData.length-1);i>0;i--){
+                console.log(historyRes.trackingData[i])
+                if (historyRes.trackingData[i].speed>0){
+                    var startTime = historyRes.trackingData[i].date;
+                    i = 0;
+                }
+            }
+            //console.log(history);
+            history.reports =reports;
+            history.overSpeedData =overSpeedData;
+            history.stopDetails =historyRes.stopDetails;
+
+            reports.distance = historyRes.distance;
+            reports.startTime = startTime;
+            reports.stopTime = historyRes.stopDetails[0].stopedTime;
+            reports.avarageSpeed = historyRes.avarageSpeed;
+
+            overSpeedData.speedingTime = historyRes.speededDetails.length ;
+            overSpeedData.overSpeedAvg = historyRes.avarageOverSpeed ;
+            overSpeedData.highestSpeed = historyRes.highestSpeed ;
+            stopDetails = historyRes.stopDetails;
+            console.log(history);
+            res.json({success: true, history});
+
+        });
+
+    },
+
+    calculateAvgSpeed : function(req, res){
+        date = req ;
+        History.historyTrackingSpeedByDate(date, function(err,historyRes){
+            if (err){
+                console.log(err);
+            }
+            console.log(historyRes.length)
+            let len = historyRes.length ;
+            for (i=0; i<len; i++){
+                //console.log(historyRes[i].trackingData);
+                let trackingData = historyRes[i].trackingData;
+                let trackingLen = trackingData.length;
+                var vehicleNumber = historyRes[i].vehicleNumber;
+                var speed = 0 ;
+                var overSpeedAvg = 0;
+                var highestSpeed = 0;
+                var num = 1;
+                var overSpeedNum = 1;
+                var avarageSpeed =0;
+
+                for(j=0;j<trackingLen;j++){
+                    if (trackingData[j].speed!=0){
+                        speed = speed +trackingData[j].speed ;
+                        num++;
+                    }
+                    if (trackingData[j].speed>60){
+                        overSpeedAvg = overSpeedAvg +trackingData[j].speed ;
+                        overSpeedNum++;
+                    }
+                    if (trackingData[j].speed>highestSpeed){
+                        highestSpeed = trackingData[j].speed ;
+                    }
+
+                    var avarageSpeed = speed/num;
+                    var avarageOverSpeed = overSpeedAvg/overSpeedNum;
+                }
+
+                History.updateHistoryTrackingDistance(vehicleNumber, date, avarageSpeed, avarageOverSpeed, highestSpeed, function(err, res){
+                    if(err){
+                      console.log(err);
+                    }
+                    console.log('add avg speeds');
+                  })
+
+            }
+        })
+    }
     
 };
 
