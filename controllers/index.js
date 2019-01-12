@@ -14,11 +14,11 @@ router.post('/login', auth.login);
 //tracking data spliting
 router.get('/test',trackingData.splitDataNew);
 
-// router.use('/', passport.authenticate('jwt', { session: false }),
-//     function(req, res, next) {
-//         next();
-//     }
-// );
+router.use('/', passport.authenticate('jwt', { session: false }),
+    function(req, res, next) {
+        next();
+    }
+);
 
 // -------------USER COLLECTION--------------
 
