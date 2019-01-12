@@ -316,10 +316,10 @@ var history = {
     },
 
     getReport: function(req,res){
-        vehicleNumber = 'wp LF 2512'
-        date = '2019-01-11'
-        //vehicleNumber =req.params.vehicleNumber;
-        // date = req.params.date;
+        // vehicleNumber = 'wp LF 2512'
+        // date = '2019-01-11'
+        vehicleNumber =req.params.vehicleNumber;
+        date = req.params.date;
         History.getHistory(vehicleNumber,date,function(err,historyRes){
             if (err){
                 console.log('err')
@@ -328,25 +328,34 @@ var history = {
             reports = {}
             overSpeedData = {}
             stopDetails = []
+            for(i=0;i<historyRes.trackingData.length;i++){
+                if (historyRes.trackingData[i].speed>0){
+                    var startTime = historyRes.trackingData[i].date;
+                    i = historyRes.trackingData.length;
+                }
+            }
             //console.log(history);
             history.reports =reports;
             history.overSpeedData =overSpeedData;
             history.stopDetails =historyRes.stopDetails;
 
             reports.distance = historyRes.distance;
+            reports.startTime = startTime;
             reports.avarageSpeed = historyRes.avarageSpeed;
 
             overSpeedData.speedingTime = historyRes.speededDetails.length ;
+            overSpeedData.overSpeedAvg = historyRes.avarageOverSpeed ;
+            overSpeedData.highestSpeed = historyRes.highestSpeed ;
             stopDetails = historyRes.stopDetails;
+            console.log(history);
             res.json({success: true, history});
 
-            console.log(history);
         });
 
     },
 
     calculateAvgSpeed : function(req, res){
-        date =req ;
+        date ='2019-01-11' ;
         History.historyTrackingSpeedByDate(date, function(err,historyRes){
             if (err){
                 console.log(err);
@@ -359,7 +368,10 @@ var history = {
                 let trackingLen = trackingData.length;
                 var vehicleNumber = historyRes[i].vehicleNumber;
                 var speed = 0 ;
-                var num = 1
+                var overSpeedAvg = 0;
+                var highestSpeed = 0;
+                var num = 1;
+                var overSpeedNum = 1;
                 var avarageSpeed =0;
 
                 for(j=0;j<trackingLen;j++){
@@ -367,10 +379,19 @@ var history = {
                         speed = speed +trackingData[j].speed ;
                         num++;
                     }
+                    if (trackingData[j].speed>60){
+                        overSpeedAvg = overSpeedAvg +trackingData[j].speed ;
+                        overSpeedNum++;
+                    }
+                    if (trackingData[j].speed>highestSpeed){
+                        highestSpeed = trackingData[j].speed ;
+                    }
+
                     var avarageSpeed = speed/num;
+                    var avarageOverSpeed = overSpeedAvg/overSpeedNum;
                 }
 
-                History.updateHistoryTrackingDistance(vehicleNumber, date, avarageSpeed, function(err, res){
+                History.updateHistoryTrackingDistance(vehicleNumber, date, avarageSpeed, avarageOverSpeed, highestSpeed, function(err, res){
                     if(err){
                       console.log(err);
                     }

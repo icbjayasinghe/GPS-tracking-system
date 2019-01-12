@@ -74,8 +74,8 @@ router.get('/api/historyByVehicle/:vehicleNumber',history.getHistoryByVehicle);
 //report related routes
 
 router.get('/api/historyReports/:vehicleNumber/:date',history.getReport);
-router.get('/api/historyStopedLocations/:vehicleNumber/:date',history.getStopedData);
-router.get('/api/speedDeailsByVehicle/:vehicleNumber/:date',history.getOverSpeed);
+// router.get('/api/historyStopedLocations/:vehicleNumber/:date',history.getStopedData);
+// router.get('/api/speedDeailsByVehicle/:vehicleNumber/:date',history.getOverSpeed);
 
 // -------------SUMMARY COLLECTION--------------
 
