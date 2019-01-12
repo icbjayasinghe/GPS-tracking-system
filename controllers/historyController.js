@@ -285,30 +285,101 @@ var history = {
     },
 
     getOverSpeed :function(req,res){
-        vehicleNumber = req.params.vehicleNumber;
-        date = req.params.date;
+        vehicleNumber = 'wp LF 2512'
+        //req.params.vehicleNumber;
+        date = '2019-01-11'
+        //req.params.date;
         History.getUserOverSpeedData(vehicleNumber,date,function(err,history){
             if (err){
                 console.log(err);
             }
-            else {
-                res.json({success: true, history});
-            }            
+            let l = history.speededDetails.length;
+            for(i=0;i<l;i++){
+                console.log(i);
+                console.log(history.speededDetails[i]);
+            }
+           
         });
     },
 
     getStopedData:function(req,res){
-        vehicleNumber = req.params.vehicleNumber;
-        date = req.params.date;
+        vehicleNumber = 'wp LF 2512'
+        //req.params.vehicleNumber;
+        date = '2019-01-11'
+        //req.params.date;
         History.getUserStoppedData(vehicleNumber,date,function(err,history){
             if (err){
                 console.log(err);
             }
-            else {
-                res.json({success: true, history});
-            }            
+            console.log(history.stopDetails);          
         });
     },
+
+    getReport: function(req,res){
+        vehicleNumber = 'wp LF 2512'
+        date = '2019-01-11'
+        //vehicleNumber =req.params.vehicleNumber;
+        // date = req.params.date;
+        History.getHistory(vehicleNumber,date,function(err,historyRes){
+            if (err){
+                console.log('err')
+            }
+            history = {};
+            reports = {}
+            overSpeedData = {}
+            stopDetails = []
+            //console.log(history);
+            history.reports =reports;
+            history.overSpeedData =overSpeedData;
+            history.stopDetails =historyRes.stopDetails;
+
+            reports.distance = historyRes.distance;
+            reports.avarageSpeed = historyRes.avarageSpeed;
+
+            overSpeedData.speedingTime = historyRes.speededDetails.length ;
+            stopDetails = historyRes.stopDetails;
+            res.json({success: true, history});
+
+            console.log(history);
+        });
+
+    },
+
+    calculateAvgSpeed : function(req, res){
+        date =req ;
+        History.historyTrackingSpeedByDate(date, function(err,historyRes){
+            if (err){
+                console.log(err);
+            }
+            console.log(historyRes.length)
+            let len = historyRes.length ;
+            for (i=0; i<len; i++){
+                //console.log(historyRes[i].trackingData);
+                let trackingData = historyRes[i].trackingData;
+                let trackingLen = trackingData.length;
+                var vehicleNumber = historyRes[i].vehicleNumber;
+                var speed = 0 ;
+                var num = 1
+                var avarageSpeed =0;
+
+                for(j=0;j<trackingLen;j++){
+                    if (trackingData[j].speed!=0){
+                        speed = speed +trackingData[j].speed ;
+                        num++;
+                    }
+                    var avarageSpeed = speed/num;
+                }
+
+                History.updateHistoryTrackingDistance(vehicleNumber, date, avarageSpeed, function(err, res){
+                    if(err){
+                      console.log(err);
+                    }
+                    console.log('add avg speed');
+                  })
+
+            }
+        })
+    }
     
 };
 

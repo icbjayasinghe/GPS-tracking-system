@@ -28,6 +28,10 @@ var historySchema = mongoose.Schema({
         type:Number,
         required:true
     },
+    avarageSpeed:{
+        type:Number,
+        required:true
+    },
     stopDetails:[{
         stopedTime :Date,
         startedTime:Date,
@@ -84,7 +88,7 @@ module.exports.historyByVehicle = function(vehicleNumber, callback){
     History.find({vehicleNumber:vehicleNumber},callback);
 }
 module.exports.getHistory = function(vehicleNumber, date, callback){
-    History.find({vehicleNumber:vehicleNumber,date:date},callback);
+    History.findOne({vehicleNumber:vehicleNumber,date:date},callback);
 }
 module.exports.getHistoryDistance = function(vehicleNumber, date, callback){
     History.findOne({vehicleNumber:vehicleNumber,date:date},{_id:0,distance:1},callback);
@@ -107,9 +111,13 @@ module.exports.historyTrackingSpeedByDate = function(date, callback){
 }
 //get history tracking data where tracking data got over speed
 module.exports.getUserOverSpeedData = function(vehicleNumber, date, callback){
-    History.find({date:date,vehicleNumber:vehicleNumber},{date:1,vehicleNumber:1,speededDetails:1},callback);
+    History.findOne({date:date,vehicleNumber:vehicleNumber},{date:1,vehicleNumber:1,speededDetails:1},callback);
 }
 //get history tracking data where tracking speed is equal to  0
 module.exports.getUserStoppedData = function(vehicleNumber, date, callback){
-    History.find({vehicleNumber:vehicleNumber, date:date},{_id:0,stopDetails:1,vehicleNumber:1},callback);
+    History.findOne({vehicleNumber:vehicleNumber, date:date},{_id:0,stopDetails:1,vehicleNumber:1},callback);
+}
+//update history avgSpeed
+module.exports.updateHistoryTrackingDistance = function(vehicleNumber, date, avarageSpeed, options, callback){
+    History.findOneAndUpdate({vehicleNumber: vehicleNumber,date:date},{avarageSpeed:avarageSpeed}, options, callback);
 }
