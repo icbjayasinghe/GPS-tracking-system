@@ -284,37 +284,6 @@ var history = {
         });
     },
 
-    getOverSpeed :function(req,res){
-        vehicleNumber = 'wp LF 2512'
-        //req.params.vehicleNumber;
-        date = '2019-01-11'
-        //req.params.date;
-        History.getUserOverSpeedData(vehicleNumber,date,function(err,history){
-            if (err){
-                console.log(err);
-            }
-            let l = history.speededDetails.length;
-            for(i=0;i<l;i++){
-                console.log(i);
-                console.log(history.speededDetails[i]);
-            }
-           
-        });
-    },
-
-    getStopedData:function(req,res){
-        vehicleNumber = 'wp LF 2512'
-        //req.params.vehicleNumber;
-        date = '2019-01-11'
-        //req.params.date;
-        History.getUserStoppedData(vehicleNumber,date,function(err,history){
-            if (err){
-                console.log(err);
-            }
-            console.log(history.stopDetails);          
-        });
-    },
-
     getReport: function(req,res){
         // vehicleNumber = 'wp LF 2512'
         // date = '2019-01-11'
@@ -324,6 +293,7 @@ var history = {
             if (err){
                 console.log('err');
                 res.json({success: true, msg: 'Something Wrong, Try Again!'});
+
             }
             history = {};
             reports = {};
