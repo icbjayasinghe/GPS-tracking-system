@@ -291,15 +291,16 @@ var history = {
         date = req.params.date;
         History.getHistory(vehicleNumber,date,function(err,historyRes){
             if (err){
-                console.log('err')
-                res.json
+                console.log('err');
+                res.json({success: true, msg: 'Something Wrong, Try Again!'});
+
             }
             history = {};
-            reports = {}
-            overSpeedData = {}
-            stopDetails = []
+            reports = {};
+            overSpeedData = {};
+            stopDetails = [];
             for(i=(historyRes.trackingData.length-1);i>0;i--){
-                console.log(historyRes.trackingData[i])
+                console.log(historyRes.trackingData[i]);
                 if (historyRes.trackingData[i].speed>0){
                     var startTime = historyRes.trackingData[i].date;
                     i = 0;
@@ -320,7 +321,7 @@ var history = {
             overSpeedData.highestSpeed = historyRes.highestSpeed ;
             stopDetails = historyRes.stopDetails;
             console.log(history);
-            res.json({success: true, history});
+            res.json({success: true, history, msg: 'Allowed Access Vehicle Report'});
 
         });
 
