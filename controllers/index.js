@@ -11,17 +11,12 @@ var trackingData = require('./trackingContoller');
 //login & registration
 router.post('/login', auth.login);
 
-
 //report related routes
 router.get('/api/historyReports/:vehicleNumber/:date',history.getReport);
-
 
 //summary related routes
 router.get('/api/summary/:date',summary.getAll);
 router.get('/api/summaryByUser/:userId/:date',summary.searchSummary);
-
-//tracking data spliting
-router.get('/test',trackingData.splitDataNew);
 
 router.use('/', passport.authenticate('jwt', { session: false }),
     function(req, res, next) {
@@ -81,10 +76,7 @@ router.get('/api/historyByUserId/:userId',history.getHistoryByUser);
 router.get('/api/historyByVehicle/:vehicleNumber',history.getHistoryByVehicle);
 
 //report related routes
-
 // router.get('/api/historyReports/:vehicleNumber/:date',history.getReport);
-// router.get('/api/historyStopedLocations/:vehicleNumber/:date',history.getStopedData);
-// router.get('/api/speedDeailsByVehicle/:vehicleNumber/:date',history.getOverSpeed);
 
 // -------------SUMMARY COLLECTION--------------
 
