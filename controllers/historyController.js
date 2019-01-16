@@ -289,39 +289,42 @@ var history = {
         // date = '2019-01-11'
         vehicleNumber =req.params.vehicleNumber;
         date = req.params.date;
-        History.getHistory(vehicleNumber,date,function(err,historyRes){
-            if (err){
+        History.getHistory(vehicleNumber,date,function(err,historyRes) {
+            if (err) {
                 console.log('err');
-                res.json({success: true, msg: 'Something Wrong, Try Again!'});
-
+                res.json({success: false, msg: 'Something Wrong, Try Again!'});
             }
             history = {};
             reports = {};
             overSpeedData = {};
             stopDetails = [];
-            for(i=(historyRes.trackingData.length-1);i>0;i--){
+            if (!historyRes) {
+                res.json({success: false, msg: 'Sorry, No Report Data in ' + vehicleNumber});
+            }  else {
+            for (i = (historyRes.trackingData.length - 1); i > 0; i--) {
                 console.log(historyRes.trackingData[i]);
-                if (historyRes.trackingData[i].speed>0){
+                if (historyRes.trackingData[i].speed > 0) {
                     var startTime = historyRes.trackingData[i].date;
                     i = 0;
                 }
             }
             //console.log(history);
-            history.reports =reports;
-            history.overSpeedData =overSpeedData;
-            history.stopDetails =historyRes.stopDetails;
+            history.reports = reports;
+            history.overSpeedData = overSpeedData;
+            history.stopDetails = historyRes.stopDetails;
 
             reports.distance = historyRes.distance;
             reports.startTime = startTime;
             reports.stopTime = historyRes.stopDetails[0].stopedTime;
             reports.avarageSpeed = historyRes.avarageSpeed;
 
-            overSpeedData.speedingTime = historyRes.speededDetails.length ;
-            overSpeedData.overSpeedAvg = historyRes.avarageOverSpeed ;
-            overSpeedData.highestSpeed = historyRes.highestSpeed ;
+            overSpeedData.speedingTime = historyRes.speededDetails.length;
+            overSpeedData.overSpeedAvg = historyRes.avarageOverSpeed;
+            overSpeedData.highestSpeed = historyRes.highestSpeed;
             stopDetails = historyRes.stopDetails;
             console.log(history);
             res.json({success: true, history, msg: 'Allowed Access Vehicle Report'});
+        }
 
         });
 
