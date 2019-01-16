@@ -11,12 +11,12 @@ var trackingData = require('./trackingContoller');
 //login & registration
 router.post('/login', auth.login);
 
-//report related routes
-router.get('/api/historyReports/:vehicleNumber/:date',history.getReport);
-
-//summary related routes
-router.get('/api/summary/:date',summary.getAll);
-router.get('/api/summaryByUser/:userId/:date',summary.searchSummary);
+// //report related routes
+// router.get('/api/historyReports/:vehicleNumber/:date',history.getReport);
+//
+// //summary related routes
+// router.get('/api/summary/:date',summary.getAll);
+// router.get('/api/summaryByUser/:userId/:date',summary.searchSummary);
 
 router.use('/', passport.authenticate('jwt', { session: false }),
     function(req, res, next) {
@@ -76,12 +76,12 @@ router.get('/api/historyByUserId/:userId',history.getHistoryByUser);
 router.get('/api/historyByVehicle/:vehicleNumber',history.getHistoryByVehicle);
 
 //report related routes
-// router.get('/api/historyReports/:vehicleNumber/:date',history.getReport);
+router.get('/api/historyReports/:vehicleNumber/:date',history.getReport);
 
 // -------------SUMMARY COLLECTION--------------
 
 //summary related routes
-// router.get('/api/summary/:date',summary.getAll);
-// router.get('/api/summaryByUser/:userId/:date',summary.searchSummary);
+router.get('/api/summary/:date',summary.getAll);
+router.get('/api/summaryByUser/:userId/:date',summary.searchSummary);
 
 module.exports = router;
