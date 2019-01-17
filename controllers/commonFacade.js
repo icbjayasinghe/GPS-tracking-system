@@ -54,6 +54,7 @@ module.exports = {
                 if (err){
                     res.json({success:false, msg:err});
                 }
+                console.log(element);
                 var trackingDataLength = element.trackingData.length;
                 var vehicleNumber = element.vehicleNumber
                 var distance = 0;
