@@ -9,22 +9,23 @@ module.exports = {
     createHistory : function(req,res) {
         Vehicle.viewVehiclesWithTrackingData(function(err,res){
             res.forEach(element => {
-                var date = new Date() // Today!
-                var date = date.toISOString();
-                console.log(date);
-                var d = date.substring(0,10);
-                var history = new History({
-                    date : d,
-                    userId : element.userId,
-                    vehicleNumber : element.vehicleNumber,
-                    trackingData : element.trackingData,
-                    distance:0,
-                    avarageSpeed:0,
-                    avarageOverSpeed:0,
-                    highestSpeed: 0,
-                    stopDetails:[],
-                    speededDetails:[]
-                });
+                if(element.trackingData.length > 0) {
+                    var date = new Date() // Today!
+                    var date = date.toISOString();
+                    console.log(date);
+                    var d = date.substring(0, 10);
+                    var history = new History({
+                        date: d,
+                        userId: element.userId,
+                        vehicleNumber: element.vehicleNumber,
+                        trackingData: element.trackingData,
+                        distance: 0,
+                        avarageSpeed: 0,
+                        avarageOverSpeed: 0,
+                        highestSpeed: 0,
+                        stopDetails: [],
+                        speededDetails: []
+                    });
                 //History.getHistoryToDist('cp VO 2020');
                 Vehicle.removeAllTrackingData(element._id,function(err,res){
                     if(err){
@@ -39,7 +40,7 @@ module.exports = {
                     console.log({success:true,history:historyRes});
                 })
                 console.log(element._id);
-            });
+            }});
         })
         console.log({success:true});
     },

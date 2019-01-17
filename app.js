@@ -143,46 +143,46 @@ app.listen(port, function(req,res){
 
     //History.getReport();
 
-    schedule.scheduleJob('00 05 11 * * *', function(req, res){
+    schedule.scheduleJob('00 00 12 * * *', function(req, res){
         CommonFacade.createHistory(req, res);
     });
 
-    schedule.scheduleJob('00 20 11 * * *', function(req, res){
+    schedule.scheduleJob('00 05 12 * * *', function(req, res){
         var date = new Date(); 
         var date = date.toISOString();
         var d = date.substring(0,10);
         CommonFacade.addDistanceToHistory(d,res);
     }); 
 
-    schedule.scheduleJob('00 25 11 * * *', function(req, res){
+    schedule.scheduleJob('00 10 12 * * *', function(req, res){
         var date = new Date(); 
         var date = date.toISOString();
         var d = date.substring(0,10);
         History.calculateAvgSpeed(d);
     }); 
 
-    schedule.scheduleJob('00 30 11 * * *', function(req, res){
+    schedule.scheduleJob('00 15 12 * * *', function(req, res){
         var date = new Date(); 
         var date = date.toISOString();
         var d = date.substring(0,10);
         History.updateHistoryStopDeytails(d);
     });
 
-    schedule.scheduleJob('00 35 11 * * *', function(req, res){
+    schedule.scheduleJob('00 20 12 * * *', function(req, res){
         var date = new Date(); 
         var date = date.toISOString();
         var d = date.substring(0,10);
         History.updateOverSpeedTrackingData(d);
     });
 
-    schedule.scheduleJob('00 40 11 * * *', function(req, res){
+    schedule.scheduleJob('00 25 12 * * *', function(req, res){
         var date = new Date(); 
         var date = date.toISOString();
         var d = date.substring(0,10);
         History.updateSummary(d,res);
     });
     
-    schedule.scheduleJob('00 45 11 17 * *', function(req, res){
+    schedule.scheduleJob('00 30 12 17 * *', function(req, res){
         var date = new Date(); 
         var date = date.toISOString();
         var d = date.substring(0,7);
