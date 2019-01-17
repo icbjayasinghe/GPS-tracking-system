@@ -48,24 +48,23 @@ module.exports = {
     },
 
     addDistanceToHistory : function(req){
-        History.historyByDate(req,function(err,res){   
-            var date = req ;         
-            res.forEach(element => { 
+        History.historyByDate(req,function(err,res){
+            var date = req ;
+            res.forEach(element => {
                 if (err){
                     res.json({success:false, msg:err});
                 }
-                console.log(element);
                 var trackingDataLength = element.trackingData.length;
                 var vehicleNumber = element.vehicleNumber
                 var distance = 0;
                 var j =0 ;
-    
+
                 for (let i = 0; i < trackingDataLength-1; i++) {
                     radconv = 3.14159265358979 / 180;
                     var x1 = element.trackingData[i].latitude * radconv;
                     var y1 = element.trackingData[i].longitude * radconv;
                     var x2 = element.trackingData[i+1].latitude * radconv;
-                    var y2 = element.trackingData[i+1].longitude * radconv;  
+                    var y2 = element.trackingData[i+1].longitude * radconv;
                     xDiff = x2 -x1;
                     yDiff = y2 -y1;
                     a = ((Math.sin(xDiff / 2) * Math.sin(xDiff / 2)) + (Math.cos(x1) * Math.cos(x2) * Math.sin(yDiff / 2) * Math.sin(yDiff / 2)))
@@ -82,10 +81,10 @@ module.exports = {
 
                 History.updateHistoryTrackingDistance(vehicleNumber, date, distance, function(err, res){
                     if(err){
-                      console.log(err);
+                        console.log(err);
                     }
                     console.log('add tracking distance');
-                  })
+                })
             });
         });
     },
