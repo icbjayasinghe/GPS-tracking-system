@@ -143,32 +143,32 @@ app.listen(port, function(req,res){
 
     //History.getReport();
 
-    schedule.scheduleJob('00 45 12 * * *', function(req, res){
+    schedule.scheduleJob('00 00 00 * * *', function(req, res){
         CommonFacade.createHistory(req, res);
     });
 
-    schedule.scheduleJob('00 55 16 * * *', function(req, res){
+    schedule.scheduleJob('00 10 00 * * *', function(req, res){
         var date = new Date(); 
         var date = date.toISOString();
         var d = date.substring(0,10);
         CommonFacade.addDistanceToHistory(d,res);
     }); 
 
-    schedule.scheduleJob('00 55 12 * * *', function(req, res){
+    schedule.scheduleJob('00 15 00 * * *', function(req, res){
         var date = new Date(); 
         var date = date.toISOString();
         var d = date.substring(0,10);
         History.calculateAvgSpeed(d);
     }); 
 
-    schedule.scheduleJob('00 00 13 * * *', function(req, res){
+    schedule.scheduleJob('00 20 00 * * *', function(req, res){
         var date = new Date(); 
         var date = date.toISOString();
         var d = date.substring(0,10);
         History.updateHistoryStopDeytails(d);
     });
 
-    schedule.scheduleJob('00 05 13 * * *', function(req, res){
+    schedule.scheduleJob('00 25 00 * * *', function(req, res){
         var date = new Date(); 
         var date = date.toISOString();
         var d = date.substring(0,10);
