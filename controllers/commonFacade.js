@@ -73,18 +73,19 @@ module.exports = {
                     dist = R * c
                     distance = distance + dist ;
                     j=i;
+                    if(j+1 === trackingDataLength-1){
+                        History.updateHistoryTrackingDistance(vehicleNumber, date, distance, function(err, res){
+                            if(err){
+                                console.log(err);
+                            }
+                            console.log('add tracking distance');
+                        })
+                    }
                 }
                 console.log('__________________________________');
                 console.log(element._id+'/'+vehicleNumber+' has'+(j+2)+' number of tracking data on '+date);
                 console.log('Total distance : '+distance);
                 console.log('__________________________________');
-
-                History.updateHistoryTrackingDistance(vehicleNumber, date, distance, function(err, res){
-                    if(err){
-                        console.log(err);
-                    }
-                    console.log('add tracking distance');
-                })
             });
         });
     },
