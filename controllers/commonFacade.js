@@ -55,7 +55,7 @@ module.exports = {
                     res.json({success:false, msg:err});
                 }
                 var trackingDataLength = element.trackingData.length;
-                var vehicleNumber = element.vehicleNumber
+                var vehicleNumber = element.vehicleNumber;
                 var distance = 0;
                 var j =0 ;
 
@@ -67,28 +67,25 @@ module.exports = {
                     var y2 = element.trackingData[i+1].longitude * radconv;
                     xDiff = x2 -x1;
                     yDiff = y2 -y1;
-                    a = ((Math.sin(xDiff / 2) * Math.sin(xDiff / 2)) + (Math.cos(x1) * Math.cos(x2) * Math.sin(yDiff / 2) * Math.sin(yDiff / 2)))
+                    a = ((Math.sin(xDiff / 2) * Math.sin(xDiff / 2)) + (Math.cos(x1) * Math.cos(x2) * Math.sin(yDiff / 2) * Math.sin(yDiff / 2)));
                     c = 2 * Math.atan(Math.sqrt(a) / Math.sqrt(1 - a));
                     R = 6371;
-                    dist = R * c
+                    dist = R * c;
                     distance = distance + dist ;
                     j=i;
-                    if(j+1 === trackingDataLength-1){
-                        History.updateHistoryTrackingDistance(vehicleNumber, date, distance, function(err, res){
-                            console.log('__________________________________');
-                            console.log(res);
-                            console.log('__________________________________');
-                            if(err){
-                                console.log(err);
-                            }
-                            console.log('add tracking distance');
-                        })
-                    }
                 }
                 console.log('__________________________________');
                 console.log(element._id+'/'+vehicleNumber+' has'+(j+2)+' number of tracking data on '+date);
                 console.log('Total distance : '+distance);
                 console.log('__________________________________');
+                if(true) {
+                    History.updateHistoryTrackingDistance(vehicleNumber, date, distance, function(err, res){
+                        if(err){
+                            console.log(err);
+                        }
+                        console.log(res+ ' add tracking distance');
+                    })
+                }
             });
         });
     },
