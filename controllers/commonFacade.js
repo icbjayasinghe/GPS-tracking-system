@@ -40,7 +40,9 @@ module.exports = {
                     console.log({success:true,history:historyRes});
                 })
                 console.log(element._id);
-            }});
+            } else {
+                    console.log('Him');
+                }});
         })
         console.log({success:true});
     },
