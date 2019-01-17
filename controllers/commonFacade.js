@@ -75,6 +75,9 @@ module.exports = {
                     j=i;
                     if(j+1 === trackingDataLength-1){
                         History.updateHistoryTrackingDistance(vehicleNumber, date, distance, function(err, res){
+                            console.log('__________________________________');
+                            console.log(res);
+                            console.log('__________________________________');
                             if(err){
                                 console.log(err);
                             }
