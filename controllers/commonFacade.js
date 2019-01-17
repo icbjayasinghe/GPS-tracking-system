@@ -201,12 +201,13 @@ module.exports = {
             //console.log(results);
         });
     },
-    updateHistoryDistance(vehicleNumber,date,distance){
-        History.updateHistoryTrackingDistance(vehicleNumber, date, distance, function (err, res) {
-            if (err) {
-                console.log(err);
-            }
-            console.log(res + ' add tracking distance');
-        })
-    },
 };
+
+function updateHistoryDistance(vehicleNumber,date,distance){
+    History.updateHistoryTrackingDistance(vehicleNumber, date, distance, function (err, res) {
+        if (err) {
+            console.log(err);
+        }
+        console.log(res + ' add tracking distance');
+    })
+}
