@@ -83,15 +83,6 @@ module.exports = {
         });
     },
 
-    updateHistoryDistance(vehicleNumber,date,distance){
-        History.updateHistoryTrackingDistance(vehicleNumber, date, distance, function (err, res) {
-            if (err) {
-                console.log(err);
-            }
-            console.log(res + ' add tracking distance');
-        })
-    },
-
     getVehicleListWithUserName : function(req,response){
         Vehicle.viewVehicles(function(err,res){
             var i =0;
@@ -209,5 +200,13 @@ module.exports = {
 
             //console.log(results);
         });
-    }
+    },
+    updateHistoryDistance(vehicleNumber,date,distance){
+        History.updateHistoryTrackingDistance(vehicleNumber, date, distance, function (err, res) {
+            if (err) {
+                console.log(err);
+            }
+            console.log(res + ' add tracking distance');
+        })
+    },
 };
