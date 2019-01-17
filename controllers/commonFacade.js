@@ -78,7 +78,7 @@ module.exports = {
                 console.log(element._id+'/'+vehicleNumber+' has'+(j+2)+' number of tracking data on '+date);
                 console.log('Total distance : '+distance);
                 console.log('__________________________________');
-                this.updateHistoryDistance(vehicleNumber,date,distance);
+                updateHistoryDistance(vehicleNumber,date,distance);
             });
         });
     },
