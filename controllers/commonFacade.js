@@ -18,7 +18,12 @@ module.exports = {
                     userId : element.userId,
                     vehicleNumber : element.vehicleNumber,
                     trackingData : element.trackingData,
-                    distance:0
+                    distance:0,
+                    avarageSpeed:0,
+                    avarageOverSpeed:0,
+                    highestSpeed: 0,
+                    stopDetails:[],
+                    speededDetails:[]
                 });
                 //History.getHistoryToDist('cp VO 2020');
                 Vehicle.removeAllTrackingData(element._id,function(err,res){
