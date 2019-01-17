@@ -147,7 +147,7 @@ app.listen(port, function(req,res){
         CommonFacade.createHistory(req, res);
     });
 
-    schedule.scheduleJob('00 43 14 * * *', function(req, res){
+    schedule.scheduleJob('00 48 14 * * *', function(req, res){
         var date = new Date(); 
         var date = date.toISOString();
         var d = date.substring(0,10);
