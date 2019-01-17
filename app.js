@@ -143,7 +143,7 @@ app.listen(port, function(req,res){
 
     //History.getReport();
 
-    schedule.scheduleJob('00 30 10 * * *', function(req, res){
+    schedule.scheduleJob('00 35 10 * * *', function(req, res){
         CommonFacade.createHistory(req, res);
     });
 
