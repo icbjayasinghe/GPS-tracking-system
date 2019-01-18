@@ -345,8 +345,8 @@ var history = {
                 var speed = 0 ;
                 var overSpeedAvg = 0;
                 var highestSpeed = 0;
-                var num = 1;
-                var overSpeedNum = 1;
+                var num = 0;
+                var overSpeedNum = 0;
                 var avarageSpeed =0;
 
                 for(j=0;j<trackingLen;j++){
@@ -355,15 +355,19 @@ var history = {
                         num++;
                     }
                     if (trackingData[j].speed>60){
-                        overSpeedAvg = overSpeedAvg +trackingData[j].speed ;
+                        overSpeed = overSpeedAvg +trackingData[j].speed ;
                         overSpeedNum++;
                     }
                     if (trackingData[j].speed>highestSpeed){
                         highestSpeed = trackingData[j].speed ;
                     }
 
-                    var avarageSpeed = speed/num;
-                    var avarageOverSpeed = overSpeedAvg/overSpeedNum;
+                    if(num>0){
+                        var avarageSpeed = speed/num;
+                    }
+                    if(overSpeedNum>0){
+                        var avarageOverSpeed = overSpeed/overSpeedNum;
+                    }
                 }
 
                 History.updateHistoryTrackingDistance(vehicleNumber, date, avarageSpeed, avarageOverSpeed, highestSpeed, function(err, res){
