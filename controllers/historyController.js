@@ -376,6 +376,15 @@ var history = {
 
             }
         })
+    },
+
+    updateDistance: function(date,vehicleNumber,distance,res){
+        History.updateHistoryTrackingDistance1(date,vehicleNumber,distance, function(err, res){
+            if (err){
+                console.log(err);
+            }
+            console.log('add distance');
+        })        
     }
     
 };

@@ -1,4 +1,5 @@
 var History = require('../models/history');
+var HistoryCon = require('./historyController')
 var Vehicle = require('../models/vehicle');
 var User = require('../models/user');
 var Summary = require('../models/summary');
@@ -49,13 +50,20 @@ module.exports = {
 
     addDistanceToHistory : function(req){
         History.historyByDate(req,function(err,res){
+            var data =[];
             var date = req ;
+            var k =0 ;
             res.forEach(element => {
+                var distanceOb = {};
                 if (err){
                     res.json({success:false, msg:err});
                 }
                 var trackingDataLength = element.trackingData.length;
-                var vehicleNumber = element.vehicleNumber;
+                var vehicleNumber = element.vehicleNumber ;
+                distanceOb.date = date;
+                distanceOb.vehicleNumber = vehicleNumber;
+                distanceOb.distance = 0;
+
                 var distance = 0;
                 var j =0 ;
 
@@ -71,15 +79,37 @@ module.exports = {
                     c = 2 * Math.atan(Math.sqrt(a) / Math.sqrt(1 - a));
                     R = 6371;
                     dist = R * c;
-                    distance = distance + dist ;
+                    distance = distance + dist 
+                    distanceOb.distance = distance;
                     j=i;
+
                 }
-                console.log('__________________________________');
-                console.log(element._id+'/'+vehicleNumber+' has'+(j+2)+' number of tracking data on '+date);
-                console.log('Total distance : '+distance);
-                console.log('__________________________________');
-                updateHistoryDistance(vehicleNumber,date,distance);
+
+                data[k] = distanceOb;
+                // console.log(k);
+                // console.log('distance '+distanceOb);
+                // console.log(element._id+' / '+vehicleNumber+' has'+(j+2)+' number of tracking data on '+date);
+                // console.log('Total distance : '+distanceOb.distance);
+                // console.log('__________________________________');
+                k++
             });
+            console.log(data);
+
+            console.log(data.length)
+
+            for (i = 0; i<data.length; i++){
+                setDelay(i)
+                function setDelay(i) {
+                    setTimeout(function(){
+                      //console.log(data[i]);
+                      date = data[i].date;
+                      vehicleNumber = data[i].vehicleNumber;
+                      distance = data[i].distance;
+                      HistoryCon.updateDistance(vehicleNumber, date, distance);
+                    }, i*2000);
+                  }
+            }
+
         });
     },
 
@@ -192,7 +222,7 @@ module.exports = {
             }
         ];
 
-        async.async.series(tasks, (err, results) => {
+        async.series(tasks, (err, results) => {
             if (err) {
                 console.log(err);
             }
@@ -202,12 +232,3 @@ module.exports = {
         });
     },
 };
-
-function updateHistoryDistance(vehicleNumber,date,distance){
-    History.updateHistoryTrackingDistance(vehicleNumber, date, distance, function (err, res) {
-        if (err) {
-            console.log(err);
-        }
-        console.log(res + ' add tracking distance');
-    })
-}
