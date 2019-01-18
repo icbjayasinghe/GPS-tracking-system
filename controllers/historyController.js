@@ -1,5 +1,4 @@
 var History  = require('../models/history');
-var CommonFacade = require('./commonFacade');
 var moment = require('moment');
 
 var history = {
