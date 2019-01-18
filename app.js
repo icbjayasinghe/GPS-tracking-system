@@ -173,7 +173,7 @@ app.listen(port, function(req,res){
         History.updateOverSpeedTrackingData(d);
     });
 
-    schedule.scheduleJob('00 48 12 * * *', function(req, res){
+    schedule.scheduleJob('00 05 13 * * *', function(req, res){
         var date = new Date(); 
         var date = date.toISOString();
         var d = date.substring(0,10);

@@ -1,5 +1,5 @@
 var History = require('../models/history');
-var HistoryCon = require('./historyController')
+//var HistoryCon = require('./historyController');
 var Vehicle = require('../models/vehicle');
 var User = require('../models/user');
 var Summary = require('../models/summary');
@@ -105,7 +105,13 @@ module.exports = {
                       date = data[i].date;
                       vehicleNumber = data[i].vehicleNumber;
                       distance = data[i].distance;
-                      HistoryCon.updateDistance(vehicleNumber, date, distance);
+                      History.updateHistoryTrackingDistance1(date,vehicleNumber,distance, function(err, res){
+                        if (err){
+                            console.log(err);
+                        }
+                        console.log('add distance');
+                    })
+                      //HistoryCon.updateDistance(vehicleNumber, date, distance);
                     }, i*2000);
                   }
             }
