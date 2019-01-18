@@ -270,7 +270,7 @@ var history = {
                         dataArray[da] = speededDetails;
                     }  
                     
-                    console.log(dataArray);
+                    console.log('speededDetails Array : '+dataArray);
                     History.updateMany({'vehicleNumber': vehicleNumber},{'$push': { speededDetails:{ '$each':dataArray}}}, function (err){
                         if (err) {
                             console.log({ success: false, message: "error"+err });
