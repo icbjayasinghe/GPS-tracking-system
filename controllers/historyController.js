@@ -364,10 +364,10 @@ var history = {
                     }
 
                     if(num>0){
-                        var avarageSpeed = speed/num;
+                        var avarageSpeed = speed/num-1;
                     }
                     if(overSpeedNum>0){
-                        var avarageOverSpeed = overSpeed/overSpeedNum;
+                        var avarageOverSpeed = overSpeed/overSpeedNum-1;
                     }
                 }
 
