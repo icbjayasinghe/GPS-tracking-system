@@ -173,14 +173,14 @@ app.listen(port, function(req,res){
         History.updateOverSpeedTrackingData(d);
     });
 
-    schedule.scheduleJob('00 25 12 * * *', function(req, res){
+    schedule.scheduleJob('00 48 12 * * *', function(req, res){
         var date = new Date(); 
         var date = date.toISOString();
         var d = date.substring(0,10);
         History.updateSummary(d,res);
     });
     
-    schedule.scheduleJob('00 30 12 18 * *', function(req, res){
+    schedule.scheduleJob('00 45 12 18 * *', function(req, res){
         var date = new Date(); 
         var date = date.toISOString();
         var d = date.substring(0,7);
