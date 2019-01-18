@@ -363,10 +363,10 @@ var history = {
                     }
                     if(j==trackingLen-1){
                         if(num>1){
-                            var avarageSpeed = speed/num-1;
+                            var avarageSpeed = speed/(num-1);
                         }
                         if(overSpeedNum>1){
-                            var avarageOverSpeed = overSpeed/overSpeedNum-1;
+                            var avarageOverSpeed = overSpeed/(overSpeedNum-1);
                         }
                     }                    
                 }
