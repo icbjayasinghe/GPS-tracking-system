@@ -152,21 +152,21 @@ app.listen(port, function(req,res){
         CommonFacade.addDistanceToHistory(d,res);
     }); 
 
-    schedule.scheduleJob('00 05 15 * * *', function(req, res){
+    schedule.scheduleJob('00 48 15 * * *', function(req, res){
         var date = new Date(); 
         var date = date.toISOString();
         var d = date.substring(0,10);
         History.calculateAvgSpeed(d);
     }); 
 
-    schedule.scheduleJob('00 07 15 * * *', function(req, res){
+    schedule.scheduleJob('00 49 15 * * *', function(req, res){
         var date = new Date(); 
         var date = date.toISOString();
         var d = date.substring(0,10);
         History.updateHistoryStopDeytails(d);
     });
 
-    schedule.scheduleJob('00 09 15 * * *', function(req, res){
+    schedule.scheduleJob('00 50 15 * * *', function(req, res){
         var date = new Date(); 
         var date = date.toISOString();
         var d = date.substring(0,10);
