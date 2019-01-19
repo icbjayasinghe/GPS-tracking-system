@@ -225,7 +225,7 @@ var history = {
                 var da = 0 ;
                 var overSpeedIndexArray = []
                 dataArray = []
-                if (trackingDataLength>2){
+                if (trackingDataLength>0){
                     for(j=0;j<trackingDataLength;j++){
                         if (trackingData[j].speed>60){
                             overSpeedIndexArray[k]=j;
