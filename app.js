@@ -141,11 +141,6 @@ server.on("connection", function(socket){
 
 app.listen(port, function(req,res){ 
 
-    var date = new Date(); 
-    var date = date.toISOString();
-    var d = date.substring(0,10);
-    CommonFacade.addDistanceToHistory(d,res);
-
     schedule.scheduleJob('00 00 12 * * *', function(req, res){
         CommonFacade.createHistory(req, res);
     });

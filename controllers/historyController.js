@@ -118,7 +118,7 @@ var history = {
                     setTimeout(function(){
                       console.log(i);
                       CommonFacade.function1(history[i],res);       
-                    }, i*1000);
+                    }, i*2000);
                   }    
             }
         });
