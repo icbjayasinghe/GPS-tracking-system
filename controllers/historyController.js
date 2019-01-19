@@ -225,7 +225,7 @@ var history = {
                 var da = 0 ;
                 var overSpeedIndexArray = []
                 dataArray = []
-                if (trackingDataLength>2){
+                if (trackingDataLength>0){
                     for(j=0;j<trackingDataLength;j++){
                         if (trackingData[j].speed>60){
                             overSpeedIndexArray[k]=j;
@@ -233,8 +233,9 @@ var history = {
                         }
                     }
                     var numberOfOverSpeedData = overSpeedIndexArray.length;
-                    if (numberOfOverSpeedData>2){
+                    if (numberOfOverSpeedData>0){
                         speedUpIndex = overSpeedIndexArray[numberOfOverSpeedData-1] ;
+                        console.log(numberOfOverSpeedData-1)
                         speedUpTime = trackingData[speedUpIndex].date;
 
                         for(j=(numberOfOverSpeedData-1);j>0;j--){
