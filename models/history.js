@@ -110,7 +110,8 @@ module.exports.historyByDate = function(date, callback){
     History.find({date:date},{_id:1, vehicleNumber:1,distance:1,date:1,trackingData:1},callback);
 }
 //update history distance
-module.exports.updateHistoryTrackingDistance1 = function(vehicleNumber, date, distance, options, callback){
+module.exports.updateHistoryTrackingDist = function(vehicleNumber, date, distance, options, callback){
+    console.log('@model : '+distance);
     History.findOneAndUpdate({vehicleNumber: vehicleNumber,date:date},{distance:distance}, options, callback);
 }
 //get history tracking data where tracking speed is equal to  0

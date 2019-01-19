@@ -95,25 +95,33 @@ module.exports = {
             });
             console.log(data);
 
-            console.log(data.length)
-
             for (i = 0; i<data.length; i++){
-                setDelay(i)
-                function setDelay(i) {
-                    setTimeout(function(){
-                      //console.log(data[i]);
-                      date = data[i].date;
-                      vehicleNumber = data[i].vehicleNumber;
-                      distance = data[i].distance;
-                      History.updateHistoryTrackingDistance1(date,vehicleNumber,distance, function(err, res){
-                        if (err){
-                            console.log(err);
-                        }
-                        console.log('add distance');
-                    })
-                      //HistoryCon.updateDistance(vehicleNumber, date, distance);
-                    }, i*2000);
-                  }
+                date = data[i].date;
+                vehicleNumber = data[i].vehicleNumber;
+                distance = data[i].distance;
+                History.updateHistoryTrackingDist(vehicleNumber,date,distance, function(err, res){
+                    if (err){
+                        console.log(err);
+                    }
+                    console.log('add distance');
+                })
+
+//                 setDelay(i)
+//                 function setDelay(i) {
+//                     setTimeout(function(){
+//                       //console.log(data[i]);
+//                       date = data[i].date;
+//                       vehicleNumber = data[i].vehicleNumber;
+//                       distance = data[i].distance;
+// //                      var d = date.substring(0,7);
+//                       History.updateHistoryTrackingDist(date,vehicleNumber,distance, function(err, res){
+//                         if (err){
+//                             console.log(err);
+//                         }
+//                         console.log('add distance');
+//                     })
+//                     }, i*2000);
+//                   }
             }
 
         });

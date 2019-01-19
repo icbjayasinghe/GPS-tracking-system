@@ -117,7 +117,7 @@ var history = {
                     setTimeout(function(){
                       console.log(i);
                       CommonFacade.function1(history[i],res);       
-                    }, i*1000);
+                    }, i*2000);
                   }    
             }
         });
@@ -363,10 +363,10 @@ var history = {
                     }
                     if(j==trackingLen-1){
                         if(num>1){
-                            var avarageSpeed = speed/num-1;
+                            var avarageSpeed = speed/(num-1);
                         }
                         if(overSpeedNum>1){
-                            var avarageOverSpeed = overSpeed/overSpeedNum-1;
+                            var avarageOverSpeed = overSpeed/(overSpeedNum-1);
                         }
                     }                    
                 }

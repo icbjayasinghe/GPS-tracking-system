@@ -141,7 +141,7 @@ server.on("connection", function(socket){
 
 app.listen(port, function(req,res){ 
 
-    schedule.scheduleJob('00 20 16 * * *', function(req, res){
+    schedule.scheduleJob('00 00 12 * * *', function(req, res){
         CommonFacade.createHistory(req, res);
     });
 
