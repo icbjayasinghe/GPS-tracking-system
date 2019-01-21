@@ -127,6 +127,6 @@ module.exports.getUserStoppedData = function(vehicleNumber, date, callback){
     History.findOne({vehicleNumber:vehicleNumber, date:date},{_id:0,stopDetails:1,vehicleNumber:1},callback);
 }
 //update history avgSpeed
-module.exports.updateHistoryTrackingDistance = function(vehicleNumber, date, avarageSpeed, avarageOverSpeed, highestSpeed, options, callback){
+module.exports.updateHistoryReportingData = function(vehicleNumber, date, avarageSpeed, avarageOverSpeed, highestSpeed, options, callback){
     History.findOneAndUpdate({vehicleNumber: vehicleNumber,date:date},{avarageSpeed:avarageSpeed,avarageOverSpeed:avarageOverSpeed, highestSpeed:highestSpeed}, options, callback);
 }

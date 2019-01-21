@@ -141,6 +141,11 @@ server.on("connection", function(socket){
 
 app.listen(port, function(req,res){ 
 
+    var date = new Date(); 
+    var date = date.toISOString();
+    var d = date.substring(0,10);
+    History.updateSummary(d,res);
+
     schedule.scheduleJob('00 00 00 * * *', function(req, res){
         CommonFacade.createHistory(req, res);
     });
@@ -163,7 +168,7 @@ app.listen(port, function(req,res){
         var date = new Date(); 
         var date = date.toISOString();
         var d = date.substring(0,10);
-        History.updateHistoryStopDeytails(d);
+        History.updateHistoryStopDetails(d);
     });
 
     schedule.scheduleJob('00 25 00 * * *', function(req, res){
