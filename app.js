@@ -10,7 +10,8 @@ var http = require('http');
 var Vehicle = require('./models/vehicle');
 var passport = require('passport');
 var CommonFacade = require('./controllers/commonFacade');
-var History = require('./controllers/historyController')
+var History = require('./controllers/historyController');
+const path  = require('path');
 
 const app = express();
 const cors = require('cors');
@@ -19,6 +20,9 @@ var schedule = require('node-schedule');
 app.use(cors());
 mongoose.connect(config.database,{useNewUrlParser:true});
 var db = mongoose.connection;
+
+
+// app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bodyParser.json());
 app.use(session({secret: config.secret, resave: false, saveUninitialized: false}));
@@ -40,8 +44,12 @@ app.all('/*', function(req, res, next) {
 });
   
 app.use('/', require('./controllers'));
+// app.get('*',(req, res) => {
+//     res.sendFile(path.join(__dirname,'public/index.html'));
+// });
 
 const port = 3000;
+// const port = 80;
 
 app.get('/',function(req,res){
     res.send("Hello world");
