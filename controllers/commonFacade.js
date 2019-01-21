@@ -48,6 +48,41 @@ module.exports = {
         console.log({success:true});
     },
 
+    addVehicle : function(req,res){
+        var newVehicle = new Vehicle({
+            vehicleNumber: req.body.vehicleNumber,
+            imeiNumber: req.body.imeiNumber,
+            userId: req.body.userId,
+            userName: req.body.userName,
+            vehicleDetails: req.body.details,
+            trackingData: [],
+        });
+        var date = new Date() // Today!
+        var date = date.toISOString();
+        var d = date.substring(0,7);
+        var newSummary = new Summary({
+            userId: req.body.userId,
+            vehicleNumber: req.body.vehicleNumber,
+            date : d,
+            distance : 0,
+            trips : 0
+        });
+        Summary.addNewSummary(newSummary,function(err,summaryRes){
+            if(err){
+                console.log({success: false, msg:'Something wrong, Try Again!',  err: err});
+            }
+            console.log({success:true,summary:summaryRes, msg: 'New Summary Added Successfully!'});
+        })
+        Vehicle.addVehicle(newVehicle,function(err,vehicleRes){
+            if(err){
+                res.json({success: false, msg:'Something wrong, Try Again!',  err: err});
+            }
+            res.json({success:true,vehicle:vehicleRes, msg: 'New Vehicle Added Successfully!'});
+        });
+        
+
+    },
+
     addDistanceToHistory : function(req){
         History.historyByDate(req,function(err,res){
             var data =[];

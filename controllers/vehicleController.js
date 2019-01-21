@@ -5,20 +5,21 @@ var CommonFacade = require('./commonFacade');
 
 var vehicle = {
     addVehicle: function(req, res){
-        var newVehicle = new Vehicle({
-            vehicleNumber: req.body.vehicleNumber,
-            imeiNumber: req.body.imeiNumber,
-            userId: req.body.userId,
-            userName: req.body.userName,
-            vehicleDetails: req.body.details,
-            trackingData: [],
-        });
-        Vehicle.addVehicle(newVehicle,function(err,vehicleRes){
-            if(err){
-                res.json({success: false, msg:'Something wrong, Try Again!',  err: err});
-            }
-            res.json({success:true,vehicle:vehicleRes, msg: 'New Vehicle Added Successfully!'});
-        })
+        CommonFacade.addVehicle(req,res);
+        // var newVehicle = new Vehicle({
+        //     vehicleNumber: req.body.vehicleNumber,
+        //     imeiNumber: req.body.imeiNumber,
+        //     userId: req.body.userId,
+        //     userName: req.body.userName,
+        //     vehicleDetails: req.body.details,
+        //     trackingData: [],
+        // });
+        // Vehicle.addVehicle(newVehicle,function(err,vehicleRes){
+        //     if(err){
+        //         res.json({success: false, msg:'Something wrong, Try Again!',  err: err});
+        //     }
+        //     res.json({success:true,vehicle:vehicleRes, msg: 'New Vehicle Added Successfully!'});
+        // })
     },
     viewAllVehicles: function(req, res){
         Vehicle.viewVehiclesWithTrackingData(function(err,vehi){
