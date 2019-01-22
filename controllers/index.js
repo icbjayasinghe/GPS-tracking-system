@@ -18,11 +18,11 @@ router.post('/login', auth.login);
 // router.get('/api/summary/:date',summary.getAll);
 // router.get('/api/summaryByUser/:userId/:date',summary.searchSummary);
 
-router.use('/', passport.authenticate('jwt', { session: false }),
-    function(req, res, next) {
-        next();
-    }
-);
+// router.use('/', passport.authenticate('jwt', { session: false }),
+//     function(req, res, next) {
+//         next();
+//     }
+// );
 
 // -------------USER COLLECTION--------------
 
@@ -74,6 +74,7 @@ router.post('/api/searchHistory',history.searchHistory);
 router.get('/api/history',history.getHistory);
 router.get('/api/historyByUserId/:userId',history.getHistoryByUser);
 router.get('/api/historyByVehicle/:vehicleNumber',history.getHistoryByVehicle);
+router.delete('/api/deleteHistory/:date/:vehicleNumber', history.deleteHistory);
 
 //report related routes
 router.get('/api/historyReports/:vehicleNumber/:date',history.getReport);
