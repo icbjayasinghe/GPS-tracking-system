@@ -130,3 +130,7 @@ module.exports.getUserStoppedData = function(vehicleNumber, date, callback){
 module.exports.updateHistoryReportingData = function(vehicleNumber, date, avarageSpeed, avarageOverSpeed, highestSpeed, options, callback){
     History.findOneAndUpdate({vehicleNumber: vehicleNumber,date:date},{avarageSpeed:avarageSpeed,avarageOverSpeed:avarageOverSpeed, highestSpeed:highestSpeed}, options, callback);
 }
+module.exports.deleteHistory = function(date,callback){
+    console.log(date)
+    History.deleteMany({date:date},callback);
+}

@@ -394,6 +394,19 @@ var history = {
             }
             console.log('add distance');
         })        
+    },
+
+    deleteHistory : function(req,res){
+        var date = req.params.date;
+
+        History.deleteHistory(date, function(err, res){
+            if (err){
+                console.log({success: false, msg: 'Something Wrong'});
+            }
+            else{
+                console.log({success: true, msg: 'History data of '+date+' deleted'});
+            }
+        })        
     }
     
 };
