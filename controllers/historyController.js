@@ -1,5 +1,6 @@
 var History  = require('../models/history');
 var moment = require('moment');
+var CommonFacade = require('./commonFacade');
 
 var history = {
     
@@ -107,6 +108,7 @@ var history = {
     },
     
     updateSummary : function(req, res){
+        console.log(req);
         History.historyByDate(req,function(err,history){
             if (err){
                 console.log(err);
@@ -123,7 +125,7 @@ var history = {
         });
     },
 
-    updateHistoryStopDeytails : function(date, res){
+    updateHistoryStopDetails : function(date, res){
         History.historyTrackingSpeedByDate(date,function(err,res){
             if (err){
                 console.log(err);
@@ -349,6 +351,7 @@ var history = {
                 var num = 1;
                 var overSpeedNum = 1;
                 var avarageSpeed =0;
+                var avarageOverSpeed = 0;
 
                 for(j=0;j<trackingLen;j++){
                     if (trackingData[j].speed!=0){
@@ -356,7 +359,7 @@ var history = {
                         num++;
                     }
                     if (trackingData[j].speed>60){
-                        overSpeed = overSpeedAvg +trackingData[j].speed ;
+                        overSpeedAvg = overSpeedAvg +trackingData[j].speed ;
                         overSpeedNum++;
                     }
                     if (trackingData[j].speed>highestSpeed){
@@ -366,13 +369,15 @@ var history = {
                         if(num>1){
                             var avarageSpeed = speed/(num-1);
                         }
+                        
                         if(overSpeedNum>1){
-                            var avarageOverSpeed = overSpeed/(overSpeedNum-1);
+                            avarageOverSpeed = overSpeedAvg/(overSpeedNum-1);
                         }
+                        
                     }                    
                 }
 
-                History.updateHistoryTrackingDistance(vehicleNumber, date, avarageSpeed, avarageOverSpeed, highestSpeed, function(err, res){
+                History.updateHistoryReportingData(vehicleNumber, date, avarageSpeed, avarageOverSpeed, highestSpeed, function(err, res){
                     if(err){
                       console.log(err);
                     }
