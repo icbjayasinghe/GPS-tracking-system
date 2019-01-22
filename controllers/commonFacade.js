@@ -10,7 +10,7 @@ module.exports = {
     createHistory : function(req,res) {
         Vehicle.viewVehiclesWithTrackingData(function(err,res){
             res.forEach(element => {
-                if(element.trackingData.length > 0) {
+                if(element.trackingData.length >= 0) {
                     var date = new Date() // Today!
                     var date = date.toISOString();
                     console.log(date);
