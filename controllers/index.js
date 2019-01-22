@@ -74,6 +74,7 @@ router.post('/api/searchHistory',history.searchHistory);
 router.get('/api/history',history.getHistory);
 router.get('/api/historyByUserId/:userId',history.getHistoryByUser);
 router.get('/api/historyByVehicle/:vehicleNumber',history.getHistoryByVehicle);
+router.delete('/api/deleteHistory/:date', history.deleteHistory);
 
 //report related routes
 router.get('/api/historyReports/:vehicleNumber/:date',history.getReport);
