@@ -398,13 +398,14 @@ var history = {
 
     deleteHistory : function(req,res){
         var date = req.params.date;
+        var vehicleNumber = req.params.vehicleNumber;
 
-        History.deleteHistory(date, function(err, res){
+        History.deleteHistory(date,vehicleNumber, function(err, res){
             if (err){
                 console.log({success: false, msg: 'Something Wrong'});
             }
             else{
-                console.log({success: true, msg: 'History data of '+date+' deleted'});
+                console.log({success: true, msg: 'History data of vehicle '+vehicleNumber+' in date '+date+' deleted'});
             }
         })        
     }
