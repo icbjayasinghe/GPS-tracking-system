@@ -303,7 +303,7 @@ var history = {
             if (!historyRes) {
                 res.json({success: false, msg: 'Sorry, No Report Data in ' + vehicleNumber});
             }  else {
-                var startTime = false;
+                var startTime = historyRes.stopDetails[0].stopedTime;
             for (i = (historyRes.trackingData.length - 1); i > 0; i--) {
                 console.log(historyRes.trackingData[i]);
                 if (historyRes.trackingData[i].speed > 0) {
