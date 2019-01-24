@@ -287,7 +287,72 @@ var history = {
         });
     },
 
-    getReport: function(req,res){
+    overDynamicOverSpeed : function(req,res){
+        var date = req.body.date;
+        var vehicleNumber = req.body.vehicleNumber;
+        var speed = req.body.speed;
+        History.historyTrackingSpeedByDateAndVehicle(date,vehicleNumber,function(err,hisRes){
+            console.log('res : '+hisRes);
+            if (err){
+                res.json({success:false, msg: 'Something went wrong! Try again'});
+            }if (!hisRes){
+                res.json({success:false, msg: 'No History available'});
+            }
+            else{
+                var trackingData = hisRes.trackingData
+                let n = trackingData.length;
+                var k= 0;
+                var da = 0 ;
+                var overSpeedIndexArray = []
+                var dataArray = [];
+                console.log(n);
+
+                if (n>0){
+                    for(j=0;j<n;j++){
+                        if (trackingData[j].speed>=speed){
+                            overSpeedIndexArray[k]=j;
+                            k++
+                        }
+                    }
+                    var numberOfOverSpeedData = overSpeedIndexArray.length;
+                    if (numberOfOverSpeedData>0){
+                        speedUpIndex = overSpeedIndexArray[numberOfOverSpeedData-1] ;
+                        console.log(numberOfOverSpeedData-1)
+                        speedUpTime = trackingData[speedUpIndex].date;
+                        for(j=(numberOfOverSpeedData-1);j>0;j--){
+                            if((overSpeedIndexArray[j]-1)!=(overSpeedIndexArray[j-1])){
+                                speedDownIndex = overSpeedIndexArray[j] ;
+                                speedDownTime = trackingData[speedDownIndex].date; 
+                                speededDetails = {}
+                                speededDetails.speedUpIndex = speedUpIndex ;
+                                speededDetails.speedDownIndex = speedDownIndex;
+                                speededDetails.speedUpDetails = trackingData[speedUpIndex] ;
+                                speededDetails.speedDownDetails = trackingData[speedDownIndex];
+                                dataArray[da] = speededDetails;
+                                da++;
+                                speedUpIndex = overSpeedIndexArray[j-1] ;
+                                speedUpTime = trackingData[speedUpIndex].date;
+                            }
+                        }
+                        speedDownIndex = overSpeedIndexArray[0] ;
+                        speedDownTime = trackingData[speedDownIndex].date;
+                        speededDetails = {}
+                        speededDetails.speedUpIndex = speedUpIndex ;
+                        speededDetails.speedDownIndex = speedDownIndex;
+                        speededDetails.speedUpDetails = trackingData[speedUpIndex] ;
+                        speededDetails.speedDownDetails = trackingData[speedDownIndex];
+                        dataArray[da] = speededDetails;
+                    }
+                    console.log(dataArray);
+                }
+                res.json({success:true, msg: dataArray});
+            }
+
+        });
+        
+    },
+
+    getReport : function(req,res){
         // vehicleNumber = 'wp LF 2512'
         // date = '2019-01-24'
         vehicleNumber =req.params.vehicleNumber;

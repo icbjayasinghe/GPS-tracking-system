@@ -66,6 +66,9 @@ router.delete('/api/deleteHistory/:date/:vehicleNumber', passport.authenticate('
 //report related routes
 router.get('/api/historyReports/:vehicleNumber/:date',passport.authenticate('jwt', { session: false }), history.getReport);
 
+//get dynamic over speed data
+router.post('/api/getOverSpeed',passport.authenticate('jwt', { session: false }), history.overDynamicOverSpeed);
+
 // -------------SUMMARY COLLECTION--------------
 
 //summary related routes
