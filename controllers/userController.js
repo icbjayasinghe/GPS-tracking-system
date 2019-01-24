@@ -98,21 +98,24 @@ var user = {
       User.getUser(userPasswordDetails.userId,function(err, user) {
           if (err) throw err;
               // check if password matches
-                      User.changePassword(userPasswordDetails, user,function(err, userRes){
-                          if(err){
+                      User.changePassword(userPasswordDetails, user,function(err, userRes) {
+                          if (err) {
                               res.json({success: false, msg: 'Something Wrong, Try Again!', err: err});
-                          }
+                          } else if (!userRes) {
+                              res.json({success: false, msg: 'Current Password Not Matched!'});
+                          } else {
                           User.findUserActivity(userPasswordDetails.userId, function (err, logDetails) {
                               let todayDate = new Date();
                               logDetails[0].logDetails.reverse()[0].passwordChangedTime = todayDate;
 
-                              User.findOneAndUpdate({'_id': logDetails[0]._id}, {'$set': { logDetails :  logDetails[0].logDetails.reverse()}}, {new: true}, function (err) {
+                              User.findOneAndUpdate({'_id': logDetails[0]._id}, {'$set': {logDetails: logDetails[0].logDetails.reverse()}}, {new: true}, function (err) {
                                   if (err) {
                                       console.log(err);
                                   }
                               });
+                              res.json({success: true, msg: 'Password Changed Successfully!'});
                           });
-                          res.json({success: true, msg: 'Password Changed Successfully!'});
+                      }
                       });
       });
   },
