@@ -167,7 +167,7 @@ var history = {
                             stopedDetails.duration = duration.minutes ;                        
 
                             var x = da ;                        
-                            if (duration.minutes>3){
+                            if (duration.minutes>5){
                                 dataArray[da] = stopedDetails;
                                 da++;
                             }
@@ -191,7 +191,7 @@ var history = {
                         var duration = new Duration(startTime,stopedTime);
 
                         stopedDetails.duration = duration.minutes ;                        
-                        if (duration.minutes>3){
+                        if (duration.minutes>5){
                             dataArray[da] = stopedDetails;
                             da++;
                         }
