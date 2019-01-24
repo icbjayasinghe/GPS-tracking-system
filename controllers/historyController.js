@@ -1,6 +1,7 @@
 var History  = require('../models/history');
 var moment = require('moment');
 var CommonFacade = require('./commonFacade');
+var Duration = require('duration');
 
 var history = {
     
@@ -162,16 +163,16 @@ var history = {
                             stopedDetails.stopedTime = startTime ;
                             stopedDetails.startedTime = stopedTime ;
                             stopedDetails.location = location ;
-                            var x = da ;
-                            console.log(da)
-                            console.log(stopedDetails)                           
-                            dataArray[da] = stopedDetails;
-                            console.log(dataArray)
-                            da++;
-                            
-                            if (da!=x){
-                                stopedTime = trackingData[zeroSpeed[j+1]].date
+                            var duration = new Duration(startTime,stopedTime);
+                            stopedDetails.duration = duration.minutes ;                        
+
+                            var x = da ;                        
+                            if (duration.minutes>3){
+                                dataArray[da] = stopedDetails;
+                                da++;
                             }
+
+                            stopedTime = trackingData[zeroSpeed[j+1]].date
                         }
                     }
 
@@ -181,22 +182,22 @@ var history = {
                         latitude =  trackingData[zeroSpeed[zl-1]].latitude
                         location = {
                             longitude :longitude,
-                        latitude : latitude
+                            latitude : latitude
                         };
                         let stopedDetails = {} ;
                         stopedDetails.stopedTime = startTime ;
                         stopedDetails.startedTime = stopedTime ;
                         stopedDetails.location = location ;
-                        console.log(da)
-                        console.log(stopedDetails)
-                        
-                        dataArray[da] = stopedDetails;
-                        console.log(dataArray)
-                        da++
+                        var duration = new Duration(startTime,stopedTime);
+
+                        stopedDetails.duration = duration.minutes ;                        
+                        if (duration.minutes>3){
+                            dataArray[da] = stopedDetails;
+                            da++;
+                        }
                     }
 
-                    //console.log(dataArray)
-                    console.log()
+                    console.log(dataArray)
 
                     History.updateMany({'vehicleNumber': vehicleNumber},{'$push': { stopDetails:{ '$each':dataArray, '$sort':{stopedTime:-1}}}}, function (err){
                         if (err) {
@@ -229,7 +230,7 @@ var history = {
                 dataArray = []
                 if (trackingDataLength>0){
                     for(j=0;j<trackingDataLength;j++){
-                        if (trackingData[j].speed>60){
+                        if (trackingData[j].speed>=60){
                             overSpeedIndexArray[k]=j;
                             k++
                         }
@@ -288,7 +289,7 @@ var history = {
 
     getReport: function(req,res){
         // vehicleNumber = 'wp LF 2512'
-        // date = '2019-01-11'
+        // date = '2019-01-24'
         vehicleNumber =req.params.vehicleNumber;
         date = req.params.date;
         History.getHistory(vehicleNumber,date,function(err,historyRes) {
@@ -305,7 +306,7 @@ var history = {
             }  else {
                 var startTime = historyRes.stopDetails[0].stopedTime;
             for (i = (historyRes.trackingData.length - 1); i > 0; i--) {
-                console.log(historyRes.trackingData[i]);
+                //console.log(historyRes.trackingData[i]);
                 if (historyRes.trackingData[i].speed > 0) {
                     startTime = historyRes.trackingData[i].date;
                     i = 0;
@@ -325,8 +326,8 @@ var history = {
             overSpeedData.overSpeedAvg = historyRes.avarageOverSpeed;
             overSpeedData.highestSpeed = historyRes.highestSpeed;
             stopDetails = historyRes.stopDetails;
-            console.log(history);
-            res.json({success: true, history, msg: 'Allowed Access Vehicle Report'});
+            console.log(history.stopDetails);
+            //res.json({success: true, history, msg: 'Allowed Access Vehicle Report'});
         }
 
         });

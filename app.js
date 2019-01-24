@@ -147,7 +147,7 @@ server.on("connection", function(socket){
     console.log("Port 1245 is open, server listening to %j", server.address());
   })
 
-app.listen(port, function(req,res){ 
+app.listen(port, function(req,res){
 
     schedule.scheduleJob('00 00 00 * * *', function(req, res){
         CommonFacade.createHistory(req, res);
