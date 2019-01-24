@@ -157,12 +157,11 @@ module.exports.restPassword = function(userRestPasswordDetails,callback){
 };
 //change password
 module.exports.changePassword = function(userPasswordDetails,user, callback) {
-
     bcrypt.compare(userPasswordDetails.currentPassword, user.password, function (err, isMatch) {
         if (err) {
             return callback(err);
         }
-        if (!isMatch) {
+        else if (!isMatch) {
             return callback(null, isMatch);
         } else {
             quary = {_id: userPasswordDetails.userId};
