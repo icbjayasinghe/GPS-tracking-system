@@ -48,10 +48,6 @@ var UserSchema = mongoose.Schema({
         longitude: {
             type: Number,
             required: true
-        },
-        range:{
-            type: String,
-            require: true
         }
     }],
     status:{

@@ -27,8 +27,8 @@ router.get('/api/userByName/:userName', passport.authenticate('jwt', { session: 
 
 //locations(branch) routes
 router.get('/api/user/location/:userName', passport.authenticate('jwt', { session: false }), user.viewLocation);
-router.put('/api/user/location/:userName', passport.authenticate('jwt', { session: false }), user.addLocation);
-router.put('/api/user/removeLocation/:userId',passport.authenticate('jwt', { session: false }), user.removeLocation);
+router.put('/api/user/location', passport.authenticate('jwt', { session: false }), user.addLocation);
+router.post('/api/user/removeLocation', passport.authenticate('jwt', { session: false }), user.removeLocation);
 
 // -------------VEHICLE COLLECTION--------------
 
