@@ -21,7 +21,6 @@ app.use(cors());
 mongoose.connect(config.database,{useNewUrlParser:true});
 var db = mongoose.connection;
 
-
 // app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bodyParser.json());
@@ -147,7 +146,11 @@ server.on("connection", function(socket){
     console.log("Port 1245 is open, server listening to %j", server.address());
   })
 
-app.listen(port, function(req,res){ 
+app.listen(port, function(req,res){
+
+    schedule.scheduleJob('00 45 * * * *', function(req,res){
+        addTracking.updateRecentRecievedTime(req,res);
+    });
 
     schedule.scheduleJob('00 00 00 * * *', function(req, res){
         CommonFacade.createHistory(req, res);

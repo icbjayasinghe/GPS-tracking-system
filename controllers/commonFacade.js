@@ -279,5 +279,5 @@ module.exports = {
 
             //console.log(results);
         });
-    },
+    }
 };

@@ -295,6 +295,31 @@ var vehicle = {
 
             }
         });
+    },
+    updateRecentRecievedTime : function(req,res){
+        Vehicle.viewAllLatesttData(function(err,vehiRes){
+            if (err){
+                console.log({success: false, msg: err});
+            }
+            else{
+                for (i=0; i<vehiRes.length; i++){
+                    console.log('__________'+vehiRes[i].vehicleNumber+'__________');
+                    if ((vehiRes[i].trackingData.length) > 0){
+                        var vehicleNumber = vehiRes[i].vehicleNumber;
+                        var lastTime = vehiRes[i].trackingData[0].date;
+                        console.log(lastTime);
+                        Vehicle.updateVehicleLastDataTime(vehicleNumber,lastTime,function(err){
+                            if (err){
+                                console.log('Error');
+                            }
+                            else{
+                                console.log("updated");
+                            }
+                        })
+                    }
+                }
+            }
+        });
     }
 };
 

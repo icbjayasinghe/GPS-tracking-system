@@ -20,6 +20,9 @@ var vehicleSchema = mongoose.Schema({
     vehicleDetails:{
         type:String
     },
+    lastDataReceivedTime:{
+        type : Date
+    },
     trackingData:[{
         date : Date,
         longitude: Number,
@@ -93,10 +96,14 @@ module.exports.checkPath = function(imeiNumber,callback){
     Vehicle.findOne({imeiNumber:imeiNumber},{trackingData:1},callback);
 }
 //view current locations of vehicles 
-module.exports.viewAllLatesttLocations = function(callback){ 
-    Vehicle.find({},{imeiNumber:1,trackingData:1,_id:0},callback);
+module.exports.viewAllLatesttData = function(callback,limit){ 
+    Vehicle.find({},{vehicleNumber:1,trackingData:1,_id:0},callback).limit(limit);
 }
 //delete tracking data
 module.exports.removeAllTrackingData = function(vehicleId, callback){
     Vehicle.update( {_id: vehicleId }, { $set: {trackingData:[]}} , callback );
+}
+//update vehicle last data rec
+module.exports.updateVehicleLastDataTime = function(vehicleNumber, lastTime, options, callback){
+    Vehicle.findOneAndUpdate({vehicleNumber: vehicleNumber},{lastDataReceivedTime:lastTime}, options, callback);
 }
