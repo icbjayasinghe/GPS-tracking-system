@@ -132,13 +132,12 @@ var user = {
         });
     },
   addLocation: function(req,res){
-    var userName = req.params.userName;
+    var userName = req.body.userName;
     let location = {
       name:req.body.locationName,
       type:req.body.locationType,
       latitude:req.body.latitude,
-      longitude:req.body.longitude,
-      range: req.body.range
+      longitude:req.body.longitude
     };
     User.updateMany({'userName': userName}, {'$push': { location : location }}, function (err) {
       if (err) {
@@ -159,14 +158,14 @@ var user = {
     });
   },
   removeLocation: function(req,res){
-    var userId = req.params.userId;
+    var userId = req.body.userId;
     var locationId = req.body.locationId;
     User.deleteLocation(userId,locationId,function(err,locationRes){
       if (err){
-        res.json({success:false, message:err});
+        res.json({success:false, msg: 'Something Wrong, Try Again!', err: err});
         //throw err ; 
       }else{
-        res.json({success:true, message:"location deleted"});
+        res.json({success:true, msg:"location Deleted Successfully!"});
       }
     });
   },
