@@ -296,7 +296,7 @@ var history = {
             if (err){
                 res.json({success:false, msg: 'Something went wrong! Try again'});
             }if (!hisRes){
-                res.json({success:false, msg: 'No History available'});
+                res.json({success:false, msg: 'No Speed Details available'});
             }
             else{
                 var trackingData = hisRes.trackingData
@@ -345,7 +345,7 @@ var history = {
                     }
                     console.log(dataArray);
                 }
-                res.json({success:true, msg: dataArray});
+                res.json({success:true, msg: 'Access Speed Dynamically!', amount: dataArray.length});
             }
 
         });
