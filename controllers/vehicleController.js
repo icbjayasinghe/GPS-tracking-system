@@ -79,7 +79,8 @@ var vehicle = {
                     _id: vehicleRes[i]._id,
                     vehicleNumber: vehicleRes[i].vehicleNumber,
                     imeiNumber: vehicleRes[i].imeiNumber,
-                    vehicleDetails: vehicleRes[i].vehicleDetails
+                    vehicleDetails: vehicleRes[i].vehicleDetails,
+                    lastReceived: vehicleRes[i].lastDataReceivedTime
                 };
             }
             res.json({vehicle, vehicleAmount});
