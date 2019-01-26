@@ -180,7 +180,8 @@ module.exports = {
                         vehicleNumber: element.vehicleNumber,
                         imeiNumber: element.imeiNumber,
                         vehicleDetails: element.vehicleDetails,
-                        userName: result.userName
+                        userName: result.userName,
+                        lastReceived: element.lastDataReceivedTime
                     };
 
                     i++;
