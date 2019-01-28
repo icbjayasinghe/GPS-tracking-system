@@ -8,6 +8,8 @@ var summary = require('./summaryController.js');
 const passport = require('passport');
 var trackingData = require('./trackingContoller');
 
+router.post('/api/getOverSpeedPath', history.overDynamicOverSpeedPath);
+
 //login & registration
 router.post('/login', auth.login);
 

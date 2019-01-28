@@ -326,8 +326,11 @@ var history = {
                                 speededDetails = {}
                                 speededDetails.speedUpIndex = speedUpIndex ;
                                 speededDetails.speedDownIndex = speedDownIndex;
-                                speededDetails.speedUpDetails = trackingData[speedUpIndex] ;
-                                speededDetails.speedDownDetails = trackingData[speedDownIndex];
+                                speedUpDetails = trackingData[speedUpIndex] ;
+                                speedDownDetails = trackingData[speedDownIndex];
+                                speededDetails.speededTime = speedUpDetails.date;
+                                var duration = new Duration(speedUpDetails.date,speedDownDetails.date);                                
+                                speededDetails.duration = duration.toString(" %Hs:%M:%S") ;
                                 dataArray[da] = speededDetails;
                                 da++;
                                 speedUpIndex = overSpeedIndexArray[j-1] ;
@@ -336,20 +339,50 @@ var history = {
                         }
                         speedDownIndex = overSpeedIndexArray[0] ;
                         speedDownTime = trackingData[speedDownIndex].date;
-                        speededDetails = {}
+                        speededDetails = {}          
                         speededDetails.speedUpIndex = speedUpIndex ;
                         speededDetails.speedDownIndex = speedDownIndex;
-                        speededDetails.speedUpDetails = trackingData[speedUpIndex] ;
-                        speededDetails.speedDownDetails = trackingData[speedDownIndex];
+                        speedUpDetails = trackingData[speedUpIndex] ;
+                        speedDownDetails = trackingData[speedDownIndex]; 
+                        speededDetails.speededTime = speedUpDetails.date;
+                        var duration = new Duration(speedUpDetails.date,speedDownDetails.date);
+                        speededDetails.duration = duration.toString("%Hs:%M:%S") ;
                         dataArray[da] = speededDetails;
                     }
                     console.log(dataArray);
                 }
-                res.json({success:true, msg: 'Access Speed Dynamically!', amount: dataArray.length});
+                res.json({success:true, msg: 'Access Speed Dynamically!', amount: dataArray.length, overSpeedData:dataArray});
             }
 
         });
         
+    },
+
+    overDynamicOverSpeedPath : function(req,res){
+        vehicleNumber =req.body.vehicleNumber;
+        date = req.body.date;
+        speedUpIndex = req.body.speedUpIndex;
+        speedDownIndex = req.body.speedDownIndex;
+        var dataArray = [];
+        var da = 0;
+        History.getHistory(vehicleNumber,date,function(err,historyRes){
+            if (err){
+                console.log('err');
+                res.json({success: false, msg: 'Something Wrong, Try Again!'});
+            }
+            if (!historyRes) {
+                res.json({success: false, msg: 'Sorry, No Report Data in ' + vehicleNumber});
+            }
+            else{
+                for (i=speedDownIndex; i<speedUpIndex; i++){
+                    dataArray[da] = historyRes.trackingData[i]
+                    console.log(i);
+                    da++;
+                }
+                res.json({success:true, msg: 'Speeded Pathe', overSpeedPath:dataArray});
+
+            }
+        })
     },
 
     getReport : function(req,res){
