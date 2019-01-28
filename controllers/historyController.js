@@ -287,7 +287,7 @@ var history = {
         });
     },
 
-    overDynamicOverSpeed : function(req,res){
+    dynamicOverSpeed : function(req,res){
         var date = req.body.date;
         var vehicleNumber = req.body.vehicleNumber;
         var speed = req.body.speed;
@@ -358,7 +358,7 @@ var history = {
         
     },
 
-    overDynamicOverSpeedPath : function(req,res){
+    dynamicOverSpeedPath : function(req,res){
         vehicleNumber =req.body.vehicleNumber;
         date = req.body.date;
         speedUpIndex = req.body.speedUpIndex;
@@ -379,7 +379,7 @@ var history = {
                     console.log(i);
                     da++;
                 }
-                res.json({success:true, msg: 'Speeded Pathe', overSpeedPath:dataArray});
+                res.json({success:true, msg: 'Access Over Speed Path', overSpeedPath:dataArray});
 
             }
         })

@@ -8,7 +8,6 @@ var summary = require('./summaryController.js');
 const passport = require('passport');
 var trackingData = require('./trackingContoller');
 
-router.post('/api/getOverSpeedPath', history.overDynamicOverSpeedPath);
 
 //login & registration
 router.post('/login', auth.login);
@@ -69,12 +68,13 @@ router.delete('/api/deleteHistory/:date/:vehicleNumber', passport.authenticate('
 router.get('/api/historyReports/:vehicleNumber/:date',passport.authenticate('jwt', { session: false }), history.getReport);
 
 //get dynamic over speed data
-router.post('/api/getOverSpeed',passport.authenticate('jwt', { session: false }), history.overDynamicOverSpeed);
+router.post('/api/getOverSpeed', passport.authenticate('jwt', { session: false }), history.dynamicOverSpeed);
+router.post('/api/getOverSpeedPath', passport.authenticate('jwt', { session: false }), history.dynamicOverSpeedPath);
 
 // -------------SUMMARY COLLECTION--------------
 
 //summary related routes
-router.get('/api/summary/:date',summary.getAll);
+router.get('/api/summary/:date', passport.authenticate('jwt', { session: false }), summary.getAll);
 router.get('/api/summaryByUser/:userId/:date',passport.authenticate('jwt', { session: false }), summary.searchSummary);
 
 module.exports = router;
