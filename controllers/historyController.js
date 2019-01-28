@@ -425,7 +425,7 @@ var history = {
             overSpeedData.highestSpeed = historyRes.highestSpeed;
             stopDetails = historyRes.stopDetails;
             console.log(history.stopDetails);
-            //res.json({success: true, history, msg: 'Allowed Access Vehicle Report'});
+            res.json({success: true, history, msg: 'Allowed Access Vehicle Report'});
         }
 
         });
