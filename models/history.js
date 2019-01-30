@@ -21,8 +21,11 @@ var historySchema = mongoose.Schema({
         angle: Number,
         satelites: Number,
         speed: Number,
-        fuel: Number,
-        temperature: Number
+        ignition:Number,
+        digitalInputTwo:Number,
+        fuel:Number,
+        batteryVoltage:Number,
+        temperature:Number
     }],
     distance:{
         type:Number,
@@ -60,8 +63,11 @@ var historySchema = mongoose.Schema({
             angle: Number,
             satelites: Number,
             speed: Number,
-            fuel: Number,
-            temperature: Number
+            ignition:Number,
+            digitalInputTwo:Number,
+            fuel:Number,
+            batteryVoltage:Number,
+            temperature:Number
         },
         speedDownDetails:{
             date : Date,
@@ -71,8 +77,11 @@ var historySchema = mongoose.Schema({
             angle: Number,
             satelites: Number,
             speed: Number,
-            fuel: Number,
-            temperature: Number
+            ignition:Number,
+            digitalInputTwo:Number,
+            fuel:Number,
+            batteryVoltage:Number,
+            temperature:Number
         },
         //speedDuration :         
     }]
