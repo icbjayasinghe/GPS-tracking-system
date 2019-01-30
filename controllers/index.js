@@ -8,7 +8,6 @@ var summary = require('./summaryController.js');
 const passport = require('passport');
 var trackingData = require('./trackingContoller');
 
-
 //login & registration
 router.post('/login', auth.login);
 
@@ -60,6 +59,7 @@ router.put('/api/vehicle/removeTrackingData/:vehicleId',passport.authenticate('j
 router.post('/api/history', passport.authenticate('jwt', { session: false }), history.create);
 router.post('/api/searchHistory',passport.authenticate('jwt', { session: false }), history.searchHistory);
 router.get('/api/history',passport.authenticate('jwt', { session: false }), history.getHistory);
+router.post('/api/history/batteryLevel',passport.authenticate('jwt', { session: false }), history.getBatteryLevel);
 router.get('/api/historyByUserId/:userId',passport.authenticate('jwt', { session: false }), history.getHistoryByUser);
 router.get('/api/historyByVehicle/:vehicleNumber',passport.authenticate('jwt', { session: false }), history.getHistoryByVehicle);
 router.delete('/api/deleteHistory/:date/:vehicleNumber', passport.authenticate('jwt', { session: false }), history.deleteHistory);
