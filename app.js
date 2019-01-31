@@ -21,6 +21,7 @@ app.use(cors());
 mongoose.connect(config.database,{useNewUrlParser:true});
 var db = mongoose.connection;
 
+/*uncomment bellow line before deployment*/
 // app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bodyParser.json());
@@ -43,10 +44,12 @@ app.all('/*', function(req, res, next) {
 });
   
 app.use('/', require('./controllers'));
+/*uncomment bellow three lines before deployment*/
 // app.get('*',(req, res) => {
 //     res.sendFile(path.join(__dirname,'public/index.html'));
 // });
 
+/*change port number to 80 before deployment*/
 const port = 3000;
 // const port = 80;
 
