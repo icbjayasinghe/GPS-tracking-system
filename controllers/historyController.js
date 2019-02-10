@@ -523,19 +523,27 @@ var history = {
             else {
                 var batteryArray = [];
                 var tempArray =[];
-                da = 0 ;
+                batteryCount = 0 ;
+                tempCount = 0;
                 var len = historyRes.trackingData.length;
-                for (i=0;i<len;i=i+120){
-                    batteryArray[da] = historyRes.trackingData[i].batteryVoltage ;
-                    tempArray[da] = historyRes.trackingData[i].temperature ;
-                    da ++ 
+                for (i=0; i<len; i=i+120){
+                    if (historyRes.trackingData[i].batteryVoltage >= 0) {
+                        batteryArray[batteryCount] = historyRes.trackingData[i].batteryVoltage ;
+                        batteryCount ++;
+                    }
+                    if (historyRes.trackingData[i].temperature >= 0){
+                        tempArray[tempCount] = historyRes.trackingData[i].temperature ;
+                        tempCount ++;
+                    }
                 }
-                if (tempArray[0]== null){
-                    tempArray = [];
-                }
-                if (batteryArray[0]== null){
-                    batteryArray = [];
-                }
+
+                console.log(batteryArray);
+                // if (tempArray[0]== null){
+                //     tempArray = [];
+                // }
+                // if (batteryArray[0]== null){
+                //     batteryArray = [];
+                // }
                 res.json({success: true, msg: 'Access to hourly battery level and temperature', battery: batteryArray ,temp : tempArray});
             }
         });
